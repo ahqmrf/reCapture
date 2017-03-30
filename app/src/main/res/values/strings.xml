@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ReCapture</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_memory_list">No memories to show. Click the add button to create one.</string>
+    <string name="title">Give a title to the memory.</string>
+    <string name="ask_for_description">What do you want to remember about this memory? Write the way you like.</string>
+    <string name="ask_for_photos">If you have photos related this memory, you can browse the gallery and add them. Click Browse to select photos.</string>
+    <string name="next">Next</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="selected_0_photos">Selected 0 photos</string>
+</resources>
