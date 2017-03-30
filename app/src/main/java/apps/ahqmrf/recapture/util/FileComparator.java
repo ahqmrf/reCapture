@@ -13,8 +13,8 @@ import java.util.Comparator;
 public class FileComparator implements Comparator<File> {
     @Override
     public int compare(File first, File second) {
-        if(first.lastModified() < second.lastModified()) return -1;
-        if(first.lastModified() > second.lastModified()) return 1;
+        if(first.lastModified() < second.lastModified()) return 1;
+        if(first.lastModified() > second.lastModified()) return -1;
         return 0;
     }
 }

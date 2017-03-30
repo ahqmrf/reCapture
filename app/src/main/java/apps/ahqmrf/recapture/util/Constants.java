@@ -10,6 +10,7 @@ public final class Constants {
         public static final String DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
         public static final String DATABASE_NAME = "recapture.db";
         public static final int DATABASE_VERSION = 1;
+        public static final String IMAGE_LIST_EXTRA = "__image__list";
     }
 
     public final class DBUtil {

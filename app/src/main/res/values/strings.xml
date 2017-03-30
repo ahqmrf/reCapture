@@ -9,5 +9,6 @@
     <string name="ask_for_photos">If you have photos related this memory, you can browse the gallery and add them. Click Browse to select photos.</string>
     <string name="next">Next</string>
     <string name="no_file_selected">No file selected</string>
-    <string name="selected_0_photos">Selected 0 photos</string>
+    <string name="selected_0_photos">Selected 0 photo</string>
+    <string name="done">Done</string>
 </resources>

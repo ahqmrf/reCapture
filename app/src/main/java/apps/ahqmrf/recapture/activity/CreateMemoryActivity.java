@@ -13,13 +13,19 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.util.Constants;
 
 public class CreateMemoryActivity extends AppCompatActivity {
 
-    private Button mNextBtn;
+    private Button mBrowseBtn;
+    private TextView mSelectedAmountText;
+    private ArrayList<String> imagePaths;
+
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -47,6 +53,10 @@ public class CreateMemoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == Constants.RequestCodes.GALLERY_BROWSE_REQ && resultCode == RESULT_OK) {
             // TODO
+            imagePaths = data.getStringArrayListExtra(Constants.Basic.IMAGE_LIST_EXTRA);
+            int amount = imagePaths.size();
+            String text = amount > 1? "photos" : "photo";
+            mSelectedAmountText.setText("Selected " + amount + " " + text);
         }
     }
 
@@ -63,6 +73,14 @@ public class CreateMemoryActivity extends AppCompatActivity {
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        prepareViews();
+    }
+
+    private void prepareViews() {
+        mBrowseBtn = (Button) findViewById(R.id.btn_browse);
+        mBrowseBtn.setOnClickListener(mOnClickListener);
+        mSelectedAmountText = (TextView) findViewById(R.id.text_selected_photo_amount);
     }
 
     @Override
