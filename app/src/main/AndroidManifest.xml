@@ -2,30 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="apps.ahqmrf.recapture">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".application.ReCapture"
         android:allowBackup="true"
         android:icon="@drawable/re_capture"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".application.ReCapture"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/TabActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.CreateMemoryActivity"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".activity.GalleryActivity"/>
+        <activity
+            android:name=".activity.GalleryActivity"
+            android:theme="@style/TabActivityTheme" />
     </application>
 
 </manifest>

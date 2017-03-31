@@ -8,14 +8,14 @@
         android:id="@+id/image_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
 
     <ImageView
         android:id="@+id/image_select"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="8dp"
-        android:background="@color/grey_transparent"
+        android:background="@drawable/circular_grey_bg_item_gallery"
         android:src="@drawable/ic_done_white_24dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"/>

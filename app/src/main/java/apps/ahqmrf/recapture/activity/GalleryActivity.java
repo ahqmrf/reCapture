@@ -1,30 +1,34 @@
 package apps.ahqmrf.recapture.activity;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.TreeSet;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.ImageSelectAdapter;
+import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
 import apps.ahqmrf.recapture.model.ImageModel;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.FileComparator;
 import apps.ahqmrf.recapture.util.GridSpacingItemDecoration;
 
-public class GalleryActivity extends Activity implements ImageSelectAdapter.ImageSelectCallback {
+public class GalleryActivity extends AppCompatActivity implements ImageSelectAdapter.ImageSelectCallback {
 
     private ArrayList<ImageModel> mImageList;
     private ArrayList<File> mImageFiles;
@@ -35,7 +39,8 @@ public class GalleryActivity extends Activity implements ImageSelectAdapter.Imag
     private ArrayList<String> imagePathsSelected;
     private ImageSelectAdapter mAdapter;
     private int size;
-    private Button mDoneBtn;
+    private TextView mAmountSelectedText;
+    private RelativeLayout mRelativeDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +77,12 @@ public class GalleryActivity extends Activity implements ImageSelectAdapter.Imag
     }
 
     private void prepareViews() {
+        mAmountSelectedText = (TextView) findViewById(R.id.text_selected_photo_amount);
         imagePathsSet = new TreeSet<>();
         imagePathsSelected = new ArrayList<>();
         mImagesRecyclerView = (RecyclerView) findViewById(R.id.recycler_images);
-        mDoneBtn = (Button) findViewById(R.id.btn_done);
-        mDoneBtn.setOnClickListener(new View.OnClickListener() {
+        mRelativeDone = (RelativeLayout) findViewById(R.id.relative_done);
+        mRelativeDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goBack();
@@ -144,8 +150,27 @@ public class GalleryActivity extends Activity implements ImageSelectAdapter.Imag
     }
 
     @Override
-    public void onImageClick(int position, ImageModel model) {
+    public void onImageSelectClick(int position, ImageModel model) {
         if(model.isSelected()) imagePathsSet.add(position);
         else imagePathsSet.remove(position);
+        if(imagePathsSet.size() > 0) {
+            mAmountSelectedText.setVisibility(View.VISIBLE);
+            mAmountSelectedText.setText(imagePathsSet.size() + "");
+        } else {
+            mAmountSelectedText.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onImageClick(final String imagePath) {
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                FullSizeImageDialogFragment fragment = FullSizeImageDialogFragment.newInstance(imagePath);
+                fragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_DialogActivity_Transparent);
+                fragment.show(getSupportFragmentManager(), FullSizeImageDialogFragment.TAG);
+            }
+        });
     }
 }

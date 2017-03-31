@@ -25,7 +25,8 @@ import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
 public class ImageSelectAdapter extends RecyclerView.Adapter <ImageSelectAdapter.ImageViewHolder> {
 
     public interface ImageSelectCallback {
-        void onImageClick(int position, ImageModel model);
+        void onImageSelectClick(int position, ImageModel model);
+        void onImageClick(String imagePath);
     }
 
     private Context context;
@@ -56,11 +57,9 @@ public class ImageSelectAdapter extends RecyclerView.Adapter <ImageSelectAdapter
         );
 
         if(model.isSelected()) {
-            holder.selectImage.setImageResource(R.drawable.ic_done_green_24dp);
-            holder.selectImage.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            holder.selectImage.setBackgroundResource(R.drawable.circular_green_bg_item_gallery);
         } else {
-            holder.selectImage.setImageResource(R.drawable.ic_done_white_24dp);
-            holder.selectImage.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_transparent));
+            holder.selectImage.setBackgroundResource(R.drawable.circular_grey_bg_item_gallery);
         }
     }
 
@@ -79,6 +78,12 @@ public class ImageSelectAdapter extends RecyclerView.Adapter <ImageSelectAdapter
 
             layout = (RelativeLayout) itemView.findViewById(R.id.layout_item);
             mainImage = (ImageView) itemView.findViewById(R.id.image_main);
+            mainImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onImageClick(items.get(getAdapterPosition()).getFilePath());
+                }
+            });
             selectImage = (ImageView) itemView.findViewById(R.id.image_select);
             selectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,7 +92,7 @@ public class ImageSelectAdapter extends RecyclerView.Adapter <ImageSelectAdapter
                     model.setSelected(!model.isSelected());
                     items.set(getAdapterPosition(), model);
                     notifyItemChanged(getAdapterPosition());
-                    callback.onImageClick(getAdapterPosition(), model);
+                    callback.onImageSelectClick(getAdapterPosition(), model);
                 }
             });
 

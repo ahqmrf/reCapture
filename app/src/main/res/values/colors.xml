@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#F44336</color>
     <color name="red">#F44336</color>
+    <color name="red_transparent">#def44336</color>
     <color name="purple">#9C27B0</color>
     <color name="indigo">#3F51B5</color>
     <color name="blue">#2196F3</color>
