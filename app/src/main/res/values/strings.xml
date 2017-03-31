@@ -11,4 +11,6 @@
     <string name="no_file_selected">No file selected</string>
     <string name="selected_0_photos">Selected 0 photo</string>
     <string name="done">Done</string>
+    <string name="create">Create</string>
+    <string name="finish">Finish</string>
 </resources>

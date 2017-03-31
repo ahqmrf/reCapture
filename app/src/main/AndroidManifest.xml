@@ -27,6 +27,10 @@
         <activity
             android:name=".activity.GalleryActivity"
             android:theme="@style/TabActivityTheme" />
+        <activity
+            android:name=".activity.SelectIconActivity"
+            android:label="Select icon" />
+        <activity android:name=".activity.TagPeopleActivity"></activity>
     </application>
 
 </manifest>

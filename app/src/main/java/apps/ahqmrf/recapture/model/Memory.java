@@ -14,33 +14,30 @@ public class Memory implements Parcelable{
     private int id;
     private String title;
     private String description;
-    private String timeStamp;
-    private String date;
-    private Uri icon;
-    private ArrayList<Uri> photos;
+    private String iconPath;
+    private ArrayList<String> images;
     private ArrayList<People> peoples;
+    private Time time;
 
     public Memory() {}
 
-    public Memory(String title, String description, Time time, Uri icon, ArrayList<Uri> photos, ArrayList<People> peoples) {
+    public Memory(String title, String description, String iconPath, ArrayList<String> images, ArrayList<People> peoples, Time time) {
         this.title = title;
         this.description = description;
-        this.timeStamp = time.getTimeStamp();
-        this.date = time.getDate();
-        this.icon = icon;
-        this.photos = photos;
+        this.iconPath = iconPath;
+        this.images = images;
         this.peoples = peoples;
+        this.time = time;
     }
 
     protected Memory(Parcel in) {
         id = in.readInt();
         title = in.readString();
         description = in.readString();
-        timeStamp = in.readString();
-        date = in.readString();
-        icon = in.readParcelable(Uri.class.getClassLoader());
-        photos = in.createTypedArrayList(Uri.CREATOR);
+        iconPath = in.readString();
+        images = in.createStringArrayList();
         peoples = in.createTypedArrayList(People.CREATOR);
+        time = in.readParcelable(Time.class.getClassLoader());
     }
 
     public static final Creator<Memory> CREATOR = new Creator<Memory>() {
@@ -79,36 +76,20 @@ public class Memory implements Parcelable{
         this.description = description;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
+    public String getIconPath() {
+        return iconPath;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 
-    public String getDate() {
-        return date;
+    public ArrayList<String> getImages() {
+        return images;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Uri getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Uri icon) {
-        this.icon = icon;
-    }
-
-    public ArrayList<Uri> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(ArrayList<Uri> photos) {
-        this.photos = photos;
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
     }
 
     public ArrayList<People> getPeoples() {
@@ -117,6 +98,14 @@ public class Memory implements Parcelable{
 
     public void setPeoples(ArrayList<People> peoples) {
         this.peoples = peoples;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     @Override
@@ -129,10 +118,9 @@ public class Memory implements Parcelable{
         dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(description);
-        dest.writeString(timeStamp);
-        dest.writeString(date);
-        dest.writeParcelable(icon, flags);
-        dest.writeTypedList(photos);
+        dest.writeString(iconPath);
+        dest.writeStringList(images);
         dest.writeTypedList(peoples);
+        dest.writeParcelable(time, flags);
     }
 }

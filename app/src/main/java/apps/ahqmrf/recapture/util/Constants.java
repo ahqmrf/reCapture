@@ -15,6 +15,10 @@ public final class Constants {
 
     public final class IntentExtras {
         public static final String IMAGE_PATH = "image__path";
+        public static final String MEMORY_TITLE = "memory__title";
+        public static final String MEMORY_DESCRIPTION = "memory__story";
+        public static final String IMAGE_LIST_EXTRA = "__image__list";
+        public static final String MEMORY = "__memory";
     }
 
     public final class DBUtil {

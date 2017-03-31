@@ -10,10 +10,10 @@ import android.os.Parcelable;
 
 public class People implements Parcelable{
     private String name;
-    private Uri avatar;
+    private String avatar;
     private String relation;
 
-    public People(String name, Uri avatar, String relation) {
+    public People(String name, String avatar, String relation) {
         this.name = name;
         this.avatar = avatar;
         this.relation = relation;
@@ -21,7 +21,7 @@ public class People implements Parcelable{
 
     protected People(Parcel in) {
         name = in.readString();
-        avatar = in.readParcelable(Uri.class.getClassLoader());
+        avatar = in.readString();
         relation = in.readString();
     }
 
@@ -45,11 +45,11 @@ public class People implements Parcelable{
         this.name = name;
     }
 
-    public Uri getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Uri avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -69,7 +69,7 @@ public class People implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeParcelable(avatar, flags);
+        dest.writeString(avatar);
         dest.writeString(relation);
     }
 }

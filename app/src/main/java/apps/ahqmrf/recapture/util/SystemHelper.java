@@ -18,7 +18,7 @@ import apps.ahqmrf.recapture.model.Time;
 public class SystemHelper {
     private Context mContext;
 
-    private SystemHelper(Context context) {
+    public SystemHelper(Context context) {
         mContext = context;
     }
 
