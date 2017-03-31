@@ -29,6 +29,7 @@ public class FullSizeImageDialogFragment extends DialogFragment {
     private static final String ARG_IMAGE_URL = "_image_url";
 
     private ImageView mImageView;
+    private ImageView mCloseImage;
 
     public static FullSizeImageDialogFragment newInstance(String imageUri) {
         Bundle args = new Bundle();
@@ -56,7 +57,7 @@ public class FullSizeImageDialogFragment extends DialogFragment {
         Display display = window.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        window.setLayout(size.x, size.y);
+        window.setLayout((int) (size.x * .9), (int) (size.y * .9));
         window.setGravity(Gravity.CENTER);
         super.onResume();
     }
@@ -71,6 +72,13 @@ public class FullSizeImageDialogFragment extends DialogFragment {
             }
         });
         mImageView = (ImageView) viewRoot.findViewById(R.id.fullSizeImageView);
+        mCloseImage = (ImageView) viewRoot.findViewById(R.id.image_close);
+        mCloseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         return viewRoot;
     }
 

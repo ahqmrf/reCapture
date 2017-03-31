@@ -13,6 +13,10 @@ public final class Constants {
         public static final String IMAGE_LIST_EXTRA = "__image__list";
     }
 
+    public final class IntentExtras {
+        public static final String IMAGE_PATH = "image__path";
+    }
+
     public final class DBUtil {
 
     }
