@@ -15,12 +15,14 @@ import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.SimpleFragmentPagerAdapter;
+import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.fragment.GalleryFragment;
 import apps.ahqmrf.recapture.fragment.MemoryFragment;
 import apps.ahqmrf.recapture.fragment.PeopleFragment;
 import apps.ahqmrf.recapture.fragment.ProfileFragment;
 import apps.ahqmrf.recapture.fragment.SettingsFragment;
 import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
+import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements TabFragmentCallback {
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     private LinearLayout mLayoutProgressBar;
     private FragmentManager mFragmentManager;
     private ArrayList<Fragment> mFragments;
+    private Database mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
 
         loadSplash();
         initComponents();
+        mDatabase = new Database(this, null, null, 1);
     }
 
     private void initComponents() {
@@ -94,6 +98,14 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
 
     @Override
     public void addNewUser() {
-        startActivity(new Intent(this, CreateUserActivity.class));
+        startActivityForResult(new Intent(this, AddUserActivity.class), Constants.RequestCodes.ADD_USER_REQ);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constants.RequestCodes.ADD_USER_REQ && resultCode == RESULT_OK) {
+            People people = data.getParcelableExtra(Constants.IntentExtras.PEOPLE);
+            mDatabase.insertUser(people);
+        }
     }
 }

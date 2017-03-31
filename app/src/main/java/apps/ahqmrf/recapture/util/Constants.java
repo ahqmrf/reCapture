@@ -19,13 +19,25 @@ public final class Constants {
         public static final String MEMORY_DESCRIPTION = "memory__story";
         public static final String IMAGE_LIST_EXTRA = "__image__list";
         public static final String MEMORY = "__memory";
+        public static final String PEOPLE = "__people";
     }
 
     public final class DBUtil {
-
+        public final class TablePeople {
+            public static final String NAME = "PeopleTable";
+            public final class Column {
+                public static final String ID = "user__id";
+                public static final String NAME = "user__name";
+                public static final String AVATAR_PATH = "avatar__path";
+                public static final String RELATION = "relation";
+            }
+        }
     }
 
     public final class RequestCodes {
         public static final int GALLERY_BROWSE_REQ = 0;
+        public static final int PERMISSION_READ_EXTERNAL_STORAGE_REQ_CODE = 1;
+        public static final int GALLERY_BROWSE_REQ_CODE = 2;
+        public static final int ADD_USER_REQ = 3;
     }
 }

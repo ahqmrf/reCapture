@@ -3,20 +3,37 @@ package apps.ahqmrf.recapture.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
+import apps.ahqmrf.recapture.activity.MainActivity;
+import apps.ahqmrf.recapture.adapter.PeopleListAdapter;
+import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
+import apps.ahqmrf.recapture.model.People;
 
-public class PeopleFragment extends Fragment {
+public class PeopleFragment extends Fragment implements PeopleListAdapter.PeopleItemCallback{
 
     private Context context;
     private TabFragmentCallback callback;
     private View root;
     private LinearLayout mAddNewUser;
+    private TextView noUserText;
+    private Database mDatabase;
+    private ArrayList<People> peoples;
+    private RecyclerView mRecyclerPeopleList;
+    private PeopleListAdapter mAdapter;
+    private ImageView mImageRefresh;
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -42,8 +59,23 @@ public class PeopleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        mDatabase = new Database(getActivity(), null, null, 1);
         root = inflater.inflate(R.layout.fragment_people, container, false);
+        mImageRefresh = (ImageView) root.findViewById(R.id.image_refresh);
+        mImageRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prepareViews();
+            }
+        });
+        prepareViews();
+        return root;
+    }
+
+    private void prepareViews() {
+        peoples = mDatabase.getAllPeople();
+        noUserText = (TextView) root.findViewById(R.id.text_no_user);
         mAddNewUser = (LinearLayout) root.findViewById(R.id.linear_add_new_user);
         mAddNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +83,17 @@ public class PeopleFragment extends Fragment {
                 callback.addNewUser();
             }
         });
-        return root;
+        mRecyclerPeopleList = (RecyclerView) root.findViewById(R.id.recycler_people_list);
+        if(peoples.size() > 0) {
+            noUserText.setVisibility(View.GONE);
+            mRecyclerPeopleList.setVisibility(View.VISIBLE);
+            mRecyclerPeopleList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mAdapter = new PeopleListAdapter(getActivity(), this, peoples);
+            mRecyclerPeopleList.setAdapter(mAdapter);
+        } else {
+            noUserText.setVisibility(View.VISIBLE);
+            mRecyclerPeopleList.setVisibility(View.GONE);
+        }
     }
 
 }

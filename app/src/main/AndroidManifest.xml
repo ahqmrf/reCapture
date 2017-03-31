@@ -31,8 +31,10 @@
             android:name=".activity.SelectIconActivity"
             android:label="Select icon" />
         <activity android:name=".activity.TagPeopleActivity" />
-        <activity android:name=".activity.CreateUserActivity"
-            android:theme="@style/Theme.DialogActivity.Transparent"/>
+        <activity
+            android:name=".activity.AddUserActivity"
+            android:theme="@style/Theme.DialogActivity.Transparent"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

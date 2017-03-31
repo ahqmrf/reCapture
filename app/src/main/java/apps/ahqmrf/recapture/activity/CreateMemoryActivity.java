@@ -1,8 +1,13 @@
 package apps.ahqmrf.recapture.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,6 +25,7 @@ import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.util.Constants;
+import apps.ahqmrf.recapture.util.SystemHelper;
 import apps.ahqmrf.recapture.util.ToastMaker;
 
 public class CreateMemoryActivity extends AppCompatActivity {
@@ -46,7 +52,7 @@ public class CreateMemoryActivity extends AppCompatActivity {
     };
 
     private void proceed() {
-        if(mTitleEdit.getText().toString().isEmpty()) {
+        if (mTitleEdit.getText().toString().isEmpty()) {
             ToastMaker.showShortMessage(this, "A title is required for the memory");
             return;
         }
@@ -60,16 +66,60 @@ public class CreateMemoryActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
-        Intent intent = new Intent(this, GalleryActivity.class);
-        startActivityForResult(intent, Constants.RequestCodes.GALLERY_BROWSE_REQ);
+        checkReadExternalStoragePermission();
+    }
+
+    private void checkReadExternalStoragePermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(CreateMemoryActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(CreateMemoryActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                } else {
+
+                    ActivityCompat.requestPermissions(CreateMemoryActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            Constants.RequestCodes.PERMISSION_READ_EXTERNAL_STORAGE_REQ_CODE);
+                }
+            } else {
+                ActivityCompat.requestPermissions(CreateMemoryActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        Constants.RequestCodes.PERMISSION_READ_EXTERNAL_STORAGE_REQ_CODE);
+            }
+        } else {
+
+            Intent intent = new Intent(this, GalleryActivity.class);
+            startActivityForResult(intent, Constants.RequestCodes.GALLERY_BROWSE_REQ);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.RequestCodes.PERMISSION_READ_EXTERNAL_STORAGE_REQ_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intent = new Intent(this, GalleryActivity.class);
+                    startActivityForResult(intent, Constants.RequestCodes.GALLERY_BROWSE_REQ);
+
+                } else {
+                    ToastMaker.showShortMessage(this, "Permission required to select media");
+                }
+                return;
+            }
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == Constants.RequestCodes.GALLERY_BROWSE_REQ && resultCode == RESULT_OK) {
+        if (requestCode == Constants.RequestCodes.GALLERY_BROWSE_REQ && resultCode == RESULT_OK) {
             imagePaths = data.getStringArrayListExtra(Constants.Basic.IMAGE_LIST_EXTRA);
             int amount = imagePaths.size();
-            String text = amount > 1? "photos" : "photo";
+            String text = amount > 1 ? "photos" : "photo";
             mSelectedAmountText.setText("Selected " + amount + " " + text);
         }
     }
@@ -78,13 +128,13 @@ public class CreateMemoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_memory);
-        setupUI(findViewById(R.id.content_frame));
+        new SystemHelper(this).setupUI(findViewById(R.id.content_frame));
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setTitle("Create a new memory");
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -103,36 +153,10 @@ public class CreateMemoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-    public void setupUI(View view) {
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(CreateMemoryActivity.this);
-                    return false;
-                }
-            });
-        }
-
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
     }
 }
