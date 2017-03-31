@@ -15,7 +15,7 @@
     <color name="black">#000000</color>
     <color name="dark_blue">#0D47A1</color>
     <color name="grey">#9E9E9E</color>
-    <color name="grey_transparent">#c39e9e9e</color>
+    <color name="black_transparent">#b6000000</color>
     <color name="brown">#795548</color>
     <color name="deep_orange">#FF5722</color>
     <color name="yellow">#FFEB3B</color>

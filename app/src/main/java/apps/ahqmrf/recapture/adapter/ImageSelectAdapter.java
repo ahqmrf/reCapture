@@ -1,12 +1,10 @@
 package apps.ahqmrf.recapture.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -59,7 +57,7 @@ public class ImageSelectAdapter extends RecyclerView.Adapter <ImageSelectAdapter
         if(model.isSelected()) {
             holder.selectImage.setBackgroundResource(R.drawable.circular_green_bg_item_gallery);
         } else {
-            holder.selectImage.setBackgroundResource(R.drawable.circular_grey_bg_item_gallery);
+            holder.selectImage.setBackgroundResource(R.drawable.circular_black_bg_item_gallery);
         }
     }
 

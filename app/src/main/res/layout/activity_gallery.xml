@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/black"
+    android:background="@color/black_transparent"
     tools:context="apps.ahqmrf.recapture.activity.GalleryActivity">
 
     <LinearLayout
@@ -38,14 +38,7 @@
             android:padding="4dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="@color/red_transparent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:text="@string/done"/>
+            android:background="@color/black_transparent">
 
             <ImageView
                 android:id="@+id/image_done"
