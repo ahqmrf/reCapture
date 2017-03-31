@@ -91,4 +91,9 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     public void onAddButtonClick() {
         startActivity(new Intent(this, CreateMemoryActivity.class));
     }
+
+    @Override
+    public void addNewUser() {
+        startActivity(new Intent(this, CreateUserActivity.class));
+    }
 }

@@ -30,7 +30,9 @@
         <activity
             android:name=".activity.SelectIconActivity"
             android:label="Select icon" />
-        <activity android:name=".activity.TagPeopleActivity"></activity>
+        <activity android:name=".activity.TagPeopleActivity" />
+        <activity android:name=".activity.CreateUserActivity"
+            android:theme="@style/Theme.DialogActivity.Transparent"/>
     </application>
 
 </manifest>

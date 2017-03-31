@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
@@ -14,6 +15,8 @@ public class PeopleFragment extends Fragment {
 
     private Context context;
     private TabFragmentCallback callback;
+    private View root;
+    private LinearLayout mAddNewUser;
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -40,7 +43,15 @@ public class PeopleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_people, container, false);
+        root = inflater.inflate(R.layout.fragment_people, container, false);
+        mAddNewUser = (LinearLayout) root.findViewById(R.id.linear_add_new_user);
+        mAddNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.addNewUser();
+            }
+        });
+        return root;
     }
 
 }
