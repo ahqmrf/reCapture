@@ -30,6 +30,7 @@
         android:layout_toLeftOf="@id/image_options"
         android:padding="8dp"
         android:gravity="center_vertical"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:maxLines="1"
         tools:text="Ariful Hoque Maruf"

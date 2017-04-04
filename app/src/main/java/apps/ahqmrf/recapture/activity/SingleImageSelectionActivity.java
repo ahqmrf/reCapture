@@ -1,5 +1,6 @@
 package apps.ahqmrf.recapture.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +11,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,32 +24,40 @@ import java.util.TreeSet;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.ImageSelectAdapter;
+import apps.ahqmrf.recapture.adapter.SingleImageSelectListAdapter;
 import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
 import apps.ahqmrf.recapture.model.ImageModel;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.FileComparator;
 
-public class GalleryActivity extends AppCompatActivity implements ImageSelectAdapter.ImageSelectCallback {
+public class SingleImageSelectionActivity extends AppCompatActivity implements SingleImageSelectListAdapter.ImageSelectCallback{
 
-    private ArrayList<ImageModel> mImageList;
+    private int selectedImageId;
+    private ArrayList<String> mImageList;
     private ArrayList<File> mImageFiles;
     private final String ROOT_DIRECTORY = Environment.getExternalStorageDirectory().getAbsolutePath();
     private RecyclerView mImagesRecyclerView;
-    private LinearLayout mProgressbarLayout;
-    private TreeSet<Integer> imagePathsSet;
-    private ArrayList<String> imagePathsSelected;
-    private ImageSelectAdapter mAdapter;
+    private String imagePathSelected;
+    private SingleImageSelectListAdapter mAdapter;
     private int size;
-    private TextView mAmountSelectedText;
-    private RelativeLayout mRelativeDone;
+    private ImageView mDoneImage, mCancelImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallery);
+        setContentView(R.layout.activity_single_image_selection);
 
+        selectedImageId = -1;
         getAllImages();
     }
+
+    @Override
+    public void onImageSelectClick(int position) {
+        selectedImageId = position;
+        imagePathSelected = mImageList.get(selectedImageId);
+    }
+
 
     private void getAllImages() {
         mImageFiles = new ArrayList<>();
@@ -68,24 +79,28 @@ public class GalleryActivity extends AppCompatActivity implements ImageSelectAda
         Collections.sort(mImageFiles, new FileComparator());
 
         for (File imageFile : mImageFiles) {
-            mImageList.add(new ImageModel(imageFile.getAbsolutePath(), false));
+            mImageList.add(imageFile.getAbsolutePath());
         }
 
         prepareViews();
     }
 
     private void prepareViews() {
-        mAmountSelectedText = (TextView) findViewById(R.id.text_selected_photo_amount);
-        imagePathsSet = new TreeSet<>();
-        imagePathsSelected = new ArrayList<>();
-        mImagesRecyclerView = (RecyclerView) findViewById(R.id.recycler_images);
-        mRelativeDone = (RelativeLayout) findViewById(R.id.relative_done);
-        mRelativeDone.setOnClickListener(new View.OnClickListener() {
+        mDoneImage = (ImageView) findViewById(R.id.image_done);
+        mDoneImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBack();
+                goBackOnSuccess();
             }
         });
+        mCancelImage = (ImageView) findViewById(R.id.image_cancel);
+        mCancelImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackOnFailure();
+            }
+        });
+        mImagesRecyclerView = (RecyclerView) findViewById(R.id.recycler_images);
 
         ViewTreeObserver vto = mImagesRecyclerView.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -97,24 +112,28 @@ public class GalleryActivity extends AppCompatActivity implements ImageSelectAda
 
             }
         });
-        mProgressbarLayout = (LinearLayout) findViewById(R.id.ll_progress);
     }
 
-    private void goBack() {
-        for(Integer i : imagePathsSet) {
-            imagePathsSelected.add(mImageList.get(i).getFilePath());
+    private void goBackOnSuccess() {
+        if (imagePathSelected == null || selectedImageId == -1) {
+            goBackOnFailure();
         }
         Intent intent = new Intent();
-        intent.putStringArrayListExtra(Constants.Basic.IMAGE_LIST_EXTRA, imagePathsSelected);
+        intent.putExtra(Constants.Basic.IMAGE_EXTRA, imagePathSelected);
         setResult(RESULT_OK, intent);
         finish();
     }
 
+    private void goBackOnFailure() {
+        Intent intent = new Intent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
+    }
+
     private void setRecycler() {
-        mAdapter = new ImageSelectAdapter(this, this, mImageList, size);
+        mAdapter = new SingleImageSelectListAdapter(this, this, mImageList, size);
         mImagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mImagesRecyclerView.setAdapter(mAdapter);
-        mProgressbarLayout.setVisibility(View.GONE);
     }
 
     private void findImage(String parent, String path) {
@@ -142,28 +161,4 @@ public class GalleryActivity extends AppCompatActivity implements ImageSelectAda
         }
     }
 
-    @Override
-    public void onImageSelectClick(int position, ImageModel model) {
-        if(model.isSelected()) imagePathsSet.add(position);
-        else imagePathsSet.remove(position);
-        if(imagePathsSet.size() > 0) {
-            mAmountSelectedText.setVisibility(View.VISIBLE);
-            mAmountSelectedText.setText(imagePathsSet.size() + "");
-        } else {
-            mAmountSelectedText.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onImageClick(final String imagePath) {
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                FullSizeImageDialogFragment fragment = FullSizeImageDialogFragment.newInstance(imagePath);
-                fragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_DialogActivity_Transparent);
-                fragment.show(getSupportFragmentManager(), FullSizeImageDialogFragment.TAG);
-            }
-        });
-    }
 }

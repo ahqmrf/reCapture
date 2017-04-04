@@ -2,6 +2,7 @@ package apps.ahqmrf.recapture.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import apps.ahqmrf.recapture.adapter.PeopleListAdapter;
 import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
 import apps.ahqmrf.recapture.model.People;
+import apps.ahqmrf.recapture.util.Constants;
 
 public class PeopleFragment extends Fragment implements PeopleListAdapter.PeopleItemCallback{
 
@@ -34,6 +36,7 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
     private RecyclerView mRecyclerPeopleList;
     private PeopleListAdapter mAdapter;
     private ImageView mImageRefresh;
+    private LinearLayout mLinearProgressBar;
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -67,6 +70,12 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
             @Override
             public void onClick(View v) {
                 prepareViews();
+                mLinearProgressBar.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        mLinearProgressBar.setVisibility(View.GONE);
+                    }
+                }, Constants.Basic.PROGRESS_BAR_DURATION);
             }
         });
         prepareViews();
@@ -74,6 +83,7 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
     }
 
     private void prepareViews() {
+        mLinearProgressBar = (LinearLayout) root.findViewById(R.id.linear_progressbar);
         peoples = mDatabase.getAllPeople();
         noUserText = (TextView) root.findViewById(R.id.text_no_user);
         mAddNewUser = (LinearLayout) root.findViewById(R.id.linear_add_new_user);
@@ -96,4 +106,13 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.callback = (TabFragmentCallback) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 }

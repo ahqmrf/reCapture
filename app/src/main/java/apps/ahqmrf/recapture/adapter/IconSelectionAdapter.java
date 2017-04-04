@@ -50,7 +50,7 @@ public class IconSelectionAdapter extends RecyclerView.Adapter<IconSelectionAdap
     public void onBindViewHolder(IconViewHolder holder, int position) {
         File model = items.get(position);
         if (position == selectedId) {
-            holder.selectImage.setBackgroundResource(R.drawable.circular_green_bg_item_gallery);
+            holder.selectImage.setBackgroundResource(R.drawable.circular_red_bg_item_gallery);
         } else {
             holder.selectImage.setBackgroundResource(R.drawable.circular_black_bg_item_gallery);
         }

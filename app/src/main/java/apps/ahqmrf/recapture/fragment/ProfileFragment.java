@@ -46,4 +46,13 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.mCallback = (TabFragmentCallback) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 }

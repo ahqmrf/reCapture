@@ -7,10 +7,12 @@ package apps.ahqmrf.recapture.util;
 public final class Constants {
     public final class Basic {
         public static final int SPLASH_SCREEN_DURATION = 4000;
+        public static final int PROGRESS_BAR_DURATION = 500;
         public static final String DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
         public static final String DATABASE_NAME = "recapture.db";
         public static final int DATABASE_VERSION = 1;
         public static final String IMAGE_LIST_EXTRA = "__image__list";
+        public static final String IMAGE_EXTRA = "Image__EXTRA";
     }
 
     public final class IntentExtras {
@@ -26,6 +28,38 @@ public final class Constants {
         public final class TablePeople {
             public static final String NAME = "PeopleTable";
             public final class Column {
+                public static final String ID = "user__id";
+                public static final String NAME = "user__name";
+                public static final String AVATAR_PATH = "avatar__path";
+                public static final String RELATION = "relation";
+            }
+        }
+
+        public final class TableMemory {
+            public static final String NAME = "MemoryTable";
+            public final class Column {
+                public static final String ID = "memory__id";
+                public static final String TITLE = "title";
+                public static final String DESCRIPTION = "description";
+                public static final String ICON_PATH = "IconPath";
+                public static final String DATE = "date";
+                public static final String TIME_STAMP = "time__stamp";
+            }
+        }
+
+        public final class TableImage {
+            public static final String NAME = "TableImage";
+            public final class Column {
+                public static final String ID = "image__id";
+                public static final String IMAGE_PATH = "imagePath";
+                public static final String TIME_STAMP = "image_timeStamp";
+            }
+        }
+
+        public final class TableTaggedPeople {
+            public static final String NAME = "TaggedPeople";
+            public final class Column {
+                public static final String TIME_STAMP = "people_timeStamp";
                 public static final String ID = "user__id";
                 public static final String NAME = "user__name";
                 public static final String AVATAR_PATH = "avatar__path";

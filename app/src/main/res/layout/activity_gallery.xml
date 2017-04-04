@@ -53,7 +53,7 @@
 
             <TextView
                 android:id="@+id/text_selected_photo_amount"
-                android:background="@drawable/circular_green_bg_item_gallery"
+                android:background="@drawable/circular_red_bg_item_gallery"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:gravity="center"

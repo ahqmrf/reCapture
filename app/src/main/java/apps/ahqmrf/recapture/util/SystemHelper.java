@@ -42,7 +42,21 @@ public class SystemHelper {
         Date date = new Date();
         String timeStr = dateFormat.format(date).toString();
         String tokens[] = timeStr.split(" ");
-        return new Time(tokens[0], tokens[1]);
+        return new Time(tokens[1], tokens[0]);
+    }
+
+    public String get12HourTimeStamp(Time time) {
+        String tokens[] = time.getTimeStamp().split(":");
+        int hour = Integer.parseInt(tokens[0]);
+        int minute = Integer.parseInt(tokens[1]);
+
+        String AM_PM = "AM";
+        if(hour > 11) {
+            hour -= 12;
+            AM_PM = "PM";
+        }
+
+        return hour + ":" + minute + " " + AM_PM;
     }
 
     public String getRealPathFromUri(Uri uri) {

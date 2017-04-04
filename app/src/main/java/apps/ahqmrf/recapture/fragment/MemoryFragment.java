@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
+import apps.ahqmrf.recapture.adapter.MemoryListAdapter;
+import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
 import apps.ahqmrf.recapture.model.Memory;
+
+import static android.view.View.GONE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MemoryFragment extends Fragment {
+public class MemoryFragment extends Fragment implements MemoryListAdapter.MemoryClickCallback {
 
     private Context mContext;
     private TabFragmentCallback mCallback;
@@ -29,6 +34,8 @@ public class MemoryFragment extends Fragment {
     private RecyclerView mMemoryRecyclerView;
     private FloatingActionButton mAddNewBtn;
     private ArrayList<Memory> mListMemory;
+    private Database mDatabase;
+    private MemoryListAdapter mAdapter;
 
     public MemoryFragment() {
         // Required empty public constructor
@@ -53,6 +60,7 @@ public class MemoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_memory, container, false);
+        mDatabase = new Database(getActivity(), null, null, 1);
         initComponents();
         return mRootView;
     }
@@ -67,8 +75,16 @@ public class MemoryFragment extends Fragment {
     }
 
     private void manipulateViews() {
-        if(mListMemory == null) {
+        mListMemory = mDatabase.getAllMemories();
+        if(mListMemory == null || mListMemory.size() == 0) {
             mEmptyListText.setVisibility(View.VISIBLE);
+            mMemoryRecyclerView.setVisibility(GONE);
+        } else {
+            mEmptyListText.setVisibility(View.GONE);
+            mMemoryRecyclerView.setVisibility(View.VISIBLE);
+            mMemoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mAdapter = new MemoryListAdapter(getActivity(), this, mListMemory);
+            mMemoryRecyclerView.setAdapter(mAdapter);
         }
     }
 
@@ -78,4 +94,14 @@ public class MemoryFragment extends Fragment {
             mCallback.onAddButtonClick();
         }
     };
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.mCallback = (TabFragmentCallback) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 }

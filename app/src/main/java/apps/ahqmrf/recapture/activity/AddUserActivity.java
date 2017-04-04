@@ -87,9 +87,8 @@ public class AddUserActivity extends AppCompatActivity {
             }
         } else {
 
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, Constants.RequestCodes.GALLERY_BROWSE_REQ_CODE);
+            Intent intent = new Intent(this, SingleImageSelectionActivity.class);
+            startActivityForResult(intent, Constants.RequestCodes.GALLERY_BROWSE_REQ);
         }
     }
 
@@ -100,9 +99,8 @@ public class AddUserActivity extends AppCompatActivity {
             case Constants.RequestCodes.PERMISSION_READ_EXTERNAL_STORAGE_REQ_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                    photoPickerIntent.setType("image/*");
-                    startActivityForResult(photoPickerIntent, Constants.RequestCodes.GALLERY_BROWSE_REQ_CODE);
+                    Intent intent = new Intent(this, SingleImageSelectionActivity.class);
+                    startActivityForResult(intent, Constants.RequestCodes.GALLERY_BROWSE_REQ);
 
                 } else {
                     ToastMaker.showShortMessage(this, "Permission required to select media");
@@ -113,12 +111,11 @@ public class AddUserActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.RequestCodes.GALLERY_BROWSE_REQ_CODE && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                path = new SystemHelper(this).getRealPathFromUri(uri);
-                selectedImagePath.setText(path);
-            }
+        if (requestCode == Constants.RequestCodes.GALLERY_BROWSE_REQ && resultCode == RESULT_OK) {
+            path = data.getStringExtra(Constants.Basic.IMAGE_EXTRA);
+            selectedImagePath.setText(path);
+        } else {
+            selectedImagePath.setText("No file selected");
         }
     }
 

@@ -47,4 +47,13 @@ public class SettingsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.callback = (TabFragmentCallback) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
 }

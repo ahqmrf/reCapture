@@ -52,6 +52,7 @@ public class SelectIconActivity extends AppCompatActivity implements IconSelecti
         memoryTitle = getIntent().getStringExtra(Constants.IntentExtras.MEMORY_TITLE);
         memoryDescription = getIntent().getStringExtra(Constants.IntentExtras.MEMORY_DESCRIPTION);
         memoryImages = getIntent().getStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA);
+        if(memoryImages == null) memoryImages = new ArrayList<>();
         imageFiles = new ArrayList<>();
 
         for (String path : memoryImages) {
@@ -86,7 +87,6 @@ public class SelectIconActivity extends AppCompatActivity implements IconSelecti
         memory.setTitle(memoryTitle);
         memory.setDescription(memoryDescription);
         memory.setIconPath(iconPath);
-        memory.setTime(new SystemHelper(this).getCurrentTime());
         memory.setImages(memoryImages);
 
         Intent intent = new Intent(this, TagPeopleActivity.class);

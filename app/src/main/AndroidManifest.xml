@@ -35,6 +35,9 @@
             android:name=".activity.AddUserActivity"
             android:theme="@style/Theme.DialogActivity.Transparent"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.SingleImageSelectionActivity"
+            android:theme="@style/TabActivityTheme" />
     </application>
 
 </manifest>
