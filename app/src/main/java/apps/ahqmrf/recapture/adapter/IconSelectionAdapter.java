@@ -1,14 +1,20 @@
 package apps.ahqmrf.recapture.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,7 +53,7 @@ public class IconSelectionAdapter extends RecyclerView.Adapter<IconSelectionAdap
     }
 
     @Override
-    public void onBindViewHolder(IconViewHolder holder, int position) {
+    public void onBindViewHolder(final IconViewHolder holder, int position) {
         File model = items.get(position);
         if (position == selectedId) {
             holder.selectImage.setBackgroundResource(R.drawable.circular_red_bg_item_gallery);
@@ -58,8 +64,29 @@ public class IconSelectionAdapter extends RecyclerView.Adapter<IconSelectionAdap
         ImageLoader.getInstance().displayImage(
                 "file://" + model.getAbsolutePath(),
                 holder.mainImage,
-                MyDisplayImageOptions.getInstance().getDisplayImageOptions()
-        );
+                MyDisplayImageOptions.getInstance().getDisplayImageOptions(), new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                        holder.progressBar.setProgress(0);
+                        holder.linearLayout.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        holder.linearLayout.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        holder.linearLayout.setVisibility(View.GONE);
+                    }
+                }, new ImageLoadingProgressListener() {
+                    @Override
+                    public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                        holder.progressBar.setProgress(Math.round(100.0f * current / total));
+                    }
+                });
+
 
         String info = "Name: " + model.getName() +
                 "\nFile path: " + model.getAbsolutePath();
@@ -76,6 +103,9 @@ public class IconSelectionAdapter extends RecyclerView.Adapter<IconSelectionAdap
 
         ImageView mainImage, selectImage;
         TextView fileInfo;
+        LinearLayout linearLayout;
+        ProgressBar progressBar;
+
 
         public IconViewHolder(final View itemView) {
             super(itemView);
@@ -100,6 +130,8 @@ public class IconSelectionAdapter extends RecyclerView.Adapter<IconSelectionAdap
             });
 
             fileInfo = (TextView) itemView.findViewById(R.id.text_file_info);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_progressbar);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressbar);
         }
     }
 }
