@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,34 +6,44 @@
     tools:context="apps.ahqmrf.recapture.fragment.GalleryFragment">
 
     <LinearLayout
+        android:id="@+id/view_switch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:weightSum="2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
         <ImageView
             android:id="@+id/image_grid"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp"
+            android:padding="12dp"
             android:background="@color/whitey_grey"
             android:src="@drawable/ic_grid_red_24dp"/>
 
         <ImageView
             android:id="@+id/image_list"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp"
+            android:padding="12dp"
             android:background="@color/white"
             android:src="@drawable/ic_format_list_bulleted_red_24dp"/>
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@id/view_switch"
+        android:background="@color/whitey_grey"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_gallery"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/line"/>
 
-</LinearLayout>
+</RelativeLayout>

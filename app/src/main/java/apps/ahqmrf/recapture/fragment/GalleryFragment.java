@@ -96,7 +96,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
                 itemsClone.add(memory);
             }
         }
-        mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size / 3, false);
+        mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size / 2, false);
         mGalleryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mGalleryRecyclerView.setAdapter(mAdapter);
     }
@@ -118,6 +118,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
         super.onAttach(context);
         try {
             this.mCallback = (TabFragmentCallback) context;
+            this.mContext = context;
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -125,16 +126,15 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
 
     private void showListView() {
         mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size, true);
-        mGalleryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mGalleryRecyclerView.setAdapter(mAdapter);
+        mGalleryRecyclerView.scrollToPosition(0);
 
         galleryView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
         listView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.whitey_grey));
     }
 
     private void showGridView() {
-        mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size / 3, false);
-        mGalleryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size / 2, false);
         mGalleryRecyclerView.setAdapter(mAdapter);
 
         galleryView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.whitey_grey));

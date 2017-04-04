@@ -42,6 +42,7 @@ public class SystemHelper {
         Date date = new Date();
         String timeStr = dateFormat.format(date).toString();
         String tokens[] = timeStr.split(" ");
+
         return new Time(tokens[1], tokens[0]);
     }
 
@@ -56,7 +57,7 @@ public class SystemHelper {
             AM_PM = "PM";
         }
 
-        return hour + ":" + minute + " " + AM_PM;
+        return (hour < 10? "0" : "") + hour + ":" + (minute < 10? "0" : "") + minute + " " + AM_PM;
     }
 
     public String getRealPathFromUri(Uri uri) {

@@ -20,6 +20,7 @@ import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.PeopleListAdapter;
 import apps.ahqmrf.recapture.adapter.PeopleToTagListAdapter;
 import apps.ahqmrf.recapture.database.Database;
+import apps.ahqmrf.recapture.model.ImageWithCaption;
 import apps.ahqmrf.recapture.model.Memory;
 import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.model.PeopleToTag;
@@ -89,7 +90,6 @@ public class TagPeopleActivity extends AppCompatActivity implements PeopleToTagL
         Time time = new SystemHelper(this).getCurrentTime();
         memory.setTime(time);
         mDatabase.insertMemory(memory);
-        //ToastMaker.showShortMessage(this, new SystemHelper(this).get12HourTimeStamp(time));
         finishAffinity();
         startActivity(new Intent(this, MainActivity.class));
     }

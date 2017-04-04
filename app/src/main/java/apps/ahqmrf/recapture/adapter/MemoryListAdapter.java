@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.model.Memory;
 import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
+import apps.ahqmrf.recapture.util.SystemHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -57,6 +58,9 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
 
         holder.title.setText(memory.getTitle());
         holder.description.setText(memory.getDescription());
+        String str = new SystemHelper(mContext).get12HourTimeStamp(memory.getTime());
+        holder.time.setText(str);
+        holder.date.setText(memory.getTime().getDate());
     }
 
     @Override
@@ -67,8 +71,7 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
     public class MemoryViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView icon;
-        TextView title, description;
-        ImageView more;
+        TextView title, description, date, time;
 
         public MemoryViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +79,8 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
             icon = (CircleImageView) itemView.findViewById(R.id.circular_image_icon);
             title = (TextView) itemView.findViewById(R.id.text_title);
             description = (TextView) itemView.findViewById(R.id.text_description);
-            more = (ImageView) itemView.findViewById(R.id.image_more);
+            time = (TextView) itemView.findViewById(R.id.text_time);
+            date = (TextView) itemView.findViewById(R.id.text_date);
         }
     }
 }

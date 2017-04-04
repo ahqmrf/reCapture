@@ -6,13 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
+import apps.ahqmrf.recapture.model.Memory;
 import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
+import apps.ahqmrf.recapture.util.SystemHelper;
 
 /**
  * Created by bsse0 on 4/1/2017.
@@ -23,15 +29,15 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
     private Context mContext;
     private ImageSelectAdapter.ImageSelectCallback mCallback;
     private ArrayList<String> items;
+    private Memory memory;
     private int size;
-    private boolean horizontal;
 
-    public GalleryImagesListAdapter(Context mContext, ImageSelectAdapter.ImageSelectCallback mCallback, ArrayList<String> items, int size, boolean horizontal) {
+    public GalleryImagesListAdapter(Context mContext, ImageSelectAdapter.ImageSelectCallback mCallback, Memory memory, int size) {
         this.mContext = mContext;
         this.mCallback = mCallback;
-        this.items = items;
+        this.memory = memory;
+        this.items = memory.getImages();
         this.size = size;
-        this.horizontal = horizontal;
     }
 
     @Override
@@ -47,6 +53,9 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
                 holder.mImage,
                 MyDisplayImageOptions.getInstance().getDisplayImageOptions()
         );
+        holder.title.setText(memory.getTitle());
+        holder.time.setText(new SystemHelper(mContext).get12HourTimeStamp(memory.getTime()));
+        holder.date.setText(memory.getTime().getDate());
     }
 
     @Override
@@ -57,9 +66,15 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mImage;
+        RelativeLayout layout;
+        TextView title, time, date;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
+
+            title = (TextView) itemView.findViewById(R.id.text_title);
+            time = (TextView) itemView.findViewById(R.id.text_time);
+            date = (TextView) itemView.findViewById(R.id.text_date);
 
             mImage = (ImageView) itemView.findViewById(R.id.image_main);
             mImage.setOnClickListener(new View.OnClickListener() {
@@ -69,11 +84,9 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
                 }
             });
 
-            if(horizontal) {
-                mImage.getLayoutParams().height = size / 2;
-                mImage.getLayoutParams().width = size;
-            }
-            else mImage.getLayoutParams().height = size;
+            layout = (RelativeLayout) itemView.findViewById(R.id.layout_item);
+
+            layout.getLayoutParams().height = size;
         }
     }
 }
