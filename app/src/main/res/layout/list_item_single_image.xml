@@ -8,7 +8,16 @@
         android:id="@+id/image_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:padding="2dp"/>
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/view_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/red_transparent"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="Selected"/>
 
 </RelativeLayout>

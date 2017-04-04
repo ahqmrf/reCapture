@@ -73,7 +73,7 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
                 mImage.getLayoutParams().height = size / 2;
                 mImage.getLayoutParams().width = size;
             }
-            else mImage.getLayoutParams().height = mImage.getLayoutParams().width = size;
+            else mImage.getLayoutParams().height = size;
         }
     }
 }

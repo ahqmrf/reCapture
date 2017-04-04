@@ -50,6 +50,7 @@ public class GalleryMainItemAdapter extends RecyclerView.Adapter<GalleryMainItem
         } else {
             GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position).getImages(), size, horizontal);
             holder.images.setLayoutManager(new GridLayoutManager(mContext, 3));
+            holder.images.addItemDecoration(new GridSpacingItemDecoration(3, 3, true));
             holder.images.setAdapter(mAdapter);
         }
     }

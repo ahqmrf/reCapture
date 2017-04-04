@@ -29,6 +29,7 @@ import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
 import apps.ahqmrf.recapture.model.ImageModel;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.FileComparator;
+import apps.ahqmrf.recapture.util.GridSpacingItemDecoration;
 
 public class SingleImageSelectionActivity extends AppCompatActivity implements SingleImageSelectListAdapter.ImageSelectCallback{
 
@@ -133,6 +134,7 @@ public class SingleImageSelectionActivity extends AppCompatActivity implements S
     private void setRecycler() {
         mAdapter = new SingleImageSelectListAdapter(this, this, mImageList, size);
         mImagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mImagesRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, 3, true));
         mImagesRecyclerView.setAdapter(mAdapter);
     }
 

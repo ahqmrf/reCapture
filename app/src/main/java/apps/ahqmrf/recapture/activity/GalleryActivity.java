@@ -25,6 +25,7 @@ import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
 import apps.ahqmrf.recapture.model.ImageModel;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.FileComparator;
+import apps.ahqmrf.recapture.util.GridSpacingItemDecoration;
 
 public class GalleryActivity extends AppCompatActivity implements ImageSelectAdapter.ImageSelectCallback {
 
@@ -113,6 +114,7 @@ public class GalleryActivity extends AppCompatActivity implements ImageSelectAda
     private void setRecycler() {
         mAdapter = new ImageSelectAdapter(this, this, mImageList, size);
         mImagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        mImagesRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, 3, true));
         mImagesRecyclerView.setAdapter(mAdapter);
         mProgressbarLayout.setVisibility(View.GONE);
     }

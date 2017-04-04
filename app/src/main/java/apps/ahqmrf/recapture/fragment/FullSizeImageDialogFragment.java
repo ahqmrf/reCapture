@@ -57,7 +57,7 @@ public class FullSizeImageDialogFragment extends DialogFragment {
         Display display = window.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        window.setLayout((int) (size.x * .9), (int) (size.y * .9));
+        window.setLayout((int) (size.x), (int) (size.y));
         window.setGravity(Gravity.CENTER);
         super.onResume();
     }

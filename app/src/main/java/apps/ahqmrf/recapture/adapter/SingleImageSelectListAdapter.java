@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -55,9 +56,11 @@ public class SingleImageSelectListAdapter extends RecyclerView.Adapter <SingleIm
                 MyDisplayImageOptions.getInstance().getDisplayImageOptions()
         );
         if(position == selectedId) {
-            holder.mainImage.setBackgroundColor(ContextCompat.getColor(context, R.color.red));
+            //holder.mainImage.setBackgroundColor(ContextCompat.getColor(context, R.color.red));
+            holder.overLayer.setVisibility(View.VISIBLE);
         } else {
-            holder.mainImage.setBackgroundColor(ContextCompat.getColor(context, R.color.black));
+            //holder.mainImage.setBackgroundColor(ContextCompat.getColor(context, R.color.black));
+            holder.overLayer.setVisibility(View.GONE);
         }
     }
 
@@ -70,6 +73,7 @@ public class SingleImageSelectListAdapter extends RecyclerView.Adapter <SingleIm
 
         RelativeLayout layout;
         ImageView mainImage;
+        TextView overLayer;
 
         public ImageViewHolder(final View itemView, final ViewGroup parent) {
             super(itemView);
@@ -88,7 +92,9 @@ public class SingleImageSelectListAdapter extends RecyclerView.Adapter <SingleIm
                 }
             });
 
-            layout.getLayoutParams().height = layout.getLayoutParams().width = size;
+            overLayer = (TextView) itemView.findViewById(R.id.view_layer);
+
+            layout.getLayoutParams().height = size;
         }
     }
 }

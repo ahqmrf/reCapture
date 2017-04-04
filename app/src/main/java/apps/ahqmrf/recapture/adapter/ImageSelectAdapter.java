@@ -94,7 +94,7 @@ public class ImageSelectAdapter extends RecyclerView.Adapter <ImageSelectAdapter
                 }
             });
 
-            layout.getLayoutParams().height = layout.getLayoutParams().width = size;
+            layout.getLayoutParams().height = size;
         }
     }
 }
