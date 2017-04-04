@@ -106,7 +106,9 @@
 
         <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/circular_progress_drawable"
+            style="?android:attr/progressBarStyle" />
 
     </LinearLayout>
 
