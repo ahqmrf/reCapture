@@ -37,13 +37,15 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
     private ArrayList<String> items;
     private Memory memory;
     private int size;
+    private boolean isRelated;
 
-    public GalleryImagesListAdapter(Context mContext, ImageSelectAdapter.ImageSelectCallback mCallback, Memory memory, int size) {
+    public GalleryImagesListAdapter(Context mContext, ImageSelectAdapter.ImageSelectCallback mCallback, Memory memory, int size, boolean isRelated) {
         this.mContext = mContext;
         this.mCallback = mCallback;
         this.memory = memory;
         this.items = memory.getImages();
         this.size = size;
+        this.isRelated = isRelated;
     }
 
     @Override
@@ -79,14 +81,18 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
                         holder.progressBar.setProgress(Math.round(100.0f * current / total));
                     }
                 });
-        holder.title.setText(memory.getTitle());
-        holder.time.setText(new SystemHelper(mContext).get12HourTimeStamp(memory.getTime()));
-        holder.date.setText(memory.getTime().getDate());
+        if (!isRelated) {
+            holder.title.setText(memory.getTitle());
+            holder.time.setText(new SystemHelper(mContext).get12HourTimeStamp(memory.getTime()));
+            holder.date.setText(memory.getTime().getDate());
+        } else {
+            holder.layoutInfo.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return items == null? 0 : items.size();
+        return items == null ? 0 : items.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -94,7 +100,7 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
         ImageView mImage;
         RelativeLayout layout;
         TextView title, time, date;
-        LinearLayout linearLayout;
+        LinearLayout linearLayout, layoutInfo;
         ProgressBar progressBar;
 
         public ImageViewHolder(View itemView) {
@@ -117,6 +123,7 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
             layout.getLayoutParams().height = size;
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_progressbar);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressbar);
+            layoutInfo = (LinearLayout) itemView.findViewById(R.id.layout_info);
         }
     }
 }

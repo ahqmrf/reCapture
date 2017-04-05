@@ -25,7 +25,7 @@ import static android.view.View.GONE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MemoryFragment extends Fragment implements MemoryListAdapter.MemoryClickCallback {
+public class MemoryFragment extends Fragment {
 
     private Context mContext;
     private TabFragmentCallback mCallback;
@@ -36,6 +36,7 @@ public class MemoryFragment extends Fragment implements MemoryListAdapter.Memory
     private ArrayList<Memory> mListMemory;
     private Database mDatabase;
     private MemoryListAdapter mAdapter;
+    private MemoryListAdapter.MemoryClickCallback memoryClickCallback;
 
     public MemoryFragment() {
         // Required empty public constructor
@@ -83,7 +84,7 @@ public class MemoryFragment extends Fragment implements MemoryListAdapter.Memory
             mEmptyListText.setVisibility(View.GONE);
             mMemoryRecyclerView.setVisibility(View.VISIBLE);
             mMemoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            mAdapter = new MemoryListAdapter(getActivity(), this, mListMemory);
+            mAdapter = new MemoryListAdapter(getActivity(), memoryClickCallback, mListMemory);
             mMemoryRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -100,6 +101,7 @@ public class MemoryFragment extends Fragment implements MemoryListAdapter.Memory
         super.onAttach(context);
         try {
             this.mCallback = (TabFragmentCallback) context;
+            this.memoryClickCallback = (MemoryListAdapter.MemoryClickCallback) context;
         } catch (ClassCastException e) {
             e.printStackTrace();
         }

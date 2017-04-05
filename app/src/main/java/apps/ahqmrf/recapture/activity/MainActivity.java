@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.ImageSelectAdapter;
+import apps.ahqmrf.recapture.adapter.MemoryListAdapter;
 import apps.ahqmrf.recapture.adapter.SimpleFragmentPagerAdapter;
 import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
@@ -26,10 +27,11 @@ import apps.ahqmrf.recapture.fragment.ProfileFragment;
 import apps.ahqmrf.recapture.fragment.SettingsFragment;
 import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
 import apps.ahqmrf.recapture.model.ImageModel;
+import apps.ahqmrf.recapture.model.Memory;
 import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.util.Constants;
 
-public class MainActivity extends AppCompatActivity implements TabFragmentCallback, ImageSelectAdapter.ImageSelectCallback {
+public class MainActivity extends AppCompatActivity implements TabFragmentCallback, ImageSelectAdapter.ImageSelectCallback, MemoryListAdapter.MemoryClickCallback {
 
     private RelativeLayout mLayoutProgressBar;
     private FragmentManager mFragmentManager;
@@ -130,5 +132,17 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
                 fragment.show(getSupportFragmentManager(), FullSizeImageDialogFragment.TAG);
             }
         });
+    }
+
+    @Override
+    public void onClickMemory(Memory memory) {
+        Intent intent = new Intent(this, MemoryViewActivity.class);
+        intent.putExtra(Constants.IntentExtras.MEMORY, memory);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickDelete(Memory memory) {
+        // TODO
     }
 }

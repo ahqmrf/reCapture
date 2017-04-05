@@ -38,6 +38,10 @@
         <activity
             android:name=".activity.SingleImageSelectionActivity"
             android:theme="@style/TabActivityTheme" />
+        <activity
+            android:name=".activity.MemoryViewActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:label="Memory"/>
     </application>
 
 </manifest>

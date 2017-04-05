@@ -2,13 +2,16 @@ package apps.ahqmrf.recapture.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,7 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.MemoryViewHolder> {
 
     public interface MemoryClickCallback {
-
+        void onClickMemory(Memory memory);
+        void onClickDelete(Memory memory);
     }
 
     private Context mContext;
@@ -100,6 +104,7 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
         TextView title, description, date, time;
         LinearLayout linearLayout;
         ProgressBar progressBar;
+        RelativeLayout layout;
 
         public MemoryViewHolder(View itemView) {
             super(itemView);
@@ -111,6 +116,44 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
             date = (TextView) itemView.findViewById(R.id.text_date);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_progressbar);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressbar);
+            layout = (RelativeLayout) itemView.findViewById(R.id.relative_memory_layout_item);
+
+            layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showContextMenu();
+                    return true;
+                }
+            });
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mCallback != null) {
+                        mCallback.onClickMemory(items.get(getAdapterPosition()));
+                    }
+                }
+            });
+        }
+
+        private void showContextMenu() {
+            PopupMenu popupMenu = new PopupMenu(mContext, description);
+            popupMenu.inflate(R.menu.memory_context_menu);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.menu_view:
+                            mCallback.onClickMemory(items.get(getAdapterPosition()));
+                            break;
+                        case R.id.menu_delete:
+                            mCallback.onClickDelete(items.get(getAdapterPosition()));
+                            break;
+                    }
+                    return false;
+                }
+            });
+            popupMenu.show();
         }
     }
 }

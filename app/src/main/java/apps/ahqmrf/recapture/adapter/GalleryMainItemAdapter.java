@@ -46,12 +46,12 @@ public class GalleryMainItemAdapter extends RecyclerView.Adapter<GalleryMainItem
     @Override
     public void onBindViewHolder(GalleryItemViewHolder holder, int position) {
         if(horizontal) {
-            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size);
+            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size, false);
             holder.images.setLayoutManager(new GridLayoutManager(mContext, 1));
             holder.images.addItemDecoration(new GridSpacingItemDecoration(1, 3, true));
             holder.images.setAdapter(mAdapter);
         } else {
-            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size);
+            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size, false);
             holder.images.setLayoutManager(new GridLayoutManager(mContext, 2));
             holder.images.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
             holder.images.setAdapter(mAdapter);
