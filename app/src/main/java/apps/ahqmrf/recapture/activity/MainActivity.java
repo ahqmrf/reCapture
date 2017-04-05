@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ import apps.ahqmrf.recapture.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements TabFragmentCallback, ImageSelectAdapter.ImageSelectCallback {
 
-    private LinearLayout mLayoutProgressBar;
+    private RelativeLayout mLayoutProgressBar;
     private FragmentManager mFragmentManager;
     private ArrayList<Fragment> mFragments;
     private Database mDatabase;
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     }
 
     private void loadSplash() {
-        mLayoutProgressBar = (LinearLayout) findViewById(R.id.ll_progress);
+        mLayoutProgressBar = (RelativeLayout) findViewById(R.id.ll_progress);
 
         new Handler().postDelayed(new Runnable() {
             public void run() {

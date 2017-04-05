@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="apps.ahqmrf.recapture.activity.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,11 +16,19 @@
         tools:visibility="visible">
 
         <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_centerInParent="true"
             android:indeterminateDrawable="@drawable/circular_progress_drawable"
             style="?android:attr/progressBarStyle" />
-    </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/re_capture"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
     
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"

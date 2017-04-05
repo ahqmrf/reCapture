@@ -6,7 +6,7 @@ package apps.ahqmrf.recapture.util;
 
 public final class Constants {
     public final class Basic {
-        public static final int SPLASH_SCREEN_DURATION = 4000;
+        public static final int SPLASH_SCREEN_DURATION = 3000;
         public static final int PROGRESS_BAR_DURATION = 500;
         public static final String DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
         public static final String DATABASE_NAME = "recapture.db";
