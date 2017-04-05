@@ -1,14 +1,20 @@
 package apps.ahqmrf.recapture.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -45,15 +51,35 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
     }
 
     @Override
-    public void onBindViewHolder(MemoryViewHolder holder, int position) {
+    public void onBindViewHolder(final MemoryViewHolder holder, int position) {
         Memory memory = items.get(position);
         if(memory.getIconPath() == null) holder.icon.setImageResource(R.drawable.re_capture);
         else {
             ImageLoader.getInstance().displayImage(
                     "file://" + memory.getIconPath(),
                     holder.icon,
-                    MyDisplayImageOptions.getInstance().getDisplayImageOptions()
-            );
+                    MyDisplayImageOptions.getInstance().getDisplayImageOptions(), new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+                            holder.progressBar.setProgress(0);
+                            holder.linearLayout.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            holder.linearLayout.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            holder.linearLayout.setVisibility(View.GONE);
+                        }
+                    }, new ImageLoadingProgressListener() {
+                        @Override
+                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                            holder.progressBar.setProgress(Math.round(100.0f * current / total));
+                        }
+                    });
         }
 
         holder.title.setText(memory.getTitle());
@@ -72,6 +98,8 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
 
         CircleImageView icon;
         TextView title, description, date, time;
+        LinearLayout linearLayout;
+        ProgressBar progressBar;
 
         public MemoryViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +109,8 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
             description = (TextView) itemView.findViewById(R.id.text_description);
             time = (TextView) itemView.findViewById(R.id.text_time);
             date = (TextView) itemView.findViewById(R.id.text_date);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_progressbar);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressbar);
         }
     }
 }

@@ -41,6 +41,26 @@
         android:layout_alignParentLeft="true"/>
 
     <LinearLayout
+        android:id="@+id/linear_progressbar"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@color/white"
+        android:layout_alignParentLeft="true"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminateDrawable="@drawable/circular_progress_drawable"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -54,17 +74,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:maxLines="1"
+            android:ellipsize="end"
             tools:text="Title" />
 
         <TextView
             android:id="@+id/text_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:maxLines="1"
-            tools:text="Memory description here" />
+            android:ellipsize="end"
+            tools:text="Memory description here will be added later" />
 
     </LinearLayout>
 
