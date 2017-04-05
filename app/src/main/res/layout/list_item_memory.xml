@@ -31,23 +31,17 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circular_image_icon"
-        android:layout_width="72dp"
+        android:layout_width="64dp"
         android:layout_height="72dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:padding="8dp"
         tools:src="@drawable/re_capture"
         android:layout_alignParentLeft="true"/>
 
     <LinearLayout
         android:id="@+id/linear_progressbar"
-        android:layout_width="72dp"
+        android:layout_width="64dp"
         android:layout_height="72dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:padding="8dp"
         android:background="@color/white"
         android:layout_alignParentLeft="true"
         android:gravity="center">
