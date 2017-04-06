@@ -45,6 +45,7 @@ public class Database extends SQLiteOpenHelper {
         query = "CREATE TABLE " + Constants.DBUtil.TableTaggedPeople.NAME + "(" +
                 Constants.DBUtil.TableTaggedPeople.Column.ID + " INTEGER PRIMARY KEY, " +
                 Constants.DBUtil.TableTaggedPeople.Column.TIME_STAMP + " TEXT, " +
+                Constants.DBUtil.TableTaggedPeople.Column.NAME + " TEXT, " +
                 Constants.DBUtil.TableTaggedPeople.Column.AVATAR_PATH + " TEXT, " +
                 Constants.DBUtil.TableTaggedPeople.Column.RELATION + " TEXT " +
                 ");";
@@ -57,16 +58,6 @@ public class Database extends SQLiteOpenHelper {
                 Constants.DBUtil.TableMemory.Column.TITLE + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.ICON_PATH + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.DESCRIPTION + " TEXT " +
-                ");";
-        db.execSQL(query);
-
-        query = "CREATE TABLE " + Constants.DBUtil.TableCaptionImage.NAME + "(" +
-                Constants.DBUtil.TableCaptionImage.Column.ID + " INTEGER PRIMARY KEY, " +
-                Constants.DBUtil.TableCaptionImage.Column.TIME_STAMP + " TEXT, " +
-                Constants.DBUtil.TableCaptionImage.Column.DATE + " TEXT, " +
-                Constants.DBUtil.TableCaptionImage.Column.MEMORY_TITLE + " TEXT, " +
-                Constants.DBUtil.TableCaptionImage.Column.IMAGE_PATH + " TEXT, " +
-                Constants.DBUtil.TableCaptionImage.Column.CAPTION + " TEXT " +
                 ");";
         db.execSQL(query);
 
@@ -174,13 +165,13 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<People> getAllTaggedPeople(String timeStamp) {
         ArrayList<People> peoples = new ArrayList<>();
-        String query = "SELECT * FROM " + Constants.DBUtil.TableTaggedPeople.NAME + " WHERE " + Constants.DBUtil.TableTaggedPeople.Column.TIME_STAMP +" = '" +timeStamp + "';";
+        String query = "SELECT * FROM " + Constants.DBUtil.TableTaggedPeople.NAME + " WHERE " + Constants.DBUtil.TableTaggedPeople.Column.TIME_STAMP + " = '" + timeStamp + "';";
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
         try {
             while (cursor.moveToNext()) {
-                String name = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.NAME));
+                String name = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.NAME));
                 String avatar = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.AVATAR_PATH));
                 String relation = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.RELATION));
                 People people = new People(name, avatar, relation);

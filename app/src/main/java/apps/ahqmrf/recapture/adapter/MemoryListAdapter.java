@@ -57,7 +57,10 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
     @Override
     public void onBindViewHolder(final MemoryViewHolder holder, int position) {
         Memory memory = items.get(position);
-        if(memory.getIconPath() == null) holder.icon.setImageResource(R.drawable.re_capture);
+        if(memory.getIconPath() == null) {
+            holder.linearLayout.setVisibility(View.GONE);
+            holder.icon.setImageResource(R.drawable.re_capture);
+        }
         else {
             ImageLoader.getInstance().displayImage(
                     "file://" + memory.getIconPath(),

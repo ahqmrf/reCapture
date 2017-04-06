@@ -66,18 +66,6 @@ public final class Constants {
                 public static final String RELATION = "relation";
             }
         }
-
-        public final class TableCaptionImage {
-            public static final String NAME = "TableCaptionImage";
-            public final class Column {
-                public static final String ID = "image__id";
-                public static final String IMAGE_PATH = "imagePath";
-                public static final String CAPTION = "caption";
-                public static final String MEMORY_TITLE = "memory__title";
-                public static final String DATE = "date";
-                public static final String TIME_STAMP = "time__stamp";
-            }
-        }
     }
 
     public final class RequestCodes {
