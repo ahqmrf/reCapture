@@ -22,6 +22,7 @@ public final class Constants {
         public static final String IMAGE_LIST_EXTRA = "__image__list";
         public static final String MEMORY = "__memory";
         public static final String PEOPLE = "__people";
+        public static final String POSITION = "position";
     }
 
     public final class DBUtil {

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.ReCapture"
@@ -40,8 +41,11 @@
             android:theme="@style/TabActivityTheme" />
         <activity
             android:name=".activity.MemoryViewActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="Memory"/>
+            android:label="Memory"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ImageFullScreenActivity"
+            android:theme="@style/Theme.DialogActivity.Transparent" />
     </application>
 
 </manifest>

@@ -122,8 +122,16 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     }
 
     @Override
+    public void onImageClick(ArrayList<String> paths, int position) {
+        Intent intent = new Intent(this, ImageFullScreenActivity.class);
+        intent.putStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA, paths);
+        intent.putExtra(Constants.IntentExtras.POSITION, position);
+        startActivity(intent);
+    }
+
+    @Override
     public void onImageClick(final String imagePath) {
-        Handler handler = new Handler();
+        /*Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -131,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
                 fragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Theme_DialogActivity_Transparent);
                 fragment.show(getSupportFragmentManager(), FullSizeImageDialogFragment.TAG);
             }
-        });
+        });*/
+
+        Intent intent = new Intent(this, ImageFullScreenActivity.class);
+        intent.putExtra(Constants.IntentExtras.IMAGE_PATH, imagePath);
+        startActivity(intent);
     }
 
     @Override

@@ -30,13 +30,14 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
 
     public interface ImageSelectCallback {
         void onImageSelectClick(int position, ImageModel model);
-
+        void onImageClick(ArrayList<String> paths, int position);
         void onImageClick(String imagePath);
     }
 
     private Context context;
     private ImageSelectCallback callback;
     private ArrayList<ImageModel> items;
+    private ArrayList<String> paths;
     private int size;
 
     public ImageSelectAdapter(Context context, ImageSelectCallback callback, ArrayList<ImageModel> items, int size) {
@@ -44,6 +45,12 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
         this.callback = callback;
         this.items = items;
         this.size = size;
+
+        paths = new ArrayList<>();
+
+        for (ImageModel imageModel : items) {
+            paths.add(imageModel.getFilePath());
+        }
     }
 
     @Override
@@ -108,7 +115,7 @@ public class ImageSelectAdapter extends RecyclerView.Adapter<ImageSelectAdapter.
             mainImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callback.onImageClick(items.get(getAdapterPosition()).getFilePath());
+                    callback.onImageClick(paths, getAdapterPosition());
                 }
             });
             selectImage = (ImageView) itemView.findViewById(R.id.image_select);

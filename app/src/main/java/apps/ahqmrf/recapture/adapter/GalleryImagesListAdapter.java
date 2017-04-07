@@ -114,7 +114,7 @@ public class GalleryImagesListAdapter extends RecyclerView.Adapter<GalleryImages
             mImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCallback.onImageClick(items.get(getAdapterPosition()));
+                    mCallback.onImageClick(items, getAdapterPosition());
                 }
             });
 

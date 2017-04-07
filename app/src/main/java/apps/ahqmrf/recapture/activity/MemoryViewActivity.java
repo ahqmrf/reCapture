@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.GalleryImagesListAdapter;
 import apps.ahqmrf.recapture.adapter.ImageSelectAdapter;
@@ -110,6 +112,11 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
 
     @Override
     public void onImageSelectClick(int position, ImageModel model) {
+
+    }
+
+    @Override
+    public void onImageClick(ArrayList<String> paths, int position) {
 
     }
 

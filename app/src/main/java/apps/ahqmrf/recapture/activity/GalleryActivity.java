@@ -157,6 +157,14 @@ public class GalleryActivity extends AppCompatActivity implements ImageSelectAda
     }
 
     @Override
+    public void onImageClick(ArrayList<String> paths, int position) {
+        Intent intent = new Intent(this, ImageFullScreenActivity.class);
+        intent.putStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA, paths);
+        intent.putExtra(Constants.IntentExtras.POSITION, position);
+        startActivity(intent);
+    }
+
+    @Override
     public void onImageClick(final String imagePath) {
         Handler handler = new Handler();
         handler.post(new Runnable() {
