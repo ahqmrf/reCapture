@@ -1,5 +1,6 @@
 package apps.ahqmrf.recapture.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -117,7 +118,10 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
 
     @Override
     public void onImageClick(ArrayList<String> paths, int position) {
-
+        Intent intent = new Intent(this, ImageFullScreenActivity.class);
+        intent.putStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA, paths);
+        intent.putExtra(Constants.IntentExtras.POSITION, position);
+        startActivity(intent);
     }
 
     @Override

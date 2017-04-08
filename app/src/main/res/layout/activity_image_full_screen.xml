@@ -9,7 +9,8 @@
     <ImageView
         android:id="@+id/image_full_size"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/image_back"/>
 
     <LinearLayout
         android:id="@+id/linear_progressbar"
@@ -28,11 +29,29 @@
 
     <ImageView
         android:id="@+id/image_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="16dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:src="@drawable/ic_arrow_back_white_24dp"/>
+
+    <ImageView
+        android:id="@+id/image_left"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/black_transparent"
+        android:src="@drawable/ic_chevron_left_white_24dp"/>
+
+    <ImageView
+        android:id="@+id/image_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@color/black_transparent"
+        android:src="@drawable/ic_chevron_right_white_24dp"/>
 
 </RelativeLayout>

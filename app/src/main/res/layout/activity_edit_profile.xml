@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_edit_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:overScrollMode="never"
+    tools:context="apps.ahqmrf.recapture.activity.EditProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="Username"/>
+
+        <EditText
+            android:id="@+id/edit_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:hint="Write your username" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="Favorite quote"/>
+
+        <EditText
+            android:id="@+id/edit_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:hint="Wirte your favorite quote" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="About yourself"/>
+
+        <EditText
+            android:id="@+id/edit_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:hint="Write something about yourself" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_ripple"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:text="Save Changes"/>
+
+    </LinearLayout>
+
+
+
+</ScrollView>

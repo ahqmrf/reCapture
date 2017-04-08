@@ -46,6 +46,9 @@
         <activity
             android:name=".activity.ImageFullScreenActivity"
             android:theme="@style/Theme.DialogActivity.Transparent" />
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

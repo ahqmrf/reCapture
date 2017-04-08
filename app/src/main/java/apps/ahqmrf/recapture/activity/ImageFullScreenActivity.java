@@ -26,10 +26,12 @@ import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
 import apps.ahqmrf.recapture.util.OnSwipeTouchListener;
 
-public class ImageFullScreenActivity extends AppCompatActivity {
+public class ImageFullScreenActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView mImageView;
     private ImageView mBackImage;
+    private ImageView mLeftArrow;
+    private ImageView mRightArrow;
     private ArrayList<String> imageUri;
     private int position;
     private LinearLayout linearLayout;
@@ -49,7 +51,10 @@ public class ImageFullScreenActivity extends AppCompatActivity {
 
         mImageView = (ImageView) findViewById(R.id.image_full_size);
         mBackImage = (ImageView) findViewById(R.id.image_back);
+        mLeftArrow = (ImageView) findViewById(R.id.image_left);
+        mRightArrow = (ImageView) findViewById(R.id.image_right);
         imageUri = getIntent().getStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA);
+
         position = getIntent().getIntExtra(Constants.IntentExtras.POSITION, 0);
         linearLayout = (LinearLayout) findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
@@ -58,6 +63,9 @@ public class ImageFullScreenActivity extends AppCompatActivity {
     }
 
     private void setValuesIntoViews() {
+        if(position == 0) mLeftArrow.setVisibility(View.GONE);
+        if(position == imageUri.size() - 1) mRightArrow.setVisibility(View.GONE);
+
         showImageAt(position);
 
         mImageView.setOnTouchListener(new OnSwipeTouchListener(this) {
@@ -66,17 +74,11 @@ public class ImageFullScreenActivity extends AppCompatActivity {
             }
 
             public void onSwipeRight() {
-                if(position > 0) {
-                    position--;
-                    showImageAt(position);
-                }
+                showLeftImage();
             }
 
             public void onSwipeLeft() {
-                if(position < imageUri.size() - 1) {
-                    position++;
-                    showImageAt(position);
-                }
+                showRightImage();
             }
 
             public void onSwipeBottom() {
@@ -85,12 +87,9 @@ public class ImageFullScreenActivity extends AppCompatActivity {
 
         });
 
-        mBackImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mBackImage.setOnClickListener(this);
+        mLeftArrow.setOnClickListener(this);
+        mRightArrow.setOnClickListener(this);
     }
 
     private void showImageAt(int index) {
@@ -119,5 +118,39 @@ public class ImageFullScreenActivity extends AppCompatActivity {
                         progressBar.setProgress(Math.round(100.0f * current / total));
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_back:
+                finish();
+                break;
+            case R.id.image_left:
+                showLeftImage();
+                break;
+            case R.id.image_right:
+                showRightImage();
+                break;
+
+        }
+    }
+
+    private void showRightImage() {
+        if(position < imageUri.size() - 1) {
+            position++;
+            showImageAt(position);
+        }
+        if(imageUri.size() > 1) mLeftArrow.setVisibility(View.VISIBLE);
+        if(position == imageUri.size() - 1) mRightArrow.setVisibility(View.GONE);
+    }
+
+    private void showLeftImage() {
+        if(position > 0) {
+            position--;
+            showImageAt(position);
+        }
+        if(imageUri.size() > 1) mRightArrow.setVisibility(View.VISIBLE);
+        if(position == 0) mLeftArrow.setVisibility(View.GONE);
     }
 }

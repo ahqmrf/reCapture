@@ -13,6 +13,11 @@ public final class Constants {
         public static final int DATABASE_VERSION = 1;
         public static final String IMAGE_LIST_EXTRA = "__image__list";
         public static final String IMAGE_EXTRA = "Image__EXTRA";
+        public static final String SHARED_PREF_NAME = "mySharedPref";
+        public static final String USERNAME = "myUsername";
+        public static final String PROFILE_IMAGE_PATH = "myProfilePhoto";
+        public static final String FAVORITE_QUOTE = "myFavoriteQuote";
+        public static final String ABOUT = "aboutMyself";
     }
 
     public final class IntentExtras {
