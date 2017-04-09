@@ -15,4 +15,5 @@
     <string name="promptDeleteMem">Are you sure you want to delete this memory?</string>
     <string name="PostiveYesButton">Delete</string>
     <string name="NegativeNoButton">Cancel</string>
+    <string name="promptDeletePeople">Are you sure you want to delete this person?</string>
 </resources>

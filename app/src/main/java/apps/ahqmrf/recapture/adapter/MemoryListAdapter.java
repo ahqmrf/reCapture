@@ -1,7 +1,10 @@
 package apps.ahqmrf.recapture.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -155,15 +158,42 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
                             mCallback.onClickMemory(items.get(getAdapterPosition()));
                             break;
                         case R.id.menu_delete:
-                            mCallback.onClickDelete(items.get(getAdapterPosition()));
-                            items.remove(getAdapterPosition());
-                            notifyItemRemoved(getAdapterPosition());
+                            deleteMemory();
                             break;
                     }
                     return false;
                 }
             });
             popupMenu.show();
+        }
+
+        private void deleteMemory() {
+            new AlertDialog.Builder(mContext)
+                    .setTitle(mContext.getResources().getString(R.string.deleteTitle))
+                    .setMessage(
+                            mContext.getResources().getString(R.string.promptDeleteMem))
+                    .setIcon(
+                            ContextCompat.getDrawable(mContext, android.R.drawable.ic_dialog_alert))
+                    .setPositiveButton(
+                            mContext.getResources().getString(R.string.PostiveYesButton),
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mCallback.onClickDelete(items.get(getAdapterPosition()));
+                                    items.remove(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+                                }
+                            })
+                    .setNegativeButton(
+                            mContext.getResources().getString(R.string.NegativeNoButton),
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Do Something Here
+                                }
+                            }).show();
         }
     }
 }

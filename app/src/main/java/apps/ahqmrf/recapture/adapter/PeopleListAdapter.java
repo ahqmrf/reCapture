@@ -126,7 +126,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
             new AlertDialog.Builder(mContext)
                     .setTitle(mContext.getResources().getString(R.string.deleteTitle))
                     .setMessage(
-                            mContext.getResources().getString(R.string.promptDeleteMem))
+                            mContext.getResources().getString(R.string.promptDeletePeople))
                     .setIcon(
                             ContextCompat.getDrawable(mContext, android.R.drawable.ic_dialog_alert))
                     .setPositiveButton(
