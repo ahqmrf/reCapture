@@ -31,7 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground">
 
             <ImageView
                 android:layout_width="40dp"
@@ -57,16 +59,20 @@
 
     </RelativeLayout>
 
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="0.5dp"
+        android:background="@color/whitey_grey"/>
+
+    <TextView
+        android:id="@+id/text_people_you_know"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:padding="8dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:background="@color/whitey_grey"
+        android:background="@color/dark_white"
         android:text="People you know"/>
 
     <TextView

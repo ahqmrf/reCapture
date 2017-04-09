@@ -24,7 +24,7 @@ import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
 import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.util.Constants;
 
-public class PeopleFragment extends Fragment implements PeopleListAdapter.PeopleItemCallback{
+public class PeopleFragment extends Fragment{
 
     private Context context;
     private TabFragmentCallback callback;
@@ -37,6 +37,12 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
     private PeopleListAdapter mAdapter;
     private ImageView mImageRefresh;
     private LinearLayout mLinearProgressBar;
+    private PeopleListAdapter.PeopleItemCallback itemCallback;
+    private TextView peopleYouKnow;
+
+    public void setItemCallback(PeopleListAdapter.PeopleItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -69,20 +75,25 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
         mImageRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prepareViews();
-                mLinearProgressBar.setVisibility(View.VISIBLE);
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        mLinearProgressBar.setVisibility(View.GONE);
-                    }
-                }, Constants.Basic.PROGRESS_BAR_DURATION);
+               reload();
             }
         });
         prepareViews();
         return root;
     }
 
+    private void reload() {
+        prepareViews();
+        mLinearProgressBar.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                mLinearProgressBar.setVisibility(View.GONE);
+            }
+        }, Constants.Basic.PROGRESS_BAR_DURATION);
+    }
+
     private void prepareViews() {
+        peopleYouKnow = (TextView) root.findViewById(R.id.text_people_you_know);
         mLinearProgressBar = (LinearLayout) root.findViewById(R.id.linear_progressbar);
         peoples = mDatabase.getAllPeople();
         noUserText = (TextView) root.findViewById(R.id.text_no_user);
@@ -98,9 +109,11 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
             noUserText.setVisibility(View.GONE);
             mRecyclerPeopleList.setVisibility(View.VISIBLE);
             mRecyclerPeopleList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            mAdapter = new PeopleListAdapter(getActivity(), this, peoples);
+            mAdapter = new PeopleListAdapter(getActivity(), itemCallback, peoples);
             mRecyclerPeopleList.setAdapter(mAdapter);
+            peopleYouKnow.setVisibility(View.VISIBLE);
         } else {
+            peopleYouKnow.setVisibility(View.GONE);
             noUserText.setVisibility(View.VISIBLE);
             mRecyclerPeopleList.setVisibility(View.GONE);
         }
@@ -111,8 +124,15 @@ public class PeopleFragment extends Fragment implements PeopleListAdapter.People
         super.onAttach(context);
         try {
             this.callback = (TabFragmentCallback) context;
+            this.itemCallback = (PeopleListAdapter.PeopleItemCallback) context;
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        reload();
     }
 }

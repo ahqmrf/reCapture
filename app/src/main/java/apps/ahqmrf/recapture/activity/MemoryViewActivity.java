@@ -1,8 +1,11 @@
 package apps.ahqmrf.recapture.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,12 +29,13 @@ import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
 import apps.ahqmrf.recapture.model.ImageModel;
 import apps.ahqmrf.recapture.model.Memory;
+import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.model.Time;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.GridSpacingItemDecoration;
 import apps.ahqmrf.recapture.util.SystemHelper;
 
-public class MemoryViewActivity extends AppCompatActivity implements PeopleListAdapter.PeopleItemCallback, ImageSelectAdapter.ImageSelectCallback, View.OnClickListener{
+public class MemoryViewActivity extends AppCompatActivity implements PeopleListAdapter.PeopleItemCallback, ImageSelectAdapter.ImageSelectCallback, View.OnClickListener {
 
     private ScrollView scrollView;
     private Memory memory;
@@ -39,9 +43,11 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     private RecyclerView relatedImages, relatedPeople;
     private int size;
     private GalleryImagesListAdapter mAdapter;
-    private ImageView star;
+    private ImageView star, play, delete, edit;
     private boolean special;
     private Database database;
+    private ArrayList<People> peoples;
+    private int sizePeople;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,7 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         }
         memory = getIntent().getParcelableExtra(Constants.IntentExtras.MEMORY);
         database = new Database(this, null, null, 1);
-        special = false;
+        special = memory.isSpecial();
 
         prepareViews();
     }
@@ -74,7 +80,8 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         amount = (TextView) findViewById(R.id.text_amount);
         amount.setText("Related Photos (" + memory.getImages().size() + ")");
         peopleAmount = (TextView) findViewById(R.id.text_related_people);
-        peopleAmount.setText("Related People (" + memory.getPeoples().size() + ")");
+        sizePeople = memory.getPeoples().size();
+        peopleAmount.setText("Related People (" + sizePeople + ")");
         relatedImages = (RecyclerView) findViewById(R.id.recycler_related_photos);
         ViewTreeObserver vto = relatedImages.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -86,20 +93,25 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
             }
         });
         star = (ImageView) findViewById(R.id.image_star);
+        delete = (ImageView) findViewById(R.id.image_trash);
         star.setOnClickListener(this);
+        delete.setOnClickListener(this);
+        if (special) star.setImageResource(R.drawable.star_golden);
+        else star.setImageResource(R.drawable.star_normal);
     }
 
     private void setRecycler() {
         int column = 3;
-        mAdapter = new GalleryImagesListAdapter(this, this, memory, size / column, true);
+        mAdapter = new GalleryImagesListAdapter(this, this, memory, size / column);
         relatedImages.setLayoutManager(new GridLayoutManager(this, column));
         relatedImages.addItemDecoration(new GridSpacingItemDecoration(column, 3, true));
         relatedImages.setAdapter(mAdapter);
         relatedPeople = (RecyclerView) findViewById(R.id.recycler_related_people);
+        peoples = database.getAllTaggedPeople(memory);
         relatedPeople.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        PeopleListAdapter adapter = new PeopleListAdapter(this, this, database.getAllTaggedPeople(memory));
+        PeopleListAdapter adapter = new PeopleListAdapter(this, this, peoples);
         relatedPeople.setAdapter(adapter);
-        scrollView.smoothScrollTo(0,0);
+        scrollView.smoothScrollTo(0, 0);
     }
 
     @Override
@@ -143,16 +155,65 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
             case R.id.image_star:
                 toggleSpecial();
                 break;
+            case R.id.image_trash:
+                deleteMemory();
+                break;
         }
     }
 
+    private void deleteMemory() {
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.deleteTitle))
+                .setMessage(
+                        getResources().getString(R.string.promptDeleteMem))
+                .setIcon(
+                        ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_dialog_alert))
+                .setPositiveButton(
+                        getResources().getString(R.string.PostiveYesButton),
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                database.remove(memory);
+                                finishAffinity();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                            }
+                        })
+                .setNegativeButton(
+                        getResources().getString(R.string.NegativeNoButton),
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Do Something Here
+                            }
+                        }).show();
+    }
+
     private void toggleSpecial() {
-        if(special) {
+        if (special) {
             star.setImageResource(R.drawable.star_normal);
             special = false;
         } else {
             star.setImageResource(R.drawable.star_golden);
             special = true;
         }
+        memory.setSpecial(special);
+        database.updateMemory(memory);
+    }
+
+    @Override
+    public void onClickPeople(People people) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(Constants.IntentExtras.PEOPLE, people);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickDelete(People people) {
+        database.remove(people);
+        sizePeople--;
+        peopleAmount.setText("Related People (" +sizePeople + ")");
     }
 }

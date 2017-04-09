@@ -32,13 +32,31 @@
 
     </LinearLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circular_image_icon"
+    <RelativeLayout
+        android:id="@+id/layout_icon"
         android:layout_width="64dp"
-        android:layout_height="72dp"
-        android:padding="8dp"
-        tools:src="@drawable/re_capture"
-        android:layout_alignParentLeft="true"/>
+        android:layout_height="72dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circular_image_icon"
+            android:layout_width="64dp"
+            android:layout_height="72dp"
+            android:padding="8dp"
+            tools:src="@drawable/re_capture"
+            android:layout_alignParentLeft="true"/>
+
+        <ImageView
+            android:id="@+id/image_special"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            tools:src="@drawable/star_normal"/>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/linear_progressbar"
@@ -47,6 +65,7 @@
         android:padding="8dp"
         android:background="@color/white"
         android:layout_alignParentLeft="true"
+        tools:visibility="gone"
         android:gravity="center">
 
         <ProgressBar
@@ -64,7 +83,7 @@
         android:gravity="center_vertical"
         android:padding="8dp"
         android:layout_toLeftOf="@id/layout_time"
-        android:layout_toRightOf="@id/circular_image_icon">
+        android:layout_toRightOf="@id/layout_icon">
 
         <TextView
             android:id="@+id/text_title"
@@ -87,5 +106,12 @@
             tools:text="Memory description here will be added later" />
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/whitey_grey"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

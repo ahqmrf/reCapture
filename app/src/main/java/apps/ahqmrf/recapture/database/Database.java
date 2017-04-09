@@ -30,6 +30,7 @@ public class Database extends SQLiteOpenHelper {
         String query = "CREATE TABLE " + Constants.DBUtil.TablePeople.NAME + "(" +
                 Constants.DBUtil.TablePeople.Column.ID + " INTEGER PRIMARY KEY, " +
                 Constants.DBUtil.TablePeople.Column.NAME + " TEXT, " +
+                Constants.DBUtil.TablePeople.Column.HASH + " TEXT, " +
                 Constants.DBUtil.TablePeople.Column.AVATAR_PATH + " TEXT, " +
                 Constants.DBUtil.TablePeople.Column.RELATION + " TEXT " +
                 ");";
@@ -46,6 +47,7 @@ public class Database extends SQLiteOpenHelper {
                 Constants.DBUtil.TableTaggedPeople.Column.ID + " INTEGER PRIMARY KEY, " +
                 Constants.DBUtil.TableTaggedPeople.Column.TIME_STAMP + " TEXT, " +
                 Constants.DBUtil.TableTaggedPeople.Column.NAME + " TEXT, " +
+                Constants.DBUtil.TableTaggedPeople.Column.HASH + " TEXT, " +
                 Constants.DBUtil.TableTaggedPeople.Column.AVATAR_PATH + " TEXT, " +
                 Constants.DBUtil.TableTaggedPeople.Column.RELATION + " TEXT " +
                 ");";
@@ -54,6 +56,7 @@ public class Database extends SQLiteOpenHelper {
         query = "CREATE TABLE " + Constants.DBUtil.TableMemory.NAME + "(" +
                 Constants.DBUtil.TableMemory.Column.ID + " INTEGER PRIMARY KEY, " +
                 Constants.DBUtil.TableMemory.Column.TIME_STAMP + " TEXT, " +
+                Constants.DBUtil.TableMemory.Column.SPECIAL + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.DATE + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.TITLE + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.ICON_PATH + " TEXT, " +
@@ -77,6 +80,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Constants.DBUtil.TablePeople.Column.NAME, people.getName());
         values.put(Constants.DBUtil.TablePeople.Column.AVATAR_PATH, people.getAvatar());
         values.put(Constants.DBUtil.TablePeople.Column.RELATION, people.getRelation());
+        values.put(Constants.DBUtil.TablePeople.Column.HASH, people.getHashValue());
         db.insert(Constants.DBUtil.TablePeople.NAME, null, values);
         db.close();
     }
@@ -92,7 +96,8 @@ public class Database extends SQLiteOpenHelper {
                 String name = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TablePeople.Column.NAME));
                 String avatar = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TablePeople.Column.AVATAR_PATH));
                 String relation = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TablePeople.Column.RELATION));
-                People people = new People(name, avatar, relation);
+                String hashValue = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TablePeople.Column.HASH));
+                People people = new People(name, avatar, relation, hashValue);
                 peoples.add(people);
             }
         } finally {
@@ -147,6 +152,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Constants.DBUtil.TableTaggedPeople.Column.AVATAR_PATH, people.getAvatar());
         values.put(Constants.DBUtil.TableTaggedPeople.Column.NAME, people.getName());
         values.put(Constants.DBUtil.TableTaggedPeople.Column.RELATION, people.getRelation());
+        values.put(Constants.DBUtil.TableTaggedPeople.Column.HASH, people.getHashValue());
         db.insert(Constants.DBUtil.TableTaggedPeople.NAME, null, values);
         db.close();
     }
@@ -174,7 +180,8 @@ public class Database extends SQLiteOpenHelper {
                 String name = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.NAME));
                 String avatar = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.AVATAR_PATH));
                 String relation = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.RELATION));
-                People people = new People(name, avatar, relation);
+                String hashValue = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableTaggedPeople.Column.HASH));
+                People people = new People(name, avatar, relation, hashValue);
                 peoples.add(people);
             }
         } finally {
@@ -198,6 +205,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Constants.DBUtil.TableMemory.Column.TITLE, memory.getTitle());
         values.put(Constants.DBUtil.TableMemory.Column.DESCRIPTION, memory.getDescription());
         values.put(Constants.DBUtil.TableMemory.Column.ICON_PATH, memory.getIconPath());
+        values.put(Constants.DBUtil.TableMemory.Column.SPECIAL, memory.isSpecial()? "1" : "0");
         db.insert(Constants.DBUtil.TableMemory.NAME, null, values);
         db.close();
     }
@@ -217,13 +225,15 @@ public class Database extends SQLiteOpenHelper {
                 String date = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableMemory.Column.DATE));
                 ArrayList<People> peoples = getAllTaggedPeople(timeStamp);
                 ArrayList<String> images = getAllImages(timeStamp);
+                String special = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableMemory.Column.SPECIAL));
                 Memory memory = new Memory(
                         title,
                         description,
                         iconPath,
                         images,
                         peoples,
-                        new Time(timeStamp, date)
+                        new Time(timeStamp, date),
+                        special.equals("1")
 
                 );
                 memories.add(memory);
@@ -231,7 +241,40 @@ public class Database extends SQLiteOpenHelper {
         } finally {
             cursor.close();
         }
+        Collections.reverse(memories);
         return memories;
+    }
+
+    public void remove(Memory memory) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + Constants.DBUtil.TableMemory.NAME + " WHERE " +  Constants.DBUtil.TableMemory.Column.TIME_STAMP + " = '" + memory.getTime().getTimeStamp() + "';");
+        db.close();
+        removeImages(memory);
+        removeTaggedPeople(memory);
+    }
+
+    public void removeImages(Memory memory) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + Constants.DBUtil.TableImage.NAME + " WHERE " +  Constants.DBUtil.TableImage.Column.TIME_STAMP + " = '" + memory.getTime().getTimeStamp() + "';");
+        db.close();
+    }
+
+    public void removeTaggedPeople(Memory memory) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + Constants.DBUtil.TableTaggedPeople.NAME + " WHERE " +  Constants.DBUtil.TableTaggedPeople.Column.TIME_STAMP + " = '" + memory.getTime().getTimeStamp() + "';");
+        db.close();
+    }
+
+    public void remove(People people) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + Constants.DBUtil.TablePeople.NAME + " WHERE " +  Constants.DBUtil.TablePeople.Column.HASH + " = '" + people.getHashValue() + "';");
+        db.execSQL("DELETE FROM " + Constants.DBUtil.TableTaggedPeople.NAME + " WHERE " +  Constants.DBUtil.TableTaggedPeople.Column.HASH + " = '" + people.getHashValue() + "';");
+        db.close();
+    }
+
+    public void updateMemory(Memory memory) {
+        remove(memory);
+        insertMemory(memory);
     }
 
 }

@@ -34,7 +34,6 @@
         <activity android:name=".activity.TagPeopleActivity" />
         <activity
             android:name=".activity.AddUserActivity"
-            android:theme="@style/Theme.DialogActivity.Transparent"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SingleImageSelectionActivity"
@@ -48,7 +47,11 @@
             android:theme="@style/Theme.DialogActivity.Transparent" />
         <activity
             android:name=".activity.EditProfileActivity"
+            android:label="Edit Profile"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:label="View Profile" />
     </application>
 
 </manifest>

@@ -11,57 +11,108 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:background="@color/dark_white"
         android:gravity="center"
         android:padding="8dp"
         android:textSize="24sp"
         android:textColor="@color/black"
         android:text="Add new user"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textColor="@color/grey"
-        android:text="Name of the user"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/whitey_grey"/>
+
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_person"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_account_circle_24dp"
+            android:tint="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_toLeftOf="@id/image_person"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Name of the user"/>
+
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/edit_text_bg"
+        android:textCursorDrawable="@null"
         android:textColor="@color/grey"
         android:inputType="text"
-        android:padding="8dp"
-        android:textSize="16sp" />
+        android:hint="Write username"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:textSize="14sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/grey"
-        android:padding="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Your relation to this person"/>
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_relation"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_relation"
+            android:tint="@color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_toLeftOf="@id/image_relation"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Your relation with this person"/>
+
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/edit_relation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/edit_text_bg"
+        android:textCursorDrawable="@null"
         android:textColor="@color/grey"
+        android:hint="Relation"
         android:inputType="text"
-        android:padding="8dp"
-        android:textSize="16sp" />
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:textSize="14sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textColor="@color/grey"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:layout_marginTop="8dp"
         android:text="Select profile photo for this user"/>
 
@@ -79,6 +130,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/button_ripple"
             android:text="Browse"
+            android:clickable="true"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -100,16 +152,16 @@
 
     <Button
         android:id="@+id/btn_add_user"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_ripple"
         android:text="Add user"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:clickable="true"/>
 
 </LinearLayout>

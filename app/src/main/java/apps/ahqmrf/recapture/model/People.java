@@ -12,17 +12,20 @@ public class People implements Parcelable{
     private String name;
     private String avatar;
     private String relation;
+    private String hashValue;
 
-    public People(String name, String avatar, String relation) {
+    public People(String name, String avatar, String relation, String hashValue) {
         this.name = name;
         this.avatar = avatar;
         this.relation = relation;
+        this.hashValue = hashValue;
     }
 
     protected People(Parcel in) {
         name = in.readString();
         avatar = in.readString();
         relation = in.readString();
+        hashValue = in.readString();
     }
 
     public static final Creator<People> CREATOR = new Creator<People>() {
@@ -61,6 +64,14 @@ public class People implements Parcelable{
         this.relation = relation;
     }
 
+    public String getHashValue() {
+        return hashValue;
+    }
+
+    public void setHashValue(String hashValue) {
+        this.hashValue = hashValue;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -71,5 +82,6 @@ public class People implements Parcelable{
         dest.writeString(name);
         dest.writeString(avatar);
         dest.writeString(relation);
+        dest.writeString(hashValue);
     }
 }

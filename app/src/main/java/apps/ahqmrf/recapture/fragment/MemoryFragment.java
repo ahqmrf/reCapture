@@ -87,6 +87,7 @@ public class MemoryFragment extends Fragment {
             mAdapter = new MemoryListAdapter(getActivity(), memoryClickCallback, mListMemory);
             mMemoryRecyclerView.setAdapter(mAdapter);
         }
+        mCallback.hideProgressBar();
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -105,5 +106,11 @@ public class MemoryFragment extends Fragment {
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        manipulateViews();
     }
 }

@@ -89,6 +89,7 @@ public class TagPeopleActivity extends AppCompatActivity implements PeopleToTagL
         memory.setPeoples(selectedPeople);
         Time time = new SystemHelper(this).getCurrentTime();
         memory.setTime(time);
+        memory.setSpecial(false);
         mDatabase.insertMemory(memory);
         finishAffinity();
         startActivity(new Intent(this, MainActivity.class));

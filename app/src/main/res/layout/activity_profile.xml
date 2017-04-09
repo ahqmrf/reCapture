@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:overScrollMode="never"
-    tools:context="apps.ahqmrf.recapture.fragment.SettingsFragment">
+    tools:context="apps.ahqmrf.recapture.activity.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,18 +134,18 @@
             android:clickable="true">
 
             <ImageView
-                android:id="@+id/image_quote"
+                android:id="@+id/image_relation"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
                 android:padding="16dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/ic_favorite_black_24dp"/>
+                android:src="@drawable/ic_relation"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@id/image_quote"
+                android:layout_toRightOf="@id/image_relation"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -156,17 +156,17 @@
                     android:paddingRight="16dp"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:text="Favorite Quote"/>
+                    android:text="Relation"/>
 
                 <TextView
-                    android:id="@+id/text_quote"
+                    android:id="@+id/text_relation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:paddingRight="16dp"
                     android:ellipsize="end"
                     android:textSize="14sp"
-                    tools:text="I am the only one who loves more.. and this is my thing.."/>
+                    android:text="Specify your relation with this user"/>
 
             </LinearLayout>
 
@@ -221,7 +221,7 @@
                     android:paddingRight="16dp"
                     android:ellipsize="end"
                     android:textSize="14sp"
-                    tools:text="I am a very simple person with complications :v But I think I am good enough! :)"/>
+                    android:text="Write something about this user"/>
 
             </LinearLayout>
 

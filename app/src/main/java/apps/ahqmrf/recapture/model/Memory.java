@@ -18,16 +18,18 @@ public class Memory implements Parcelable{
     private ArrayList<String> images;
     private ArrayList<People> peoples;
     private Time time;
+    private boolean special;
 
     public Memory() {}
 
-    public Memory(String title, String description, String iconPath, ArrayList<String> images, ArrayList<People> peoples, Time time) {
+    public Memory(String title, String description, String iconPath, ArrayList<String> images, ArrayList<People> peoples, Time time, boolean special) {
         this.title = title;
         this.description = description;
         this.iconPath = iconPath;
         this.images = images;
         this.peoples = peoples;
         this.time = time;
+        this.special = special;
     }
 
     protected Memory(Parcel in) {
@@ -38,6 +40,7 @@ public class Memory implements Parcelable{
         images = in.createStringArrayList();
         peoples = in.createTypedArrayList(People.CREATOR);
         time = in.readParcelable(Time.class.getClassLoader());
+        special = in.readByte() != 0;
     }
 
     public static final Creator<Memory> CREATOR = new Creator<Memory>() {
@@ -108,6 +111,15 @@ public class Memory implements Parcelable{
         this.time = time;
     }
 
+    public boolean isSpecial() {
+        return special;
+    }
+
+    public void setSpecial(boolean special) {
+        this.special = special;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,5 +134,6 @@ public class Memory implements Parcelable{
         dest.writeStringList(images);
         dest.writeTypedList(peoples);
         dest.writeParcelable(time, flags);
+        dest.writeByte((byte) (special ? 1 : 0));
     }
 }

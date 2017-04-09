@@ -42,7 +42,6 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@color/black_transparent"
         android:src="@drawable/ic_chevron_left_white_24dp"/>
 
     <ImageView
@@ -51,7 +50,6 @@
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@color/black_transparent"
         android:src="@drawable/ic_chevron_right_white_24dp"/>
 
 </RelativeLayout>

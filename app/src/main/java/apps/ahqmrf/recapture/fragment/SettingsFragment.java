@@ -30,9 +30,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     private TabFragmentCallback callback;
     private View viewRoot, nameLayout, aboutLayout, quoteLayout;
     private ImageView mImageView;
+    private ImageView mCameraImage;
     private TextView mNameBig, mNameSmall, mAbout, mFavoriteQuote;
     private LinearLayout linearLayout;
     private ProgressBar progressBar;
+    private String imageUri;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -70,12 +72,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         linearLayout = (LinearLayout) viewRoot.findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) viewRoot.findViewById(R.id.progressbar);
         mImageView = (ImageView) viewRoot.findViewById(R.id.image_profile);
+        mCameraImage = (ImageView) viewRoot.findViewById(R.id.image_camera);
         mNameBig = (TextView) viewRoot.findViewById(R.id.text_name);
         mNameSmall = (TextView) viewRoot.findViewById(R.id.text_username);
         mAbout = (TextView) viewRoot.findViewById(R.id.text_about);
         mFavoriteQuote = (TextView) viewRoot.findViewById(R.id.text_quote);
 
         mImageView.setOnClickListener(this);
+        mCameraImage.setOnClickListener(this);
         nameLayout.setOnClickListener(this);
         quoteLayout.setOnClickListener(this);
         aboutLayout.setOnClickListener(this);
@@ -86,7 +90,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
     private void setValuesToViews() {
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        String imageUri = preferences.getString(Constants.Basic.PROFILE_IMAGE_PATH, null);
+        imageUri = preferences.getString(Constants.Basic.PROFILE_IMAGE_PATH, null);
         String name = preferences.getString(Constants.Basic.USERNAME, null);
         String quote = preferences.getString(Constants.Basic.FAVORITE_QUOTE, null);
         String about = preferences.getString(Constants.Basic.ABOUT, null);
@@ -160,7 +164,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_profile:
-                callback.onProfilePhotoClick();
+                callback.onProfilePhotoClick(imageUri);
+                break;
+            case R.id.image_camera:
+                callback.onCameraClick();
                 break;
             case R.id.layout_username:
                 callback.onNameClick();

@@ -57,6 +57,9 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
     @Override
     public void onBindViewHolder(final MemoryViewHolder holder, int position) {
         Memory memory = items.get(position);
+        if(memory.isSpecial()) {
+            holder.special.setImageResource(R.drawable.star_golden);
+        } else holder.special.setVisibility(View.GONE);
         if(memory.getIconPath() == null) {
             holder.linearLayout.setVisibility(View.GONE);
             holder.icon.setImageResource(R.drawable.re_capture);
@@ -108,10 +111,12 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
         LinearLayout linearLayout;
         ProgressBar progressBar;
         RelativeLayout layout;
+        ImageView special;
 
         public MemoryViewHolder(View itemView) {
             super(itemView);
 
+            special = (ImageView) itemView.findViewById(R.id.image_special);
             icon = (CircleImageView) itemView.findViewById(R.id.circular_image_icon);
             title = (TextView) itemView.findViewById(R.id.text_title);
             description = (TextView) itemView.findViewById(R.id.text_description);
@@ -151,6 +156,8 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
                             break;
                         case R.id.menu_delete:
                             mCallback.onClickDelete(items.get(getAdapterPosition()));
+                            items.remove(getAdapterPosition());
+                            notifyItemRemoved(getAdapterPosition());
                             break;
                     }
                     return false;

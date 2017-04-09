@@ -16,6 +16,7 @@ import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.model.Memory;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.GridSpacingItemDecoration;
+import apps.ahqmrf.recapture.util.SystemHelper;
 
 /**
  * Created by bsse0 on 4/1/2017.
@@ -45,15 +46,19 @@ public class GalleryMainItemAdapter extends RecyclerView.Adapter<GalleryMainItem
 
     @Override
     public void onBindViewHolder(GalleryItemViewHolder holder, int position) {
+        holder.title.setText(items.get(position).getTitle());
+        String timeStamp = new SystemHelper(mContext).get12HourTimeStamp(items.get(position).getTime());
+        String date = items.get(position).getTime().getDate();
+        holder.timeCreated.setText("Created at " + timeStamp + ", " + date);
         if(horizontal) {
-            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size, false);
+            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size);
             holder.images.setLayoutManager(new GridLayoutManager(mContext, 1));
             holder.images.addItemDecoration(new GridSpacingItemDecoration(1, 3, true));
             holder.images.setAdapter(mAdapter);
         } else {
-            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size, false);
-            holder.images.setLayoutManager(new GridLayoutManager(mContext, 2));
-            holder.images.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
+            GalleryImagesListAdapter mAdapter = new GalleryImagesListAdapter(mContext, mCallback, items.get(position), size);
+            holder.images.setLayoutManager(new GridLayoutManager(mContext, 3));
+            holder.images.addItemDecoration(new GridSpacingItemDecoration(3, 2, true));
             holder.images.setAdapter(mAdapter);
         }
     }
@@ -65,10 +70,13 @@ public class GalleryMainItemAdapter extends RecyclerView.Adapter<GalleryMainItem
 
     public class GalleryItemViewHolder extends RecyclerView.ViewHolder {
         RecyclerView images;
+        TextView title, timeCreated;
 
         public GalleryItemViewHolder(View itemView) {
             super(itemView);
             images = (RecyclerView) itemView.findViewById(R.id.recycler_gallery_item);
+            title = (TextView) itemView.findViewById(R.id.text_title);
+            timeCreated = (TextView) itemView.findViewById(R.id.text_created);
         }
     }
 }

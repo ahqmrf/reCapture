@@ -8,6 +8,6 @@
         </shape>
     </item>
     <item>
-        <color android:color="@color/red" />
+        <color android:color="@color/colorPrimary" />
     </item>
 </ripple>

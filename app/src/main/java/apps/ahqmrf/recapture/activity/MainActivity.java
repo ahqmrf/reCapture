@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.ImageSelectAdapter;
 import apps.ahqmrf.recapture.adapter.MemoryListAdapter;
+import apps.ahqmrf.recapture.adapter.PeopleListAdapter;
 import apps.ahqmrf.recapture.adapter.SimpleFragmentPagerAdapter;
 import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.fragment.GalleryFragment;
@@ -36,7 +37,7 @@ import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.ToastMaker;
 
-public class MainActivity extends AppCompatActivity implements TabFragmentCallback, ImageSelectAdapter.ImageSelectCallback, MemoryListAdapter.MemoryClickCallback {
+public class MainActivity extends AppCompatActivity implements TabFragmentCallback, ImageSelectAdapter.ImageSelectCallback, MemoryListAdapter.MemoryClickCallback, PeopleListAdapter.PeopleItemCallback {
 
     private RelativeLayout mLayoutProgressBar;
     private FragmentManager mFragmentManager;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
         PeopleFragment peopleFragment = new PeopleFragment();
         peopleFragment.setCallback(this);
         peopleFragment.setContext(this);
+        peopleFragment.setItemCallback(this);
         mFragments.add(peopleFragment);
 
         SettingsFragment settingsFragment = new SettingsFragment();
@@ -90,12 +92,6 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
 
     private void loadSplash() {
         mLayoutProgressBar = (RelativeLayout) findViewById(R.id.ll_progress);
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mLayoutProgressBar.setVisibility(View.GONE);
-            }
-        }, Constants.Basic.SPLASH_SCREEN_DURATION);
     }
 
     @Override
@@ -109,8 +105,11 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     }
 
     @Override
-    public void onProfilePhotoClick() {
-        openDefaultGallery();
+    public void onProfilePhotoClick(String path) {
+        if(path == null) return;
+        ArrayList<String> paths = new ArrayList<>();
+        paths.add(path);
+        onImageClick(paths, 0);
     }
 
     @Override
@@ -126,6 +125,16 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     @Override
     public void onQuoteClick() {
         startActivity(new Intent(this, EditProfileActivity.class));
+    }
+
+    @Override
+    public void hideProgressBar() {
+        mLayoutProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onCameraClick() {
+        openDefaultGallery();
     }
 
     private void checkReadExternalStoragePermission() {
@@ -232,5 +241,18 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     @Override
     public void onClickDelete(Memory memory) {
         // TODO
+        mDatabase.remove(memory);
+    }
+
+    @Override
+    public void onClickPeople(People people) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(Constants.IntentExtras.PEOPLE, people);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickDelete(People people) {
+        mDatabase.remove(people);
     }
 }
