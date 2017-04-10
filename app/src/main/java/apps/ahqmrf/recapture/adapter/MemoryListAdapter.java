@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.model.Memory;
+import apps.ahqmrf.recapture.model.Time;
 import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
 import apps.ahqmrf.recapture.util.SystemHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -97,9 +98,18 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
 
         holder.title.setText(memory.getTitle());
         holder.description.setText(memory.getDescription());
-        String str = new SystemHelper(mContext).get12HourTimeStamp(memory.getTime());
-        holder.time.setText(str);
-        holder.date.setText(memory.getTime().getDate());
+        SystemHelper helper = new SystemHelper(mContext);
+        Time cur = helper.getCurrentTime();
+        int curDay = cur.getDay();
+        int memDay = memory.getTime().getDay();
+        int cmp = Time.compare(cur, memory.getTime());
+        if(cmp == 0) {
+            holder.date.setText(helper.get12HourTimeStamp(memory.getTime()));
+        } else {
+            if(curDay - memDay == 1) {
+                holder.date.setText("Yesterday");
+            } else holder.date.setText(memory.getTime().getDate());
+        }
     }
 
     @Override
@@ -110,7 +120,7 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
     public class MemoryViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView icon;
-        TextView title, description, date, time;
+        TextView title, description, date;
         LinearLayout linearLayout;
         ProgressBar progressBar;
         RelativeLayout layout;
@@ -123,7 +133,6 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
             icon = (CircleImageView) itemView.findViewById(R.id.circular_image_icon);
             title = (TextView) itemView.findViewById(R.id.text_title);
             description = (TextView) itemView.findViewById(R.id.text_description);
-            time = (TextView) itemView.findViewById(R.id.text_time);
             date = (TextView) itemView.findViewById(R.id.text_date);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linear_progressbar);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressbar);

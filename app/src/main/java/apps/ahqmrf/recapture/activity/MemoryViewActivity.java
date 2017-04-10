@@ -3,6 +3,7 @@ package apps.ahqmrf.recapture.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -16,8 +17,15 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -33,6 +41,7 @@ import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.model.Time;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.GridSpacingItemDecoration;
+import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
 import apps.ahqmrf.recapture.util.SystemHelper;
 
 public class MemoryViewActivity extends AppCompatActivity implements PeopleListAdapter.PeopleItemCallback, ImageSelectAdapter.ImageSelectCallback, View.OnClickListener {
@@ -43,11 +52,13 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     private RecyclerView relatedImages, relatedPeople;
     private int size;
     private GalleryImagesListAdapter mAdapter;
-    private ImageView star, play, delete, edit;
+    private ImageView star, play, delete, edit, icon;
     private boolean special;
     private Database database;
     private ArrayList<People> peoples;
     private int sizePeople;
+    private LinearLayout linearLayout;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +78,51 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     }
 
     private void prepareViews() {
+        linearLayout = (LinearLayout) findViewById(R.id.linear_progressbar);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        icon = (ImageView) findViewById(R.id.image_icon);
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(memory.getIconPath() == null) return;
+                ArrayList<String> paths = new ArrayList<String>();
+                paths.add(memory.getIconPath());
+                onImageClick(paths, 0);
+            }
+        });
+        if(memory.getIconPath() == null) {
+            linearLayout.setVisibility(View.GONE);
+            icon.setImageResource(R.drawable.re_capture);
+        }
+        else {
+            ImageLoader.getInstance().displayImage(
+                    "file://" + memory.getIconPath(),
+                    icon,
+                    MyDisplayImageOptions.getInstance().getDisplayImageOptions(), new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+                            progressBar.setProgress(0);
+                            linearLayout.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            linearLayout.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            linearLayout.setVisibility(View.GONE);
+                        }
+                    }, new ImageLoadingProgressListener() {
+                        @Override
+                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                            progressBar.setProgress(Math.round(100.0f * current / total));
+                        }
+                    });
+        }
+
         title = (TextView) findViewById(R.id.text_title);
         title.setText(memory.getTitle());
         time = (TextView) findViewById(R.id.text_time);
@@ -94,6 +149,10 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         });
         star = (ImageView) findViewById(R.id.image_star);
         delete = (ImageView) findViewById(R.id.image_trash);
+        play = (ImageView) findViewById(R.id.image_play);
+        play.setOnClickListener(this);
+        if(memory.getImages().size() == 0) play.setColorFilter(ContextCompat.getColor(this, R.color.grey));
+        else play.setColorFilter(ContextCompat.getColor(this, R.color.black));
         star.setOnClickListener(this);
         delete.setOnClickListener(this);
         if (special) star.setImageResource(R.drawable.star_golden);

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     tools:context="apps.ahqmrf.recapture.activity.MemoryViewActivity">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,9 +12,9 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_bar"
         android:layout_alignParentTop="true"
         android:fillViewport="true"
-        android:layout_above="@+id/bottom_bar"
         android:overScrollMode="never">
 
         <LinearLayout
@@ -23,65 +24,99 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="56dp"
+                android:background="@color/dark_white">
 
                 <TextView
                     android:id="@+id/text_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:layout_toLeftOf="@+id/image_star"
+                    android:layout_toRightOf="@+id/layout_icon"
+                    android:ellipsize="end"
+                    android:gravity="center"
                     android:padding="8dp"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    tools:text="Memory Title here"
-                    android:layout_toLeftOf="@+id/image_star"/>
+                    android:textSize="16sp"
+                    tools:text="Memory Title" />
+
+                <TextView
+                    android:id="@+id/text_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:paddingBottom="8dp"
+                    android:textSize="8sp"
+                    tools:text="Created at 05:00 AM, 2017/04/04" />
 
                 <ImageView
                     android:id="@+id/image_star"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="8dp"
-                    android:src="@drawable/star_normal"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_alignParentRight="true"
+                    android:padding="16dp"
+                    android:src="@drawable/star_normal" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_icon"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_alignParentLeft="true"
+                    android:padding="8dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/image_icon"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:src="@drawable/re_capture" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_progressbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        tools:visibility="gone">
+
+                        <ProgressBar
+                            android:id="@+id/progressbar"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:indeterminateDrawable="@drawable/circular_progress_drawable"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
 
             </RelativeLayout>
 
-
-            <TextView
-                android:id="@+id/text_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textSize="12sp"
-                tools:text="Created at 12:04 PM, 2017/04/04" />
 
             <View
                 android:id="@+id/view_line"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginTop="8dp"
                 android:background="@color/whitey_grey" />
 
             <TextView
                 android:id="@+id/text_description_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/dark_white"
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:text="Details"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:padding="16dp"
                 android:textSize="14sp"
                 tools:text="We will write memory desciption here as short as possible so that it does not look bad to read." />
 
@@ -89,12 +124,13 @@
                 android:id="@+id/text_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/dark_white"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:text="Related photos (3)"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
 
             <android.support.v7.widget.RecyclerView
@@ -104,14 +140,14 @@
 
             <TextView
                 android:id="@+id/text_related_people"
+                android:background="@color/dark_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:text="Related People (3)"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_related_people"
@@ -130,9 +166,9 @@
 
     <LinearLayout
         android:id="@+id/action"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -142,7 +178,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="16dp"
-            android:src="@drawable/ic_mode_edit_black_24dp"/>
+            android:src="@drawable/ic_mode_edit_black_24dp" />
 
         <ImageView
             android:id="@+id/image_play"
@@ -150,7 +186,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="16dp"
-            android:src="@drawable/ic_play_circle_filled_black_24dp"/>
+            android:src="@drawable/ic_play_circle_filled_black_24dp" />
 
         <ImageView
             android:id="@+id/image_trash"
@@ -158,7 +194,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="16dp"
-            android:src="@drawable/ic_delete_black_24dp"/>
+            android:src="@drawable/ic_delete_black_24dp" />
 
     </LinearLayout>
 </RelativeLayout>

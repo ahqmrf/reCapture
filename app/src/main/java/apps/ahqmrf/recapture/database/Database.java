@@ -14,6 +14,7 @@ import apps.ahqmrf.recapture.model.Memory;
 import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.model.Time;
 import apps.ahqmrf.recapture.util.Constants;
+import apps.ahqmrf.recapture.util.MemoryComparator;
 import apps.ahqmrf.recapture.util.PeopleComparator;
 
 /**
@@ -241,7 +242,7 @@ public class Database extends SQLiteOpenHelper {
         } finally {
             cursor.close();
         }
-        Collections.reverse(memories);
+        Collections.sort(memories, new MemoryComparator());
         return memories;
     }
 
