@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout linearLayout;
     private ProgressBar progressBar;
     private Database database;
+    private View relationLayout, nameLayout, aboutLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +60,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void prepareViews() {
+        nameLayout = findViewById(R.id.layout_username);
+        aboutLayout = findViewById(R.id.layout_about);
+        relationLayout = findViewById(R.id.layout_relation);
+        nameLayout.setOnClickListener(this);
+        aboutLayout.setOnClickListener(this);
+        relationLayout.setOnClickListener(this);
+
+
         linearLayout = (LinearLayout) findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         mImageView = (ImageView) findViewById(R.id.image_profile);
         mImageView.setOnClickListener(this);
         mCameraImage = (ImageView) findViewById(R.id.image_camera);
         mCameraImage.setOnClickListener(this);
-        mAbout = (TextView) findViewById(R.id.text_about);
+
         mUsernameSmall = (TextView) findViewById(R.id.text_username);
         mUsernameBig = (TextView) findViewById(R.id.text_name);
         mRelation = (TextView) findViewById(R.id.text_relation);
-
+        mAbout = (TextView) findViewById(R.id.text_about);
         setValuesToViews();
 
     }
@@ -79,9 +88,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         mUsernameBig.setText(people.getName());
         mUsernameSmall.setText(people.getName());
         mRelation.setText(people.getRelation());
+        mAbout.setText(people.getAbout());
     }
 
     private void showImageProfile(String path) {
+        if(path == null) {
+            linearLayout.setVisibility(View.GONE);
+            mImageView.setImageResource(R.drawable.ic_account_circle_24dp);
+            return;
+        }
         ImageLoader.getInstance().displayImage(
                 "file://" + path,
                 mImageView,
@@ -128,7 +143,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.image_camera:
                 onCameraClick();
                 break;
+            case R.id.layout_about:
+            case R.id.layout_relation:
+            case R.id.layout_username:
+                editProfile();
+                break;
         }
+    }
+
+    private void editProfile() {
+        Intent intent = new Intent(this, EditUserActivity.class);
+        intent.putExtra(Constants.IntentExtras.PEOPLE, people);
+        startActivity(intent);
+        finish();
     }
 
     private void onCameraClick() {
@@ -199,7 +226,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void onProfilePhotoClick(String path) {
-        if(path == null) return;
+        if (path == null) return;
         ArrayList<String> paths = new ArrayList<>();
         paths.add(path);
         onImageClick(paths, 0);

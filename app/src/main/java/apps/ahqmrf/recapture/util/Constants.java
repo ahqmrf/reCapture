@@ -38,6 +38,7 @@ public final class Constants {
                 public static final String NAME = "user__name";
                 public static final String AVATAR_PATH = "avatar__path";
                 public static final String RELATION = "relation";
+                public static final String ABOUT = "__about__";
             }
         }
 
@@ -72,6 +73,7 @@ public final class Constants {
                 public static final String HASH = "people___hash";
                 public static final String AVATAR_PATH = "avatar__path";
                 public static final String RELATION = "relation";
+                public static final String ABOUT = "__about__";
             }
         }
     }

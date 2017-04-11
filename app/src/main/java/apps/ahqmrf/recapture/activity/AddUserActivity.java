@@ -54,7 +54,7 @@ public class AddUserActivity extends AppCompatActivity {
             return;
         }
         Time time = new SystemHelper(this).getCurrentTime();
-        People user = new People(userName.getText().toString(), path, userRelation.getText().toString(), time.getTimeStamp() + "&" + time.getDate());
+        People user = new People(userName.getText().toString(), path, userRelation.getText().toString(), time.getTimeStamp() + "&" + time.getDate(), "");
         Intent intent = new Intent();
         intent.putExtra(Constants.IntentExtras.PEOPLE, user);
         setResult(RESULT_OK, intent);

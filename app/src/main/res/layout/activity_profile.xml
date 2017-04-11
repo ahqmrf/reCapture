@@ -127,7 +127,7 @@
             android:background="@color/whitey_grey"/>
 
         <RelativeLayout
-            android:id="@+id/layout_quote"
+            android:id="@+id/layout_relation"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:background="?attr/selectableItemBackground"
