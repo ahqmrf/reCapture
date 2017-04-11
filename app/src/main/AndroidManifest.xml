@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/TabActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,34 +25,48 @@
         </activity>
         <activity
             android:name=".activity.CreateMemoryActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.GalleryActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/TabActivityTheme" />
         <activity
             android:name=".activity.SelectIconActivity"
-            android:label="Select icon" />
-        <activity android:name=".activity.TagPeopleActivity" />
+            android:label="Select icon"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TagPeopleActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddUserActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SingleImageSelectionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/TabActivityTheme" />
         <activity
             android:name=".activity.MemoryViewActivity"
             android:label="Memory"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ImageFullScreenActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DialogActivity.Transparent" />
         <activity
             android:name=".activity.EditProfileActivity"
             android:label="Edit Profile"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ProfileActivity"
-            android:label="View Profile" />
+            android:label="View Profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EditUserActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
