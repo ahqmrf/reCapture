@@ -157,6 +157,14 @@
 
     </ScrollView>
 
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar"
+        android:background="@color/black_transparent"
+        android:visibility="gone"/>
+
     <View
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"

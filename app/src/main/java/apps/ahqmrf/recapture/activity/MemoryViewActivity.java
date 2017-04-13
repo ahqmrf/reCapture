@@ -12,15 +12,19 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -57,8 +61,11 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     private Database database;
     private ArrayList<People> peoples;
     private int sizePeople;
-    private LinearLayout linearLayout;
-    private ProgressBar progressBar;
+    private LinearLayout linearLayout, linear;
+    private ProgressBar progressBar, progress;
+    private ViewFlipper mViewFlipper;
+    private boolean isFlipping;
+    private boolean flipperIsVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +80,14 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         memory = getIntent().getParcelableExtra(Constants.IntentExtras.MEMORY);
         database = new Database(this, null, null, 1);
         special = memory.isSpecial();
+        isFlipping = false;
+        flipperIsVisible = false;
 
         prepareViews();
     }
 
     private void prepareViews() {
+        mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         linearLayout = (LinearLayout) findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -157,6 +167,56 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         delete.setOnClickListener(this);
         if (special) star.setImageResource(R.drawable.star_golden);
         else star.setImageResource(R.drawable.star_normal);
+
+        prepareFlipper();
+    }
+
+    private void prepareFlipper() {
+        if(memory.getImages().size() == 0) return;
+        mViewFlipper.setVisibility(View.GONE);
+        mViewFlipper.removeAllViews();
+        ArrayList<String> photos = memory.getImages();
+        for(String imageUri : photos) {
+            View view = LayoutInflater.from(this).inflate(R.layout.layout_flipping_image, mViewFlipper, false);
+            ImageView flipImage = (ImageView) view.findViewById(R.id.image);
+            linear = (LinearLayout) view.findViewById(R.id.linear_progressbar);
+            progress = (ProgressBar) view.findViewById(R.id.progressbar);
+            ImageView close = (ImageView) view.findViewById(R.id.image_close);
+            close.setOnClickListener(this);
+            flipImage.setOnClickListener(this);
+            flipImage.setOnClickListener(this);
+            ImageLoader.getInstance().displayImage(
+                    "file://" + imageUri,
+                    flipImage,
+                    MyDisplayImageOptions.getInstance().getDisplayImageOptions(), new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+                            progress.setProgress(0);
+                            linear.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            linear.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            linear.setVisibility(View.GONE);
+                        }
+                    }, new ImageLoadingProgressListener() {
+                        @Override
+                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                            progress.setProgress(Math.round(100.0f * current / total));
+                        }
+                    });
+            mViewFlipper.addView(view);
+        }
+        mViewFlipper.setFlipInterval(3000);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        Animation fadeOut = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
+        mViewFlipper.setInAnimation(fadeIn);
+        mViewFlipper.setOutAnimation(fadeOut);
     }
 
     private void setRecycler() {
@@ -217,6 +277,16 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
             case R.id.image_trash:
                 deleteMemory();
                 break;
+            case R.id.image_play:
+                flipperIsVisible = true;
+                toggleFlipping();
+                break;
+            case R.id.image:
+                toggleFlipping();
+                break;
+            case R.id.image_close:
+                onBackPressed();
+                break;
         }
     }
 
@@ -226,7 +296,7 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
                 .setMessage(
                         getResources().getString(R.string.promptDeleteMem))
                 .setIcon(
-                        ContextCompat.getDrawable(getApplicationContext(), android.R.drawable.ic_dialog_alert))
+                        ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_delete_black_24dp))
                 .setPositiveButton(
                         getResources().getString(R.string.PostiveYesButton),
                         new DialogInterface.OnClickListener() {
@@ -274,5 +344,30 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         database.remove(people);
         sizePeople--;
         peopleAmount.setText("Related People (" +sizePeople + ")");
+    }
+
+    private void toggleFlipping() {
+        if(flipperIsVisible) mViewFlipper.setVisibility(View.VISIBLE);
+        else mViewFlipper.setVisibility(View.GONE);
+        if(isFlipping) {
+            isFlipping = false;
+            mViewFlipper.stopFlipping();
+            play.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
+        } else {
+            isFlipping = true;
+            mViewFlipper.startFlipping();
+            play.setImageResource(R.drawable.ic_pause_black_24dp);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(flipperIsVisible) {
+            mViewFlipper.setVisibility(View.GONE);
+            mViewFlipper.setDisplayedChild(0);
+            mViewFlipper.stopFlipping();
+            play.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
+            flipperIsVisible = false;
+        } else super.onBackPressed();
     }
 }
