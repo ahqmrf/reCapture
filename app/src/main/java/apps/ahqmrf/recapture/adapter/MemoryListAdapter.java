@@ -182,7 +182,7 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
                     .setMessage(
                             mContext.getResources().getString(R.string.promptDeleteMem))
                     .setIcon(
-                            ContextCompat.getDrawable(mContext, android.R.drawable.ic_dialog_alert))
+                            ContextCompat.getDrawable(mContext, R.drawable.ic_delete_black_24dp))
                     .setPositiveButton(
                             mContext.getResources().getString(R.string.PostiveYesButton),
                             new DialogInterface.OnClickListener() {
