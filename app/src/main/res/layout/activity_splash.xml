@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="apps.ahqmrf.recapture.activity.SplashActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="Enter password"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border">
+
+        <EditText
+            android:id="@+id/edit_pass"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:textColor="@color/black"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/image_key"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_vpn_key_black_24dp"
+            android:tint="@color/grey"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_enter"
+        android:layout_marginTop="8dp"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_ripple"
+        android:textAllCaps="false"
+        android:text="Enter"/>
+
+</LinearLayout>

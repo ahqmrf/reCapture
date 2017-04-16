@@ -18,17 +18,21 @@ public class Memory implements Parcelable{
     private ArrayList<String> images;
     private ArrayList<People> peoples;
     private Time time;
+    private String happenedDate;
+    private String happenedTime;
     private boolean special;
 
     public Memory() {}
 
-    public Memory(String title, String description, String iconPath, ArrayList<String> images, ArrayList<People> peoples, Time time, boolean special) {
+    public Memory(String title, String description, String iconPath, ArrayList<String> images, ArrayList<People> peoples, Time time, String happenedDate, String happenedTime, boolean special) {
         this.title = title;
         this.description = description;
         this.iconPath = iconPath;
         this.images = images;
         this.peoples = peoples;
         this.time = time;
+        this.happenedDate = happenedDate;
+        this.happenedTime = happenedTime;
         this.special = special;
     }
 
@@ -40,7 +44,28 @@ public class Memory implements Parcelable{
         images = in.createStringArrayList();
         peoples = in.createTypedArrayList(People.CREATOR);
         time = in.readParcelable(Time.class.getClassLoader());
+        happenedDate = in.readString();
+        happenedTime = in.readString();
         special = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(iconPath);
+        dest.writeStringList(images);
+        dest.writeTypedList(peoples);
+        dest.writeParcelable(time, flags);
+        dest.writeString(happenedDate);
+        dest.writeString(happenedTime);
+        dest.writeByte((byte) (special ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Memory> CREATOR = new Creator<Memory>() {
@@ -111,29 +136,27 @@ public class Memory implements Parcelable{
         this.time = time;
     }
 
+    public String getHappenedDate() {
+        return happenedDate;
+    }
+
+    public void setHappenedDate(String happenedDate) {
+        this.happenedDate = happenedDate;
+    }
+
+    public String getHappenedTime() {
+        return happenedTime;
+    }
+
+    public void setHappenedTime(String happenedTime) {
+        this.happenedTime = happenedTime;
+    }
+
     public boolean isSpecial() {
         return special;
     }
 
     public void setSpecial(boolean special) {
         this.special = special;
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(iconPath);
-        dest.writeStringList(images);
-        dest.writeTypedList(peoples);
-        dest.writeParcelable(time, flags);
-        dest.writeByte((byte) (special ? 1 : 0));
     }
 }

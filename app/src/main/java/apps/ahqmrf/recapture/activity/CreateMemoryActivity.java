@@ -1,27 +1,26 @@
 package apps.ahqmrf.recapture.activity;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.util.Constants;
@@ -33,9 +32,12 @@ public class CreateMemoryActivity extends AppCompatActivity {
     private Button mBrowseBtn;
     private TextView mSelectedAmountText;
     private ArrayList<String> imagePaths;
-    private Button mNextBtn;
-    private EditText mTitleEdit;
+    private Button mNextBtn, mBtnSetDate, mBtnSetTime;
+    private EditText mTitleEdit, mEditDate, mEditTime;
     private EditText mDescriptionEdit;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    private String date, time;
+    private Calendar c = Calendar.getInstance();
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -47,9 +49,69 @@ public class CreateMemoryActivity extends AppCompatActivity {
                 case R.id.btn_next:
                     proceed();
                     break;
+                case R.id.btn_set_date:
+                    setDate();
+                    break;
+                case R.id.btn_set_time:
+                    setTime();
+                    break;
+                case R.id.edit_date:
+                    setDate();
+                    break;
+                case R.id.edit_time:
+                    setTime();
+                    break;
             }
         }
     };
+
+    private void setTime() {
+        c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        String str = "AM";
+                        if(hourOfDay > 12) {
+                            hourOfDay -= 12;
+                            str = "PM";
+                        }
+
+                        time = (hourOfDay < 10? "0" : "") + hourOfDay + ":" + (minute < 10? "0" : "") + minute + " " + str;
+                        mEditTime.setText(time);
+
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
+
+    private void setDate() {
+        c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        date = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+                        mEditDate.setText(date);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
 
     private void proceed() {
         if (mTitleEdit.getText().toString().isEmpty()) {
@@ -61,6 +123,8 @@ public class CreateMemoryActivity extends AppCompatActivity {
         intent.putStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA, imagePaths);
         intent.putExtra(Constants.IntentExtras.MEMORY_TITLE, mTitleEdit.getText().toString());
         intent.putExtra(Constants.IntentExtras.MEMORY_DESCRIPTION, mDescriptionEdit.getText().toString());
+        intent.putExtra(Constants.IntentExtras.HAPPENED_DATE, date);
+        intent.putExtra(Constants.IntentExtras.HAPPENED_TIME, time);
 
         startActivity(intent);
     }
@@ -126,6 +190,7 @@ public class CreateMemoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_memory);
         new SystemHelper(this).setupUI(findViewById(R.id.content_frame));
@@ -142,6 +207,34 @@ public class CreateMemoryActivity extends AppCompatActivity {
     }
 
     private void prepareViews() {
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        String str = "AM";
+        if(mHour > 12) {
+            mHour -= 12;
+            str = "PM";
+        }
+
+        time = (mHour < 10? "0" : "") + mHour + ":" + (mMinute < 10? "0" : "") + mMinute + " " + str;
+
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH) + 1;
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        date = mYear + "/" + mMonth + "/" + mDay;
+
+
+        mEditDate = (EditText) findViewById(R.id.edit_date);
+        mEditDate.setText(date);
+        mEditDate.setOnClickListener(mOnClickListener);
+        mEditTime = (EditText) findViewById(R.id.edit_time);
+        mEditTime.setText(time);
+        mEditTime.setOnClickListener(mOnClickListener);
+        mBtnSetDate = (Button) findViewById(R.id.btn_set_date);
+        mBtnSetDate.setOnClickListener(mOnClickListener);
+        mBtnSetTime = (Button) findViewById(R.id.btn_set_time);
+        mBtnSetTime.setOnClickListener(mOnClickListener);
         mBrowseBtn = (Button) findViewById(R.id.btn_browse);
         mBrowseBtn.setOnClickListener(mOnClickListener);
         mNextBtn = (Button) findViewById(R.id.btn_next);

@@ -65,6 +65,8 @@ public class Database extends SQLiteOpenHelper {
                 Constants.DBUtil.TableMemory.Column.DATE + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.TITLE + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.ICON_PATH + " TEXT, " +
+                Constants.DBUtil.TableMemory.Column.HAPPENED_DATE + " TEXT, " +
+                Constants.DBUtil.TableMemory.Column.HAPPENED_TIME + " TEXT, " +
                 Constants.DBUtil.TableMemory.Column.DESCRIPTION + " TEXT " +
                 ");";
         db.execSQL(query);
@@ -244,6 +246,8 @@ public class Database extends SQLiteOpenHelper {
         values.put(Constants.DBUtil.TableMemory.Column.TIME_STAMP, memory.getTime().getTimeStamp());
         values.put(Constants.DBUtil.TableMemory.Column.DATE, memory.getTime().getDate());
         values.put(Constants.DBUtil.TableMemory.Column.TITLE, memory.getTitle());
+        values.put(Constants.DBUtil.TableMemory.Column.HAPPENED_DATE, memory.getHappenedDate());
+        values.put(Constants.DBUtil.TableMemory.Column.HAPPENED_TIME, memory.getHappenedTime());
         values.put(Constants.DBUtil.TableMemory.Column.DESCRIPTION, memory.getDescription());
         values.put(Constants.DBUtil.TableMemory.Column.ICON_PATH, memory.getIconPath());
         values.put(Constants.DBUtil.TableMemory.Column.SPECIAL, memory.isSpecial() ? "1" : "0");
@@ -266,6 +270,8 @@ public class Database extends SQLiteOpenHelper {
                 String date = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableMemory.Column.DATE));
                 ArrayList<People> peoples = getAllTaggedPeople(timeStamp);
                 ArrayList<String> images = getAllImages(timeStamp);
+                String hDate = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableMemory.Column.HAPPENED_DATE));
+                String hTime = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableMemory.Column.HAPPENED_TIME));
                 String special = cursor.getString(cursor.getColumnIndex(Constants.DBUtil.TableMemory.Column.SPECIAL));
                 Memory memory = new Memory(
                         title,
@@ -274,6 +280,8 @@ public class Database extends SQLiteOpenHelper {
                         images,
                         peoples,
                         new Time(timeStamp, date),
+                        hDate,
+                        hTime,
                         special.equals("1")
 
                 );

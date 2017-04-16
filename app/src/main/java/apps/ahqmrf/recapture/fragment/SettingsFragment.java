@@ -5,13 +5,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,12 +34,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     private Context context;
     private TabFragmentCallback callback;
     private View viewRoot, nameLayout, aboutLayout, quoteLayout;
-    private ImageView mImageView;
-    private ImageView mCameraImage;
-    private TextView mNameBig, mNameSmall, mAbout, mFavoriteQuote;
+    private TextView mNameSmall, mAbout, mFavoriteQuote;
     private LinearLayout linearLayout;
     private ProgressBar progressBar;
     private String imageUri;
+    private SwitchCompat mSwitchLock;
+    private RelativeLayout passLayout;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -66,20 +71,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     }
 
     private void prepareViews() {
+        passLayout = (RelativeLayout) viewRoot.findViewById(R.id.layout_password);
+        passLayout.setOnClickListener(this);
+        mSwitchLock = (SwitchCompat) viewRoot.findViewById(R.id.simpleSwitch);
+        mSwitchLock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                changeLockMode(isChecked);
+            }
+        });
         nameLayout = viewRoot.findViewById(R.id.layout_username);
         quoteLayout = viewRoot.findViewById(R.id.layout_quote);
         aboutLayout = viewRoot.findViewById(R.id.layout_about);
         linearLayout = (LinearLayout) viewRoot.findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) viewRoot.findViewById(R.id.progressbar);
-        mImageView = (ImageView) viewRoot.findViewById(R.id.image_profile);
-        mCameraImage = (ImageView) viewRoot.findViewById(R.id.image_camera);
-        mNameBig = (TextView) viewRoot.findViewById(R.id.text_name);
         mNameSmall = (TextView) viewRoot.findViewById(R.id.text_username);
         mAbout = (TextView) viewRoot.findViewById(R.id.text_about);
         mFavoriteQuote = (TextView) viewRoot.findViewById(R.id.text_quote);
 
-        mImageView.setOnClickListener(this);
-        mCameraImage.setOnClickListener(this);
         nameLayout.setOnClickListener(this);
         quoteLayout.setOnClickListener(this);
         aboutLayout.setOnClickListener(this);
@@ -88,51 +98,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         setValuesToViews();
     }
 
+    private void changeLockMode(boolean isChecked) {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(Constants.Basic.LOCK_MODE, isChecked);
+        editor.apply();
+    }
+
     private void setValuesToViews() {
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        imageUri = preferences.getString(Constants.Basic.PROFILE_IMAGE_PATH, null);
         String name = preferences.getString(Constants.Basic.USERNAME, null);
         String quote = preferences.getString(Constants.Basic.FAVORITE_QUOTE, null);
         String about = preferences.getString(Constants.Basic.ABOUT, null);
+        boolean lockMode = preferences.getBoolean(Constants.Basic.LOCK_MODE, false);
 
-        if(imageUri == null) {
-            linearLayout.setVisibility(View.GONE);
-            mImageView.setImageResource(R.drawable.ic_account_circle_24dp);
-        }
-        else {
-            ImageLoader.getInstance().displayImage(
-                    "file://" + imageUri,
-                    mImageView,
-                    MyDisplayImageOptions.getInstance().getDisplayImageOptions(), new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String imageUri, View view) {
-                            progressBar.setProgress(0);
-                            linearLayout.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                            linearLayout.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            linearLayout.setVisibility(View.GONE);
-                        }
-                    }, new ImageLoadingProgressListener() {
-                        @Override
-                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
-                            progressBar.setProgress(Math.round(100.0f * current / total));
-                        }
-                    });
-        }
 
         if(name == null) {
             mNameSmall.setText("Click here to set username");
-            mNameBig.setText("No name set yet");
         } else {
             mNameSmall.setText(name);
-            mNameBig.setText(name);
         }
 
         if(quote == null) {
@@ -142,6 +126,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         if(about == null) {
             mAbout.setText("Click to write something about you");
         } else mAbout.setText(about);
+
+        mSwitchLock.setChecked(lockMode);
     }
 
     @Override
@@ -163,12 +149,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.image_profile:
-                callback.onProfilePhotoClick(imageUri);
-                break;
-            case R.id.image_camera:
-                callback.onCameraClick();
-                break;
             case R.id.layout_username:
                 callback.onNameClick();
                 break;
@@ -177,6 +157,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.layout_quote:
                 callback.onQuoteClick();
+                break;
+            case R.id.layout_password:
+                callback.onPasswordClick();
                 break;
         }
     }

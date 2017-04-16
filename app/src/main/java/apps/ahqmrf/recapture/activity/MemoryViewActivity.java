@@ -52,7 +52,7 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
 
     private ScrollView scrollView;
     private Memory memory;
-    private TextView title, time, description, amount, peopleAmount;
+    private TextView title, time, description, amount, peopleAmount, hTime;
     private RecyclerView relatedImages, relatedPeople;
     private int size;
     private GalleryImagesListAdapter mAdapter;
@@ -133,6 +133,9 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
                     });
         }
 
+        hTime = (TextView) findViewById(R.id.text_h_time);
+        hTime.setText(memory.getHappenedTime() + ", " + memory.getHappenedDate());
+
         title = (TextView) findViewById(R.id.text_title);
         title.setText(memory.getTitle());
         time = (TextView) findViewById(R.id.text_time);
@@ -141,7 +144,9 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         String date = memory.getTime().getDate();
         time.setText("Created at " + timeStamp + ", " + date);
         description = (TextView) findViewById(R.id.text_description);
-        description.setText(memory.getDescription());
+        String str = memory.getDescription();
+        if(str.isEmpty()) str = "No description added.";
+        description.setText(str);
         amount = (TextView) findViewById(R.id.text_amount);
         amount.setText("Related Photos (" + memory.getImages().size() + ")");
         peopleAmount = (TextView) findViewById(R.id.text_related_people);

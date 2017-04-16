@@ -15,17 +15,10 @@
         android:background="@color/dark_white"
         android:gravity="center"
         android:padding="8dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textColor="@color/black"
         android:text="Add new user"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/whitey_grey"/>
 
     <RelativeLayout
         android:layout_marginTop="16dp"
@@ -39,7 +32,7 @@
             android:padding="8dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_account_circle_24dp"
-            android:tint="@color/black"/>
+            android:tint="@color/grey"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -58,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textCursorDrawable="@null"
-        android:textColor="@color/grey"
+        android:textColor="@color/black"
         android:inputType="text"
         android:hint="Write username"
         android:paddingTop="8dp"
@@ -79,7 +72,7 @@
             android:padding="8dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_relation"
-            android:tint="@color/black"/>
+            android:tint="@color/grey"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -98,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textCursorDrawable="@null"
-        android:textColor="@color/grey"
+        android:textColor="@color/black"
         android:hint="Relation"
         android:inputType="text"
         android:paddingTop="8dp"
@@ -152,16 +145,16 @@
 
     <Button
         android:id="@+id/btn_add_user"
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_ripple"
         android:text="Add user"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:clickable="true"/>
 
 </LinearLayout>

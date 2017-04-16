@@ -28,6 +28,7 @@ public class SelectIconActivity extends AppCompatActivity implements IconSelecti
     private RecyclerView mIconsRecyclerView;
     private String memoryTitle;
     private String memoryDescription;
+    private String hDate, hTime;
     private String iconPath;
     private ArrayList<String> memoryImages;
     private ArrayList<File> imageFiles;
@@ -52,6 +53,8 @@ public class SelectIconActivity extends AppCompatActivity implements IconSelecti
         memoryTitle = getIntent().getStringExtra(Constants.IntentExtras.MEMORY_TITLE);
         memoryDescription = getIntent().getStringExtra(Constants.IntentExtras.MEMORY_DESCRIPTION);
         memoryImages = getIntent().getStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA);
+        hDate = getIntent().getStringExtra(Constants.IntentExtras.HAPPENED_DATE);
+        hTime = getIntent().getStringExtra(Constants.IntentExtras.HAPPENED_TIME);
         if(memoryImages == null) memoryImages = new ArrayList<>();
         imageFiles = new ArrayList<>();
 
@@ -88,6 +91,8 @@ public class SelectIconActivity extends AppCompatActivity implements IconSelecti
         memory.setDescription(memoryDescription);
         memory.setIconPath(iconPath);
         memory.setImages(memoryImages);
+        memory.setHappenedDate(hDate);
+        memory.setHappenedTime(hTime);
 
         Intent intent = new Intent(this, TagPeopleActivity.class);
         intent.putExtra(Constants.IntentExtras.MEMORY, memory);

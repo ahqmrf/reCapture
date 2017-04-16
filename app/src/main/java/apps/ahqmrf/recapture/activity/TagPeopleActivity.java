@@ -138,6 +138,7 @@ public class TagPeopleActivity extends AppCompatActivity implements PeopleToTagL
         if(requestCode == Constants.RequestCodes.ADD_USER_REQ && resultCode == RESULT_OK) {
             People people = data.getParcelableExtra(Constants.IntentExtras.PEOPLE);
             mDatabase.insertUser(people);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

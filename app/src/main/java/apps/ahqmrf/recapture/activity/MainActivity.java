@@ -137,6 +137,11 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
         openDefaultGallery();
     }
 
+    @Override
+    public void onPasswordClick() {
+        startActivity(new Intent(this, PasswordActivity.class));
+    }
+
     private void checkReadExternalStoragePermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(MainActivity.this,

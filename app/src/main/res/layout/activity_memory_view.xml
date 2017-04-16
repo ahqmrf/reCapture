@@ -120,6 +120,27 @@
                 android:textSize="14sp"
                 tools:text="We will write memory desciption here as short as possible so that it does not look bad to read." />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_white"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:text="Time:"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_h_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textSize="14sp"
+                tools:text="03:30 PM, 2017/02/19" />
+
             <TextView
                 android:id="@+id/text_amount"
                 android:layout_width="match_parent"

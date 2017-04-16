@@ -9,4 +9,5 @@ public interface TabFragmentCallback {
     void onQuoteClick();
     void hideProgressBar();
     void onCameraClick();
+    void onPasswordClick();
 }

@@ -102,6 +102,7 @@ public class PeopleFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 callback.addNewUser();
+                reload();
             }
         });
         mRecyclerPeopleList = (RecyclerView) root.findViewById(R.id.recycler_people_list);

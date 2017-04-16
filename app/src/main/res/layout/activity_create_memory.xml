@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <TextView
@@ -18,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:textColor="@color/black"
             android:text="@string/title"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <EditText
@@ -29,9 +30,9 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
-            android:textCursorDrawable="@null"
             android:inputType="text"
             android:padding="8dp"
+            android:textCursorDrawable="@null"
             android:textSize="14sp" />
 
         <View
@@ -41,6 +42,109 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:background="@color/whitey_grey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="16dp"
+            android:text="When this memory took place?"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="4dp"
+            android:text="(Select date and time when this memory happened. Click Set Date to select date and Set Time to select Time.)"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@color/dark_white"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_set_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/button_ripple"
+                    android:text="Set Date"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edit_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@color/dark_white"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_set_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/button_ripple"
+                    android:text="Set Time"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/whitey_grey" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,10 +172,10 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
-            android:textCursorDrawable="@null"
             android:inputType="textMultiLine"
             android:maxLines="6"
             android:padding="8dp"
+            android:textCursorDrawable="@null"
             android:textSize="14sp" />
 
         <View
@@ -126,10 +230,10 @@
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@id/btn_browse"
                 android:background="@android:color/transparent"
-                android:text="@string/selected_0_photos"
                 android:gravity="center_vertical"
-                android:textColor="@color/grey"
                 android:padding="8dp"
+                android:text="@string/selected_0_photos"
+                android:textColor="@color/grey"
                 android:textSize="12sp" />
 
         </RelativeLayout>
@@ -144,15 +248,16 @@
 
         <Button
             android:id="@+id/btn_next"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/button_ripple"
-            android:text="@string/next"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_ripple"
+            android:text="&lt; Next &gt;"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

@@ -43,7 +43,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
             R.drawable.ic_history_white_24dp,
             R.drawable.ic_collections_white_24dp,
             R.drawable.ic_people_white_24dp,
-            R.drawable.ic_account_circle_white_24dp
+            R.drawable.ic_settings_white_24dp
     };
 
 // ...

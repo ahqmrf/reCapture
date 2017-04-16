@@ -17,6 +17,8 @@ public final class Constants {
         public static final String PROFILE_IMAGE_PATH = "myProfilePhoto";
         public static final String FAVORITE_QUOTE = "myFavoriteQuote";
         public static final String ABOUT = "aboutMyself";
+        public static final String LOCK_MODE = "lock_mode";
+        public static final String PASSWORD =  "Pass_word" ;
     }
 
     public final class IntentExtras {
@@ -27,6 +29,8 @@ public final class Constants {
         public static final String MEMORY = "__memory";
         public static final String PEOPLE = "__people";
         public static final String POSITION = "position";
+        public static final String HAPPENED_DATE = "date_happened";
+        public static final String HAPPENED_TIME = "time_happened";
     }
 
     public final class DBUtil {
@@ -52,6 +56,8 @@ public final class Constants {
                 public static final String ICON_PATH = "IconPath";
                 public static final String DATE = "date";
                 public static final String TIME_STAMP = "time__stamp";
+                public static final String HAPPENED_DATE = "date_happened";
+                public static final String HAPPENED_TIME = "time_happened";
             }
         }
 
