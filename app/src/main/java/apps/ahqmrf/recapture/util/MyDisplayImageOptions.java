@@ -1,5 +1,7 @@
 package apps.ahqmrf.recapture.util;
 
+import android.graphics.Bitmap;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import apps.ahqmrf.recapture.R;
@@ -31,6 +33,8 @@ public class MyDisplayImageOptions {
                     .showImageOnLoading(R.drawable.loading)
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .resetViewBeforeLoading()
                     .build();
         }
         return displayImageOptions;

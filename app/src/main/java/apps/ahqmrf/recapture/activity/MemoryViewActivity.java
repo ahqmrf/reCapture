@@ -61,8 +61,8 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     private Database database;
     private ArrayList<People> peoples;
     private int sizePeople;
-    private LinearLayout linearLayout, linear;
-    private ProgressBar progressBar, progress;
+    private LinearLayout linearLayout;
+    private ProgressBar progressBar;
     private ViewFlipper mViewFlipper;
     private boolean isFlipping;
     private boolean flipperIsVisible;
@@ -179,8 +179,6 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         for(String imageUri : photos) {
             View view = LayoutInflater.from(this).inflate(R.layout.layout_flipping_image, mViewFlipper, false);
             ImageView flipImage = (ImageView) view.findViewById(R.id.image);
-            linear = (LinearLayout) view.findViewById(R.id.linear_progressbar);
-            progress = (ProgressBar) view.findViewById(R.id.progressbar);
             ImageView close = (ImageView) view.findViewById(R.id.image_close);
             close.setOnClickListener(this);
             flipImage.setOnClickListener(this);
@@ -188,31 +186,10 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
             ImageLoader.getInstance().displayImage(
                     "file://" + imageUri,
                     flipImage,
-                    MyDisplayImageOptions.getInstance().getDisplayImageOptions(), new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String imageUri, View view) {
-                            progress.setProgress(0);
-                            linear.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                            linear.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            linear.setVisibility(View.GONE);
-                        }
-                    }, new ImageLoadingProgressListener() {
-                        @Override
-                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
-                            progress.setProgress(Math.round(100.0f * current / total));
-                        }
-                    });
+                    MyDisplayImageOptions.getInstance().getDisplayImageOptions());
             mViewFlipper.addView(view);
         }
-        mViewFlipper.setFlipInterval(3000);
+        mViewFlipper.setFlipInterval(5000);
         Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
         Animation fadeOut = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
         mViewFlipper.setInAnimation(fadeIn);
