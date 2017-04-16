@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.util.Constants;
+import apps.ahqmrf.recapture.util.SystemHelper;
 import apps.ahqmrf.recapture.util.ToastMaker;
 
 public class PasswordActivity extends AppCompatActivity {
@@ -23,7 +25,10 @@ public class PasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
-        if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        new SystemHelper(this).setupUI(findViewById(R.id.pass_layout));
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         old = (EditText) findViewById(R.id.edit_old);
         _new = (EditText) findViewById(R.id.edit_new);
@@ -42,12 +47,12 @@ public class PasswordActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String passwordStr = preferences.getString(Constants.Basic.PASSWORD, "");
 
-        if(passwordStr.equals(old.getText().toString())) {
-            if(_new.getText().toString().isEmpty()) {
+        if (passwordStr.equals(old.getText().toString())) {
+            if (_new.getText().toString().isEmpty()) {
                 ToastMaker.showShortMessage(this, "Password cannot be empty");
                 return;
             }
-            if(!_new.getText().toString().equals(confirm.getText().toString())) {
+            if (!_new.getText().toString().equals(confirm.getText().toString())) {
                 ToastMaker.showShortMessage(this, "Passwords do not match");
                 return;
             }
@@ -57,15 +62,14 @@ public class PasswordActivity extends AppCompatActivity {
             editor.apply();
             ToastMaker.showShortMessage(this, "Password updated");
             finish();
-        }
-        else {
+        } else {
             ToastMaker.showShortMessage(this, "Wrong password");
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
