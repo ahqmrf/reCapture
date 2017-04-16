@@ -32,7 +32,6 @@
             android:layout_marginTop="8dp"
             android:inputType="text"
             android:padding="8dp"
-            android:textCursorDrawable="@null"
             android:textSize="14sp" />
 
         <View
@@ -175,7 +174,6 @@
             android:inputType="textMultiLine"
             android:maxLines="6"
             android:padding="8dp"
-            android:textCursorDrawable="@null"
             android:textSize="14sp" />
 
         <View
