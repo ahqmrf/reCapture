@@ -56,9 +56,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
     public void onBindViewHolder(PeopleViewHolder holder, int position) {
         People item = items.get(position);
         holder.name.setText(item.getName());
-        if(item.getAvatar() == null) {
-            holder.avatarImage.setImageResource(R.drawable.ic_account_circle_24dp);
-        } else {
+        if (item.getAvatar() != null) {
             ImageLoader.getInstance().displayImage(
                     "file://" + item.getAvatar(),
                     holder.avatarImage,

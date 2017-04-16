@@ -94,7 +94,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void showImageProfile(String path) {
         if(path == null) {
             linearLayout.setVisibility(View.GONE);
-            mImageView.setImageResource(R.drawable.ic_account_circle_24dp);
             return;
         }
         ImageLoader.getInstance().displayImage(

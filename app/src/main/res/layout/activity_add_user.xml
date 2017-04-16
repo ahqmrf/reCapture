@@ -9,19 +9,7 @@
     android:padding="16dp"
     tools:context="apps.ahqmrf.recapture.activity.AddUserActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/dark_white"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:text="Add new user"/>
-
-
     <RelativeLayout
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

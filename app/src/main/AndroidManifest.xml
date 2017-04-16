@@ -35,7 +35,8 @@
         <activity
             android:name=".activity.AddUserActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:label="Add new people"/>
         <activity
             android:name=".activity.SingleImageSelectionActivity"
             android:screenOrientation="portrait"

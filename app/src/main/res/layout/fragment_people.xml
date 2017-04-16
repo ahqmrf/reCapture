@@ -75,6 +75,11 @@
         android:background="@color/dark_white"
         android:text="People you know"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/whitey_grey"/>
+
     <TextView
         android:id="@+id/text_no_user"
         android:layout_width="match_parent"
