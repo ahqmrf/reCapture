@@ -5,31 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/light_black"
+    android:padding="16dp"
+    android:overScrollMode="never"
     tools:context="apps.ahqmrf.recapture.activity.EditProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textSize="16sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Username"/>
 
         <EditText
             android:id="@+id/edit_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:maxLines="1"
-            android:padding="12dp"
-            android:background="@drawable/edit_text_bg"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp"
             android:textSize="14sp"
             android:hint="Write your username" />
 
@@ -39,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:padding="8dp"
             android:textSize="16sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Favorite quote"/>
 
         <EditText
@@ -47,10 +48,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="4"
-            android:inputType="textMultiLine"
-            android:padding="12dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/edit_text_bg"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp"
             android:textSize="14sp"
             android:hint="Wirte your favorite quote" />
 
@@ -60,18 +61,18 @@
             android:layout_marginTop="16dp"
             android:padding="8dp"
             android:textSize="16sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="About yourself"/>
 
         <EditText
             android:id="@+id/edit_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
             android:maxLines="4"
-            android:padding="12dp"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/edit_text_bg"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp"
             android:textSize="14sp"
             android:hint="Write something about yourself" />
 
@@ -84,7 +85,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
-            android:textSize="12sp"
             android:text="Save Changes"/>
 
     </LinearLayout>

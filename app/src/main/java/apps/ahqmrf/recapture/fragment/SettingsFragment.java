@@ -35,9 +35,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     private TabFragmentCallback callback;
     private View viewRoot, nameLayout, aboutLayout, quoteLayout;
     private TextView mNameSmall, mAbout, mFavoriteQuote;
-    private LinearLayout linearLayout;
-    private ProgressBar progressBar;
-    private String imageUri;
     private SwitchCompat mSwitchLock;
     private RelativeLayout passLayout;
 
@@ -52,10 +49,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
     public void setContext(Context context) {
         this.context = context;
-    }
-
-    public TabFragmentCallback getCallback() {
-        return callback;
     }
 
     public void setCallback(TabFragmentCallback callback) {
@@ -84,8 +77,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         nameLayout = viewRoot.findViewById(R.id.layout_username);
         quoteLayout = viewRoot.findViewById(R.id.layout_quote);
         aboutLayout = viewRoot.findViewById(R.id.layout_about);
-        linearLayout = (LinearLayout) viewRoot.findViewById(R.id.linear_progressbar);
-        progressBar = (ProgressBar) viewRoot.findViewById(R.id.progressbar);
         mNameSmall = (TextView) viewRoot.findViewById(R.id.text_username);
         mAbout = (TextView) viewRoot.findViewById(R.id.text_about);
         mFavoriteQuote = (TextView) viewRoot.findViewById(R.id.text_quote);
@@ -113,17 +104,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         boolean lockMode = preferences.getBoolean(Constants.Basic.LOCK_MODE, false);
 
 
-        if(name == null) {
+        if(name == null || name.isEmpty()) {
             mNameSmall.setText("Click here to set username");
         } else {
             mNameSmall.setText(name);
         }
 
-        if(quote == null) {
+        if(quote == null || quote.isEmpty()) {
             mFavoriteQuote.setText("Click to set your favorite quote");
         } else mFavoriteQuote.setText(quote);
 
-        if(about == null) {
+        if(about == null || about.isEmpty()) {
             mAbout.setText("Click to write something about you");
         } else mAbout.setText(about);
 

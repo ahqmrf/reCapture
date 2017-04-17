@@ -56,10 +56,6 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
         this.mContext = mContext;
     }
 
-    public TabFragmentCallback getCallback() {
-        return mCallback;
-    }
-
     public void setCallback(TabFragmentCallback mCallback) {
         this.mCallback = mCallback;
     }

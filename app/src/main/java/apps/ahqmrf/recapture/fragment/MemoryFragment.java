@@ -50,9 +50,6 @@ public class MemoryFragment extends Fragment {
         this.mContext = mContext;
     }
 
-    public TabFragmentCallback getCallback() {
-        return mCallback;
-    }
 
     public void setCallback(TabFragmentCallback mCallback) {
         this.mCallback = mCallback;

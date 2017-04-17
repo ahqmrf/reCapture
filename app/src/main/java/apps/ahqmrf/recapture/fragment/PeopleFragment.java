@@ -57,10 +57,6 @@ public class PeopleFragment extends Fragment{
         this.context = context;
     }
 
-    public TabFragmentCallback getCallback() {
-        return callback;
-    }
-
     public void setCallback(TabFragmentCallback callback) {
         this.callback = callback;
     }

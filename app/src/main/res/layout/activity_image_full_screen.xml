@@ -10,31 +10,18 @@
         android:id="@+id/image_full_size"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/image_back"/>
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/image_back" />
 
-    <LinearLayout
-        android:id="@+id/linear_progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:gravity="center">
-
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:indeterminateDrawable="@drawable/circular_progress_drawable"/>
-
-    </LinearLayout>
 
     <ImageView
         android:id="@+id/image_back"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:padding="16dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_arrow_back_white_24dp"/>
+        android:layout_alignParentTop="true"
+        android:padding="16dp"
+        android:src="@drawable/ic_arrow_back_white_24dp" />
 
     <ImageView
         android:id="@+id/image_left"
@@ -42,7 +29,7 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_chevron_left_white_24dp"/>
+        android:src="@drawable/ic_chevron_left_white_24dp" />
 
     <ImageView
         android:id="@+id/image_right"
@@ -50,6 +37,64 @@
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_chevron_right_white_24dp"/>
+        android:src="@drawable/ic_chevron_right_white_24dp" />
+
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black_transparent"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/text_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Rotate left"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/text_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Rotate right"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_expand"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_expand_less_32dp"
+        android:layout_alignParentBottom="true"/>
+
+    <LinearLayout
+        android:id="@+id/linear_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center"
+        tools:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:indeterminateDrawable="@drawable/circular_progress_drawable" />
+
+    </LinearLayout>
 
 </RelativeLayout>

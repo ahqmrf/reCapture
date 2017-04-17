@@ -85,14 +85,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setValuesToViews() {
         showImageProfile(imageUri);
-        mUsernameBig.setText(people.getName());
-        mUsernameSmall.setText(people.getName());
-        mRelation.setText(people.getRelation());
-        mAbout.setText(people.getAbout());
+        if (!people.getName().isEmpty()) {
+            mUsernameBig.setText(people.getName());
+            mUsernameSmall.setText(people.getName());
+        }
+        if (!people.getRelation().isEmpty()) mRelation.setText(people.getRelation());
+        if (!people.getAbout().isEmpty()) mAbout.setText(people.getAbout());
     }
 
     private void showImageProfile(String path) {
-        if(path == null) {
+        if (path == null) {
             linearLayout.setVisibility(View.GONE);
             return;
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimary">#EF5350</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#3e3e3e</color>
+    <color name="colorAccent">#EF5350</color>
     <color name="red_transparent">#b9f44336</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
@@ -13,5 +13,4 @@
     <color name="red_light">#d48a85</color>
     <color name="dark_purple">#4A148C</color>
     <color name="light_purple">#6A1B9A</color>
-    <color name="light_black">#1a1a1a</color>
 </resources>
