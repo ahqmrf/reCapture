@@ -187,7 +187,6 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
             ImageView close = (ImageView) view.findViewById(R.id.image_close);
             close.setOnClickListener(this);
             flipImage.setOnClickListener(this);
-            flipImage.setOnClickListener(this);
             ImageLoader.getInstance().displayImage(
                     "file://" + imageUri,
                     flipImage,
