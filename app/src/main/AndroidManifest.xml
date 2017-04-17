@@ -9,7 +9,7 @@
     <application
         android:name=".application.ReCapture"
         android:allowBackup="true"
-        android:icon="@drawable/re_capture"
+        android:icon="@drawable/heart"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
