@@ -9,7 +9,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +34,7 @@ import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
 import apps.ahqmrf.recapture.util.Constants;
 import apps.ahqmrf.recapture.util.MyDisplayImageOptions;
 
-public class SettingsFragment extends Fragment implements View.OnClickListener{
+public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
     private TabFragmentCallback callback;
@@ -108,17 +111,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         boolean lockMode = preferences.getBoolean(Constants.Basic.LOCK_MODE, false);
 
 
-        if(name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             mNameSmall.setText("Click here to set username");
         } else {
             mNameSmall.setText(name);
         }
 
-        if(quote == null || quote.isEmpty()) {
+        if (quote == null || quote.isEmpty()) {
             mFavoriteQuote.setText("Click to set your favorite quote");
         } else mFavoriteQuote.setText(quote);
 
-        if(about == null || about.isEmpty()) {
+        if (about == null || about.isEmpty()) {
             mAbout.setText("Click to write something about you");
         } else mAbout.setText(about);
 
@@ -163,16 +166,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     }
 
     private void showInfo() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view=inflater.inflate(R.layout.dialog_layout, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.info)
-                .setTitle("About ReCapture")
+                .setCustomTitle(view)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //do things
                     }
                 });
-        AlertDialog alert = builder.create();
-        alert.show();
+        AlertDialog alert = builder.show();
+        TextView messageText = (TextView) alert.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+        messageText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.textsize));
     }
 }
