@@ -34,9 +34,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddUserActivity"
+            android:label="Add new people"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:label="Add new people"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SingleImageSelectionActivity"
             android:screenOrientation="portrait"
@@ -62,10 +62,12 @@
         <activity
             android:name=".activity.EditUserActivity"
             android:label="Edit user profile"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.EditMemoryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -78,7 +80,8 @@
         </activity>
         <activity
             android:name=".activity.PasswordActivity"
-            android:label="Change password" />
+            android:label="Change password"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

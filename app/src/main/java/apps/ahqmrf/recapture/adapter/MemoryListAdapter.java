@@ -97,7 +97,8 @@ public class MemoryListAdapter extends RecyclerView.Adapter<MemoryListAdapter.Me
         }
 
         holder.title.setText(memory.getTitle());
-        holder.description.setText(memory.getDescription());
+        String str = memory.getDescription().isEmpty()? "[No description added.]" : memory.getDescription();
+        holder.description.setText(str);
         SystemHelper helper = new SystemHelper(mContext);
         Time cur = helper.getCurrentTime();
         int curDay = cur.getDay();
