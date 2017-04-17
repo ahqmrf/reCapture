@@ -1,59 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context="apps.ahqmrf.recapture.activity.SplashActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:text="Enter password"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/heart"/>
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/border">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/black_transparent"
+        tools:context="apps.ahqmrf.recapture.activity.SplashActivity">
 
-        <EditText
-            android:id="@+id/edit_pass"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="8dp"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:background="@android:color/transparent"
-            android:textColor="@color/black"
-            android:inputType="textPassword" />
+            android:text="Enter password"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/image_key"
-            android:layout_width="40dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_pass"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/image_key"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="8dp"
+                android:src="@drawable/ic_vpn_key_black_24dp"
+                android:tint="@color/grey" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_enter"
+            android:layout_width="160dp"
             android:layout_height="40dp"
-            android:padding="8dp"
-            android:clickable="true"
-            android:background="?attr/selectableItemBackground"
-            android:src="@drawable/ic_vpn_key_black_24dp"
-            android:tint="@color/grey"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_ripple"
+            android:text="Enter"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_enter"
-        android:layout_marginTop="8dp"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        android:background="@drawable/button_ripple"
-        android:textAllCaps="false"
-        android:text="Enter"/>
 
-</LinearLayout>
+</FrameLayout>
