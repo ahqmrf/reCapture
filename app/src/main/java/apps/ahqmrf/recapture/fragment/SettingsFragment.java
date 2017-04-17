@@ -1,7 +1,9 @@
 package apps.ahqmrf.recapture.fragment;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -33,7 +35,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
 
     private Context context;
     private TabFragmentCallback callback;
-    private View viewRoot, nameLayout, aboutLayout, quoteLayout;
+    private View viewRoot, nameLayout, aboutLayout, quoteLayout, infoLayout;
     private TextView mNameSmall, mAbout, mFavoriteQuote;
     private SwitchCompat mSwitchLock;
     private RelativeLayout passLayout;
@@ -64,6 +66,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     }
 
     private void prepareViews() {
+        infoLayout = viewRoot.findViewById(R.id.layout_info);
+        infoLayout.setOnClickListener(this);
         passLayout = (RelativeLayout) viewRoot.findViewById(R.id.layout_password);
         passLayout.setOnClickListener(this);
         mSwitchLock = (SwitchCompat) viewRoot.findViewById(R.id.simpleSwitch);
@@ -152,6 +156,23 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
             case R.id.layout_password:
                 callback.onPasswordClick();
                 break;
+            case R.id.layout_info:
+                showInfo();
+                break;
         }
+    }
+
+    private void showInfo() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.info)
+                .setTitle("About ReCapture")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do things
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

@@ -16,4 +16,5 @@
     <string name="PostiveYesButton">Delete</string>
     <string name="NegativeNoButton">Cancel</string>
     <string name="promptDeletePeople">Are you sure you want to delete this person?</string>
+    <string name="info">ReCapture is a very simple app for your easy to use. You can easily save your sweet or bitter moments here attaching photos. Currently it is in beta version. Hope we will add more features in the near future. Thanks for using this app!</string>
 </resources>

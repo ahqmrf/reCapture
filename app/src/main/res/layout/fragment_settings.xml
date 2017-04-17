@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <RelativeLayout
             android:id="@+id/layout_username"
@@ -21,12 +21,12 @@
                 android:id="@+id/image_account"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_account_circle_24dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
+                android:src="@drawable/ic_account_circle_24dp"
+                android:tint="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,19 +40,19 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:paddingRight="16dp"
-                    android:textSize="16sp"
+                    android:text="Username"
                     android:textColor="@color/black"
-                    android:text="Username"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingRight="16dp"
-                    android:ellipsize="end"
                     android:textSize="14sp"
-                    tools:text="Ariful Hoque Maruf"/>
+                    tools:text="Ariful Hoque Maruf" />
 
             </LinearLayout>
 
@@ -63,7 +63,7 @@
             android:layout_height="0.5dp"
             android:layout_marginLeft="56dp"
             android:layout_marginRight="8dp"
-            android:background="@color/whitey_grey"/>
+            android:background="@color/whitey_grey" />
 
         <RelativeLayout
             android:id="@+id/layout_quote"
@@ -76,11 +76,11 @@
                 android:id="@+id/image_quote"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:tint="@color/colorPrimary"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/ic_favorite_black_24dp"/>
+                android:padding="16dp"
+                android:src="@drawable/ic_favorite_black_24dp"
+                android:tint="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,19 +94,19 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:paddingRight="16dp"
-                    android:textSize="16sp"
+                    android:text="Favorite Quote"
                     android:textColor="@color/black"
-                    android:text="Favorite Quote"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_quote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingRight="16dp"
-                    android:ellipsize="end"
                     android:textSize="14sp"
-                    tools:text="I am the only one who loves more.. and this is my thing.."/>
+                    tools:text="I am the only one who loves more.. and this is my thing.." />
 
             </LinearLayout>
 
@@ -117,7 +117,7 @@
             android:layout_height="0.5dp"
             android:layout_marginLeft="56dp"
             android:layout_marginRight="8dp"
-            android:background="@color/whitey_grey"/>
+            android:background="@color/whitey_grey" />
 
         <RelativeLayout
             android:id="@+id/layout_about"
@@ -130,12 +130,12 @@
                 android:id="@+id/image_about"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_info_outline_black_24dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
+                android:src="@drawable/ic_info_outline_black_24dp"
+                android:tint="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,19 +149,19 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:paddingRight="16dp"
-                    android:textSize="16sp"
+                    android:text="Bio"
                     android:textColor="@color/black"
-                    android:text="About"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_about"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingRight="16dp"
-                    android:ellipsize="end"
                     android:textSize="14sp"
-                    tools:text="I am a very simple person with complications :v But I think I am good enough! :)"/>
+                    tools:text="I am a very simple person with complications :v But I think I am good enough! :)" />
 
             </LinearLayout>
 
@@ -172,7 +172,7 @@
             android:layout_height="0.5dp"
             android:layout_marginLeft="56dp"
             android:layout_marginRight="8dp"
-            android:background="@color/whitey_grey"/>
+            android:background="@color/whitey_grey" />
 
         <RelativeLayout
             android:id="@+id/layout_lock"
@@ -185,12 +185,12 @@
                 android:id="@+id/image_lock"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_lock_outline_black_24dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
+                android:src="@drawable/ic_lock_outline_black_24dp"
+                android:tint="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -204,11 +204,11 @@
                     android:id="@+id/simpleSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="App Lock mode"
+                    android:gravity="start|center_vertical"
                     android:paddingRight="16dp"
+                    android:text="App Lock mode"
                     android:textSize="16sp"
-                    tools:checked="true"
-                    android:gravity="start|center_vertical"/>
+                    tools:checked="true" />
 
             </LinearLayout>
 
@@ -219,7 +219,7 @@
             android:layout_height="0.5dp"
             android:layout_marginLeft="56dp"
             android:layout_marginRight="8dp"
-            android:background="@color/whitey_grey"/>
+            android:background="@color/whitey_grey" />
 
 
         <RelativeLayout
@@ -233,32 +233,61 @@
                 android:id="@+id/image_pass"
                 android:layout_width="56dp"
                 android:layout_height="match_parent"
-                android:padding="16dp"
-                android:tint="@color/colorPrimary"
-                android:src="@drawable/ic_vpn_key_black_24dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
+                android:src="@drawable/ic_vpn_key_black_24dp"
+                android:tint="@color/colorPrimary" />
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/image_pass"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:paddingRight="16dp"
+                android:text="Change password"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:checked="true" />
 
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Change password"
-                    android:paddingRight="16dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    tools:checked="true"
-                    android:gravity="center_vertical"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="56dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/whitey_grey" />
 
-            </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/image_info"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
+                android:src="@drawable/ic_r"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/image_info"
+                android:gravity="center_vertical"
+                android:paddingRight="16dp"
+                android:text="About ReCapture"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:checked="true" />
 
         </RelativeLayout>
 
