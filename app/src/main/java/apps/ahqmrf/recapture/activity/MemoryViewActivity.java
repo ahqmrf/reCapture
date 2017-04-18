@@ -98,14 +98,6 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         mIndicator = (CirclePageIndicator) findViewById(R.id.pageIndicator);
         bottombar = findViewById(R.id.action);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        /*mViewPager.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                return true;
-            }
-        });*/
         linearLayout = (LinearLayout) findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
