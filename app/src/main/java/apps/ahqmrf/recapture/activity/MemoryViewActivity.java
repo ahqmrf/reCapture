@@ -211,8 +211,7 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         NUM_PAGES = photos.size();
         mPagerAdapter = new ImagesPagerAdapter(this, photos);
         mViewPager.setAdapter(mPagerAdapter);
-        mIndicator.setViewPager(mViewPager);
-    }
+        mIndicator.setViewPager(mViewPager);    }
 
     private void setRecycler() {
         int column = 3;
