@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
     </style>
 
     <style name="TabActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -30,5 +31,12 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="CustomCirclePageIndicator">
+        <item name="fillColor">@color/grey</item>
+        <item name="strokeColor">#FFFFFFFF</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="radius">4dp</item>
+        <item name="centered">true</item>
+    </style>
 
 </resources>

@@ -1,5 +1,6 @@
 package apps.ahqmrf.recapture.activity;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -30,12 +33,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import apps.ahqmrf.recapture.R;
 import apps.ahqmrf.recapture.adapter.GalleryImagesListAdapter;
 import apps.ahqmrf.recapture.adapter.ImageSelectAdapter;
+import apps.ahqmrf.recapture.adapter.ImagesPagerAdapter;
 import apps.ahqmrf.recapture.adapter.PeopleListAdapter;
 import apps.ahqmrf.recapture.database.Database;
 import apps.ahqmrf.recapture.fragment.FullSizeImageDialogFragment;
@@ -63,9 +70,12 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     private int sizePeople;
     private LinearLayout linearLayout;
     private ProgressBar progressBar;
-    private ViewFlipper mViewFlipper;
-    private boolean isFlipping;
-    private boolean flipperIsVisible;
+    private ViewPager mViewPager;
+    private int NUM_PAGES, currentPage;
+    private ImagesPagerAdapter mPagerAdapter;
+    private View bottombar;
+    private boolean flipping;
+    private CirclePageIndicator mIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +90,22 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         memory = getIntent().getParcelableExtra(Constants.IntentExtras.MEMORY);
         database = new Database(this, null, null, 1);
         special = memory.isSpecial();
-        isFlipping = false;
-        flipperIsVisible = false;
-
+        flipping = false;
         prepareViews();
     }
 
     private void prepareViews() {
-        mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
+        mIndicator = (CirclePageIndicator) findViewById(R.id.pageIndicator);
+        bottombar = findViewById(R.id.action);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        /*mViewPager.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                return true;
+            }
+        });*/
         linearLayout = (LinearLayout) findViewById(R.id.linear_progressbar);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -173,31 +191,34 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         if (special) star.setImageResource(R.drawable.star_golden);
         else star.setImageResource(R.drawable.star_normal);
 
-        prepareFlipper();
+        preparePager();
     }
 
-    private void prepareFlipper() {
+    private void preparePager() {
         if(memory.getImages().size() == 0) return;
-        mViewFlipper.setVisibility(View.GONE);
-        mViewFlipper.removeAllViews();
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         ArrayList<String> photos = memory.getImages();
-        for(String imageUri : photos) {
-            View view = LayoutInflater.from(this).inflate(R.layout.layout_flipping_image, mViewFlipper, false);
-            ImageView flipImage = (ImageView) view.findViewById(R.id.image);
-            ImageView close = (ImageView) view.findViewById(R.id.image_close);
-            close.setOnClickListener(this);
-            flipImage.setOnClickListener(this);
-            ImageLoader.getInstance().displayImage(
-                    "file://" + imageUri,
-                    flipImage,
-                    MyDisplayImageOptions.getInstance().getDisplayImageOptions());
-            mViewFlipper.addView(view);
-        }
-        mViewFlipper.setFlipInterval(5000);
-        Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        Animation fadeOut = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
-        mViewFlipper.setInAnimation(fadeIn);
-        mViewFlipper.setOutAnimation(fadeOut);
+        NUM_PAGES = photos.size();
+        mPagerAdapter = new ImagesPagerAdapter(this, photos);
+        mViewPager.setAdapter(mPagerAdapter);
+        mIndicator.setViewPager(mViewPager);
     }
 
     private void setRecycler() {
@@ -233,7 +254,9 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         Intent intent = new Intent(this, ImageFullScreenActivity.class);
         intent.putStringArrayListExtra(Constants.IntentExtras.IMAGE_LIST_EXTRA, paths);
         intent.putExtra(Constants.IntentExtras.POSITION, position);
-        startActivity(intent);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(this, R.anim.fade_in, R.anim.fade_out);
+        startActivity(intent, options.toBundle());
     }
 
     @Override
@@ -259,16 +282,49 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
                 deleteMemory();
                 break;
             case R.id.image_play:
-                flipperIsVisible = true;
-                toggleFlipping();
-                break;
-            case R.id.image:
-                toggleFlipping();
-                break;
-            case R.id.image_close:
-                onBackPressed();
+                startFlipping();
                 break;
         }
+    }
+
+    private void hideViewPager() {
+        if(getSupportActionBar() != null) getSupportActionBar().show();
+        mViewPager.setVisibility(View.GONE);
+        flipping = false;
+        mIndicator.setVisibility(View.GONE);
+        bottombar.setVisibility(View.VISIBLE);
+        play.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
+    }
+
+    private void startFlipping() {
+        play.setImageResource(R.drawable.ic_slide_show);
+        if(getSupportActionBar() != null) getSupportActionBar().hide();
+        flipping = true;
+        bottombar.setVisibility(View.INVISIBLE);
+        mIndicator.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
+        mViewPager.setCurrentItem(0);
+        currentPage = 0;
+        final Handler handler = new Handler();
+
+        final Runnable update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mViewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+
+
+        new Timer().schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, 4000, 4000);
+
     }
 
     private void deleteMemory() {
@@ -327,28 +383,9 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         peopleAmount.setText("Related People (" +sizePeople + ")");
     }
 
-    private void toggleFlipping() {
-        if(flipperIsVisible) mViewFlipper.setVisibility(View.VISIBLE);
-        else mViewFlipper.setVisibility(View.GONE);
-        if(isFlipping) {
-            isFlipping = false;
-            mViewFlipper.stopFlipping();
-            play.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
-        } else {
-            isFlipping = true;
-            mViewFlipper.startFlipping();
-            play.setImageResource(R.drawable.ic_pause_black_24dp);
-        }
-    }
-
     @Override
     public void onBackPressed() {
-        if(flipperIsVisible) {
-            mViewFlipper.setVisibility(View.GONE);
-            mViewFlipper.setDisplayedChild(0);
-            mViewFlipper.stopFlipping();
-            play.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
-            flipperIsVisible = false;
-        } else super.onBackPressed();
+        if(flipping) hideViewPager();
+        else super.onBackPressed();
     }
 }

@@ -178,13 +178,8 @@
 
     </ScrollView>
 
-    <ViewFlipper
-        android:id="@+id/viewFlipper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_bar"
-        android:background="@color/black_transparent"
-        android:visibility="gone"/>
+    <!--TODO-->
+
 
     <View
         android:id="@+id/bottom_bar"
@@ -215,6 +210,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="16dp"
+            android:tint="@color/black"
             android:src="@drawable/ic_play_circle_filled_black_24dp" />
 
         <ImageView
@@ -226,4 +222,21 @@
             android:src="@drawable/ic_delete_black_24dp" />
 
     </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparent"
+        tools:visibility="visible"
+        android:visibility="invisible"/>
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/pageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="24dp"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>
