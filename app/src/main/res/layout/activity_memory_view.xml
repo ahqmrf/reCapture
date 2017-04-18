@@ -229,12 +229,14 @@
         android:layout_height="match_parent"
         android:background="@color/black_transparent"
         tools:visibility="visible"
+        android:layout_above="@+id/pageIndicator"
         android:visibility="invisible"/>
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/pageIndicator"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@color/black_transparent"
         android:padding="24dp"
         android:visibility="invisible"
         android:layout_alignParentBottom="true"/>

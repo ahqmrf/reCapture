@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
@@ -280,7 +281,10 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
     }
 
     private void hideViewPager() {
-        if(getSupportActionBar() != null) getSupportActionBar().show();
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("View Memory");
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)));
+        }
         mViewPager.setVisibility(View.GONE);
         flipping = false;
         mIndicator.setVisibility(View.GONE);
@@ -290,7 +294,10 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
 
     private void startFlipping() {
         play.setImageResource(R.drawable.ic_slide_show);
-        if(getSupportActionBar() != null) getSupportActionBar().hide();
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Slide Show");
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.black_transparent)));
+        }
         flipping = true;
         bottombar.setVisibility(View.INVISIBLE);
         mIndicator.setVisibility(View.VISIBLE);
