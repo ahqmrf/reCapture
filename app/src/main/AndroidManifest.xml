@@ -81,6 +81,7 @@
         <activity
             android:name=".activity.PasswordActivity"
             android:label="Change password"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
     </application>
 
