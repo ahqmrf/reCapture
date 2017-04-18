@@ -2,11 +2,14 @@ package apps.ahqmrf.recapture.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -28,60 +31,22 @@ public class ImageFullScreenActivity extends AppCompatActivity implements View.O
     private ImageView mBackImage;
     private ImageView mLeftArrow;
     private ImageView mRightArrow;
-    private ImageView mImageExpand;
+    private ImageView mMore;
     private ArrayList<String> imageUri;
     private int position;
     private LinearLayout linearLayout;
     private ProgressBar progressBar;
     private Bitmap mBitmap;
-    private TextView mLeft, mRight;
-    private View bottomBar;
-    private boolean visible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_full_screen);
 
-        bottomBar = findViewById(R.id.bottom_bar);
-
-        mLeft = (TextView) findViewById(R.id.text_left);
-        mLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBitmap != null) {
-                    mBitmap = rotateBitmap(-90, mBitmap);
-                    mImageView.setImageBitmap(mBitmap);
-                }
-            }
-        });
-        mRight = (TextView) findViewById(R.id.text_right);
-        mRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBitmap != null) {
-                    mBitmap = rotateBitmap(90, mBitmap);
-                    mImageView.setImageBitmap(mBitmap);
-                }
-            }
-        });
+        mMore = (ImageView) findViewById(R.id.image_more);
+        mMore.setOnClickListener(this);
 
         mImageView = (ImageView) findViewById(R.id.image_full_size);
-        mImageExpand = (ImageView) findViewById(R.id.image_expand);
-        mImageExpand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (visible) {
-                    visible = false;
-                    mImageExpand.setImageResource(R.drawable.ic_expand_less_32dp);
-                    bottomBar.setVisibility(View.GONE);
-                } else {
-                    visible = true;
-                    mImageExpand.setImageResource(R.drawable.ic_expand_more_32dp);
-                    bottomBar.setVisibility(View.VISIBLE);
-                }
-            }
-        });
         mBackImage = (ImageView) findViewById(R.id.image_back);
         mLeftArrow = (ImageView) findViewById(R.id.image_left);
         mRightArrow = (ImageView) findViewById(R.id.image_right);
@@ -102,7 +67,6 @@ public class ImageFullScreenActivity extends AppCompatActivity implements View.O
 
         mImageView.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeTop() {
-                bottomBar.setVisibility(View.VISIBLE);
             }
 
             public void onSwipeRight() {
@@ -114,7 +78,7 @@ public class ImageFullScreenActivity extends AppCompatActivity implements View.O
             }
 
             public void onSwipeBottom() {
-                bottomBar.setVisibility(View.GONE);
+
             }
 
         });
@@ -165,7 +129,43 @@ public class ImageFullScreenActivity extends AppCompatActivity implements View.O
             case R.id.image_right:
                 showRightImage();
                 break;
+            case R.id.image_more:
+                showPopup();
+                break;
+        }
+    }
 
+    private void showPopup() {
+        PopupMenu popupMenu = new PopupMenu(this, mMore);
+        popupMenu.inflate(R.menu.image_context_menu);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.rotate_left:
+                        rotateLeft();
+                        break;
+                    case R.id.rotate_right:
+                        rotateRight();
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+    private void rotateRight() {
+        if (mBitmap != null) {
+            mBitmap = rotateBitmap(90, mBitmap);
+            mImageView.setImageBitmap(mBitmap);
+        }
+    }
+
+    private void rotateLeft() {
+        if (mBitmap != null) {
+            mBitmap = rotateBitmap(-90, mBitmap);
+            mImageView.setImageBitmap(mBitmap);
         }
     }
 
