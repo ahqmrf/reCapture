@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_intervals">
+        <item>1 sec</item>
+        <item>2 sec</item>
+        <item>3 sec</item>
+        <item>4 sec</item>
+        <item>5 sec</item>
+        <item>6 sec</item>
+        <item>7 sec</item>
+        <item>8 sec</item>
+        <item>9 sec</item>
+        <item>10 sec</item>
+        <item>11 sec</item>
+        <item>12 sec</item>
+        <item>13 sec</item>
+        <item>14 sec</item>
+        <item>15 sec</item>
+        <item>16 sec</item>
+        <item>17 sec</item>
+        <item>18 sec</item>
+        <item>19 sec</item>
+        <item>20 sec</item>
+    </string-array>
+</resources>

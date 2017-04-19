@@ -16,11 +16,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -38,10 +40,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
     private TabFragmentCallback callback;
-    private View viewRoot, nameLayout, aboutLayout, quoteLayout, infoLayout;
-    private TextView mNameSmall, mAbout, mFavoriteQuote;
+    private View viewRoot, infoLayout;
     private SwitchCompat mSwitchLock;
     private RelativeLayout passLayout;
+    private Spinner mSpinner;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -69,6 +71,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void prepareViews() {
+        mSpinner = (Spinner) viewRoot.findViewById(R.id.spinner_time_interval);
         infoLayout = viewRoot.findViewById(R.id.layout_info);
         infoLayout.setOnClickListener(this);
         passLayout = (RelativeLayout) viewRoot.findViewById(R.id.layout_password);
@@ -81,16 +84,21 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 changeLockMode(isChecked);
             }
         });
-        nameLayout = viewRoot.findViewById(R.id.layout_username);
-        quoteLayout = viewRoot.findViewById(R.id.layout_quote);
-        aboutLayout = viewRoot.findViewById(R.id.layout_about);
-        mNameSmall = (TextView) viewRoot.findViewById(R.id.text_username);
-        mAbout = (TextView) viewRoot.findViewById(R.id.text_about);
-        mFavoriteQuote = (TextView) viewRoot.findViewById(R.id.text_quote);
 
-        nameLayout.setOnClickListener(this);
-        quoteLayout.setOnClickListener(this);
-        aboutLayout.setOnClickListener(this);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences preferences = getActivity().getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt(Constants.Basic.SLIDE_SHOW_TIME_INTERVAL, position);
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         setValuesToViews();
@@ -105,27 +113,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private void setValuesToViews() {
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        String name = preferences.getString(Constants.Basic.USERNAME, null);
-        String quote = preferences.getString(Constants.Basic.FAVORITE_QUOTE, null);
-        String about = preferences.getString(Constants.Basic.ABOUT, null);
+        int timeInterval = preferences.getInt(Constants.Basic.SLIDE_SHOW_TIME_INTERVAL, 2);
         boolean lockMode = preferences.getBoolean(Constants.Basic.LOCK_MODE, false);
 
-
-        if (name == null || name.isEmpty()) {
-            mNameSmall.setText("Click here to set username");
-        } else {
-            mNameSmall.setText(name);
-        }
-
-        if (quote == null || quote.isEmpty()) {
-            mFavoriteQuote.setText("Click to set your favorite quote");
-        } else mFavoriteQuote.setText(quote);
-
-        if (about == null || about.isEmpty()) {
-            mAbout.setText("Click to write something about you");
-        } else mAbout.setText(about);
-
         mSwitchLock.setChecked(lockMode);
+        mSpinner.setSelection(timeInterval);
     }
 
     @Override
@@ -147,15 +139,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_username:
-                callback.onNameClick();
-                break;
-            case R.id.layout_about:
-                callback.onAboutClick();
-                break;
-            case R.id.layout_quote:
-                callback.onQuoteClick();
-                break;
             case R.id.layout_password:
                 callback.onPasswordClick();
                 break;

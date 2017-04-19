@@ -19,6 +19,7 @@ public final class Constants {
         public static final String ABOUT = "aboutMyself";
         public static final String LOCK_MODE = "lock_mode";
         public static final String PASSWORD =  "Pass_word" ;
+        public static final String SLIDE_SHOW_TIME_INTERVAL = "slide_show_time_interval";
     }
 
     public final class IntentExtras {

@@ -113,21 +113,6 @@ public class MainActivity extends AppCompatActivity implements TabFragmentCallba
     }
 
     @Override
-    public void onNameClick() {
-        startActivity(new Intent(this, EditProfileActivity.class));
-    }
-
-    @Override
-    public void onAboutClick() {
-        startActivity(new Intent(this, EditProfileActivity.class));
-    }
-
-    @Override
-    public void onQuoteClick() {
-        startActivity(new Intent(this, EditProfileActivity.class));
-    }
-
-    @Override
     public void hideProgressBar() {
         mLayoutProgressBar.setVisibility(View.GONE);
     }

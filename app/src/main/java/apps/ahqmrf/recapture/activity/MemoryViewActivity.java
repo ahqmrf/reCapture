@@ -2,8 +2,10 @@ package apps.ahqmrf.recapture.activity;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -303,6 +305,12 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
         mViewPager.setVisibility(View.VISIBLE);
         mViewPager.setCurrentItem(0);
         currentPage = 0;
+
+        SharedPreferences preferences = getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        int timeInterval = preferences.getInt(Constants.Basic.SLIDE_SHOW_TIME_INTERVAL, 2);
+        timeInterval++;
+        timeInterval *= 1000;
+
         final Handler handler = new Handler();
 
         final Runnable update = new Runnable() {
@@ -321,7 +329,7 @@ public class MemoryViewActivity extends AppCompatActivity implements PeopleListA
             public void run() {
                 handler.post(update);
             }
-        }, 4000, 4000);
+        }, timeInterval, timeInterval);
 
     }
 
