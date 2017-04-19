@@ -26,7 +26,7 @@ import apps.ahqmrf.recapture.model.Memory;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GalleryFragment extends Fragment implements View.OnClickListener{
+public class GalleryFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private TabFragmentCallback mCallback;
     private Database mDatabase;
@@ -40,12 +40,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
     private ImageView galleryView, listView;
     private TextView emtpyTextView;
 
-    public void setImageCallback(ImageSelectAdapter.ImageSelectCallback mImageCallback) {
-        this.mImageCallback = mImageCallback;
-    }
-
     public GalleryFragment() {
-        // Required empty public constructor
     }
 
     public Context getContext() {
@@ -54,10 +49,6 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
 
     public void setContext(Context mContext) {
         this.mContext = mContext;
-    }
-
-    public void setCallback(TabFragmentCallback mCallback) {
-        this.mCallback = mCallback;
     }
 
     @Override
@@ -91,11 +82,11 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
         items = mDatabase.getAllMemories();
         itemsClone = new ArrayList<>();
         for (Memory memory : items) {
-            if(memory.getImages().size() > 0) {
+            if (memory.getImages().size() > 0) {
                 itemsClone.add(memory);
             }
         }
-        if(itemsClone.size() > 0) {
+        if (itemsClone.size() > 0) {
             mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size / 3, false);
             mGalleryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             mGalleryRecyclerView.setAdapter(mAdapter);
@@ -121,6 +112,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
         try {
             this.mCallback = (TabFragmentCallback) context;
             this.mContext = context;
+            this.mImageCallback = (ImageSelectAdapter.ImageSelectCallback) context;
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -130,15 +122,15 @@ public class GalleryFragment extends Fragment implements View.OnClickListener{
         mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size, true);
         mGalleryRecyclerView.setAdapter(mAdapter);
 
-        galleryView.setColorFilter(ContextCompat.getColor(mContext,R.color.grey));
-        listView.setColorFilter(ContextCompat.getColor(mContext,R.color.colorPrimary));
+        galleryView.setColorFilter(ContextCompat.getColor(mContext, R.color.grey));
+        listView.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
     }
 
     private void showGridView() {
         mAdapter = new GalleryMainItemAdapter(getActivity(), mImageCallback, itemsClone, size / 3, false);
         mGalleryRecyclerView.setAdapter(mAdapter);
 
-        galleryView.setColorFilter(ContextCompat.getColor(mContext,R.color.colorPrimary));
-        listView.setColorFilter(ContextCompat.getColor(mContext,R.color.grey));
+        galleryView.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
+        listView.setColorFilter(ContextCompat.getColor(mContext, R.color.grey));
     }
 }

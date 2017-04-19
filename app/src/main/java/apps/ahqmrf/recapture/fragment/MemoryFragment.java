@@ -39,7 +39,6 @@ public class MemoryFragment extends Fragment {
     private MemoryListAdapter.MemoryClickCallback memoryClickCallback;
 
     public MemoryFragment() {
-        // Required empty public constructor
     }
 
     public Context getContext() {
@@ -50,10 +49,6 @@ public class MemoryFragment extends Fragment {
         this.mContext = mContext;
     }
 
-
-    public void setCallback(TabFragmentCallback mCallback) {
-        this.mCallback = mCallback;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,7 +69,7 @@ public class MemoryFragment extends Fragment {
 
     private void manipulateViews() {
         mListMemory = mDatabase.getAllMemories();
-        if(mListMemory == null || mListMemory.size() == 0) {
+        if (mListMemory == null || mListMemory.size() == 0) {
             mEmptyListText.setVisibility(View.VISIBLE);
             mMemoryRecyclerView.setVisibility(GONE);
         } else {

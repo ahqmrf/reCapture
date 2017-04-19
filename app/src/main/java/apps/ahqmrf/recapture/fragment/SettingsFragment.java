@@ -46,7 +46,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Spinner mSpinner;
 
     public SettingsFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -56,10 +55,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     public void setContext(Context context) {
         this.context = context;
-    }
-
-    public void setCallback(TabFragmentCallback callback) {
-        this.callback = callback;
     }
 
     @Override
@@ -150,7 +145,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private void showInfo() {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view=inflater.inflate(R.layout.dialog_layout, null);
+        View view = inflater.inflate(R.layout.dialog_layout, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.info)
                 .setCustomTitle(view)

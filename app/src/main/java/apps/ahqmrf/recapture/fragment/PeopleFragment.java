@@ -24,7 +24,7 @@ import apps.ahqmrf.recapture.interfaces.TabFragmentCallback;
 import apps.ahqmrf.recapture.model.People;
 import apps.ahqmrf.recapture.util.Constants;
 
-public class PeopleFragment extends Fragment{
+public class PeopleFragment extends Fragment {
 
     private Context context;
     private TabFragmentCallback callback;
@@ -40,12 +40,7 @@ public class PeopleFragment extends Fragment{
     private PeopleListAdapter.PeopleItemCallback itemCallback;
     private TextView peopleYouKnow;
 
-    public void setItemCallback(PeopleListAdapter.PeopleItemCallback itemCallback) {
-        this.itemCallback = itemCallback;
-    }
-
     public PeopleFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -55,10 +50,6 @@ public class PeopleFragment extends Fragment{
 
     public void setContext(Context context) {
         this.context = context;
-    }
-
-    public void setCallback(TabFragmentCallback callback) {
-        this.callback = callback;
     }
 
     @Override
@@ -71,7 +62,7 @@ public class PeopleFragment extends Fragment{
         mImageRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               reload();
+                reload();
             }
         });
         prepareViews();
@@ -102,7 +93,7 @@ public class PeopleFragment extends Fragment{
             }
         });
         mRecyclerPeopleList = (RecyclerView) root.findViewById(R.id.recycler_people_list);
-        if(peoples.size() > 0) {
+        if (peoples.size() > 0) {
             noUserText.setVisibility(View.GONE);
             mRecyclerPeopleList.setVisibility(View.VISIBLE);
             mRecyclerPeopleList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
