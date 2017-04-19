@@ -20,11 +20,34 @@
         android:background="@color/black_transparent"
         tools:context="apps.ahqmrf.recapture.activity.SplashActivity">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Locked"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_lock_outline_black_24dp"
+                android:tint="@color/white"/>
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Enter password"
+            android:text="Enter password to unlock"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -52,7 +75,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="8dp"
-                android:src="@drawable/ic_vpn_key_black_24dp"
+                android:src="@drawable/ic_visibility_black_24dp"
                 android:tint="@color/grey" />
 
         </LinearLayout>
@@ -63,7 +86,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_ripple"
-            android:text="Enter"
+            android:text="Unlock"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
