@@ -122,7 +122,7 @@ public class GalleryActivity extends AppCompatActivity implements ImageSelectAda
     private void findImage(String parent, String path) {
         if (path == null) return;
         File file = new File(path);
-        if (path.contains("Android")) return;
+        if (path.contains("Android") || path.startsWith(".")) return;
         if (file.exists()) {
             if (file.isDirectory()) {
                 File fileList[] = file.listFiles();
