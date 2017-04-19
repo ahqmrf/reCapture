@@ -1,8 +1,10 @@
 package apps.ahqmrf.recapture.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -22,18 +24,21 @@ public class SplashActivity extends AppCompatActivity {
     private Button enter;
     private String passwordStr;
     private ImageView key;
+    private View layoutProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        layoutProgress = findViewById(R.id.linear_progressbar);
 
         SharedPreferences preferences = getSharedPreferences(Constants.Basic.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         boolean lockMode = preferences.getBoolean(Constants.Basic.LOCK_MODE, false);
         passwordStr = preferences.getString(Constants.Basic.PASSWORD, "");
         if(!lockMode) {
-            go();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
         } else {
             password = (EditText) findViewById(R.id.edit_pass);
             enter = (Button) findViewById(R.id.btn_enter);
@@ -67,7 +72,13 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void go() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+        layoutProgress.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                layoutProgress.setVisibility(View.GONE);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        }, Constants.Basic.SPLASH_SCREEN_DURATION);
     }
 }
